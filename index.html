@@ -1,0 +1,663 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>The Global Archive</title>
+  <meta name="description" content="A shared archive of recipes, songs, writing and notes from every country, contributed by people around the world.">
+  <style>
+:root {
+  --paper: #f6f0e4;
+  --paper-2: #efe6d3;
+  --ink: #2a2420;
+  --muted: #6e6359;
+  --accent: #b5502d;
+  --accent-dark: #8f3d20;
+  --line: #d9cdb6;
+  --card: #fffaf0;
+  --radius: 10px;
+}
+
+* { box-sizing: border-box; }
+
+body {
+  margin: 0;
+  background: var(--paper);
+  color: var(--ink);
+  font-family: Georgia, "Times New Roman", serif;
+  line-height: 1.6;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+
+a { color: var(--accent-dark); }
+
+.site-header {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 12px 28px;
+  padding: 16px 24px;
+  border-bottom: 2px solid var(--ink);
+  background: var(--paper-2);
+}
+
+.brand {
+  font-size: 1.6rem;
+  font-weight: bold;
+  letter-spacing: 0.02em;
+  color: var(--ink);
+  text-decoration: none;
+}
+
+nav { display: flex; gap: 18px; flex: 1; flex-wrap: wrap; }
+nav a { text-decoration: none; color: var(--ink); font-family: system-ui, sans-serif; font-size: 0.95rem; }
+nav a:hover, nav a.active { color: var(--accent); text-decoration: underline; }
+
+.auth-area { display: flex; align-items: center; gap: 12px; font-family: system-ui, sans-serif; }
+.user-name { font-size: 0.9rem; color: var(--muted); }
+
+main { flex: 1; width: 100%; max-width: 1000px; margin: 0 auto; padding: 32px 20px 60px; }
+
+.site-footer { text-align: center; color: var(--muted); font-size: 0.85rem; padding: 20px; border-top: 1px solid var(--line); }
+
+h1 { font-size: 2.2rem; margin: 0 0 8px; line-height: 1.2; }
+h2 { margin-top: 0; }
+.lede { color: var(--muted); font-size: 1.1rem; max-width: 60ch; }
+
+.btn {
+  font-family: system-ui, sans-serif;
+  font-size: 0.95rem;
+  padding: 8px 16px;
+  border: 1.5px solid var(--ink);
+  background: transparent;
+  color: var(--ink);
+  border-radius: 999px;
+  cursor: pointer;
+}
+.btn:hover { background: var(--ink); color: var(--paper); }
+.btn-primary { background: var(--accent); border-color: var(--accent); color: #fff; }
+.btn-primary:hover { background: var(--accent-dark); border-color: var(--accent-dark); }
+.btn-small { padding: 4px 12px; font-size: 0.85rem; }
+.btn-danger { border-color: #9b2c2c; color: #9b2c2c; }
+.btn-danger:hover { background: #9b2c2c; color: #fff; }
+.btn-google { width: 100%; }
+
+.toolbar { display: flex; flex-wrap: wrap; gap: 12px; margin: 24px 0; font-family: system-ui, sans-serif; }
+
+input, select, textarea {
+  font: inherit;
+  font-family: system-ui, sans-serif;
+  padding: 9px 12px;
+  border: 1.5px solid var(--line);
+  border-radius: 8px;
+  background: #fff;
+  color: var(--ink);
+  width: 100%;
+}
+input:focus, select:focus, textarea:focus { outline: 2px solid var(--accent); border-color: var(--accent); }
+textarea { min-height: 180px; resize: vertical; font-family: Georgia, serif; }
+
+label { display: block; margin-bottom: 14px; font-family: system-ui, sans-serif; font-size: 0.9rem; font-weight: 600; }
+label input, label select, label textarea { margin-top: 5px; font-weight: normal; }
+.hint { font-weight: normal; color: var(--muted); font-size: 0.8rem; }
+
+.toolbar input { max-width: 320px; }
+.toolbar select { max-width: 200px; }
+
+.country-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(180px, 1fr)); gap: 10px; list-style: none; padding: 0; margin: 0; }
+.country-grid a {
+  display: flex; justify-content: space-between; align-items: center;
+  padding: 10px 14px; background: var(--card); border: 1px solid var(--line);
+  border-radius: var(--radius); text-decoration: none; color: var(--ink);
+}
+.country-grid a:hover { border-color: var(--accent); transform: translateY(-1px); }
+.country-grid a.has-items { border-left: 4px solid var(--accent); }
+.count { font-family: system-ui, sans-serif; font-size: 0.8rem; color: var(--muted); }
+
+.card {
+  background: var(--card); border: 1px solid var(--line);
+  border-radius: var(--radius); padding: 20px 22px; margin-bottom: 16px;
+}
+.card h3 { margin: 4px 0 6px; font-size: 1.3rem; }
+.card .body { white-space: pre-wrap; word-wrap: break-word; }
+.card .meta { font-family: system-ui, sans-serif; font-size: 0.82rem; color: var(--muted); }
+.card .actions { margin-top: 12px; display: flex; gap: 8px; flex-wrap: wrap; }
+
+.tag {
+  display: inline-block; font-family: system-ui, sans-serif; font-size: 0.72rem;
+  text-transform: uppercase; letter-spacing: 0.08em; font-weight: 700;
+  background: var(--accent); color: #fff; padding: 2px 9px; border-radius: 999px;
+}
+.tag.pending { background: #8a7a3a; }
+.tag.approved { background: #3f6b4a; }
+
+.form-card { max-width: 680px; }
+.notice { padding: 14px 18px; border-radius: var(--radius); background: #e6efdf; border: 1px solid #b7cfa8; font-family: system-ui, sans-serif; margin-bottom: 20px; }
+.error { color: #9b2c2c; font-family: system-ui, sans-serif; font-size: 0.9rem; }
+.empty { color: var(--muted); font-style: italic; padding: 30px 0; }
+
+dialog {
+  border: 2px solid var(--ink); border-radius: 14px; background: var(--paper);
+  padding: 28px; width: min(420px, 92vw); color: var(--ink);
+}
+dialog::backdrop { background: rgba(42, 36, 32, 0.55); }
+.dialog-close { position: absolute; top: 8px; right: 12px; }
+.dialog-close button { background: none; border: none; font-size: 1.6rem; cursor: pointer; color: var(--ink); }
+.divider { text-align: center; color: var(--muted); font-family: system-ui, sans-serif; font-size: 0.8rem; margin: 16px 0; }
+.auth-switch { font-family: system-ui, sans-serif; font-size: 0.85rem; text-align: center; margin-bottom: 0; }
+
+[hidden] { display: none !important; }
+
+@media (max-width: 600px) {
+  h1 { font-size: 1.7rem; }
+  .site-header { padding: 12px 16px; }
+}
+
+</style>
+</head>
+<body>
+  <header class="site-header">
+    <a class="brand" href="#/">The Global Archive</a>
+    <nav id="nav">
+      <a href="#/">Browse</a>
+      <a href="#/contribute">Contribute</a>
+      <a href="#/mine" id="navMine" hidden>My contributions</a>
+      <a href="#/review" id="navReview" hidden>Review queue</a>
+    </nav>
+    <div class="auth-area">
+      <span id="userName" class="user-name" hidden></span>
+      <button id="authBtn" class="btn">Log in</button>
+    </div>
+  </header>
+
+  <main id="app" aria-live="polite"></main>
+
+  <footer class="site-footer">
+    <p>The Global Archive &mdash; a collection of the world, written by the people in it.</p>
+  </footer>
+
+  <dialog id="authDialog">
+    <form method="dialog" class="dialog-close"><button aria-label="Close">&times;</button></form>
+    <h2 id="authTitle">Log in</h2>
+    <button id="googleBtn" class="btn btn-google" type="button">Continue with Google</button>
+    <p class="divider"><span>or use email</span></p>
+    <form id="emailForm">
+      <label id="nameRow" hidden>Display name
+        <input type="text" id="authName" maxlength="40" autocomplete="nickname">
+      </label>
+      <label>Email
+        <input type="email" id="authEmail" required autocomplete="email">
+      </label>
+      <label>Password
+        <input type="password" id="authPass" required minlength="6" autocomplete="current-password">
+      </label>
+      <p id="authError" class="error" role="alert" hidden></p>
+      <button class="btn btn-primary" type="submit" id="authSubmit">Log in</button>
+    </form>
+    <p class="auth-switch">
+      <a href="#" id="authToggle">New here? Create an account</a> &middot;
+      <a href="#" id="resetLink">Forgot password?</a>
+    </p>
+  </dialog>
+
+  <script type="module">
+import { initializeApp } from "https://www.gstatic.com/firebasejs/10.14.1/firebase-app.js";
+import {
+  getAuth, onAuthStateChanged, GoogleAuthProvider, signInWithPopup,
+  createUserWithEmailAndPassword, signInWithEmailAndPassword, signOut,
+  updateProfile, sendPasswordResetEmail
+} from "https://www.gstatic.com/firebasejs/10.14.1/firebase-auth.js";
+import {
+  getFirestore, collection, addDoc, query, where, getDocs, getDoc,
+  doc, updateDoc, deleteDoc, serverTimestamp, limit
+} from "https://www.gstatic.com/firebasejs/10.14.1/firebase-firestore.js";
+const firebaseConfig = {
+  apiKey: "AIzaSyDd5DmV6E8J1jhd0DKhbqMKcb8mD5ANEmg",
+  authDomain: "the-global-archive.firebaseapp.com",
+  projectId: "the-global-archive",
+  storageBucket: "the-global-archive.firebasestorage.app",
+  messagingSenderId: "496015789383",
+  appId: "1:496015789383:web:d2039d67fb9df55be0d062",
+  measurementId: "G-W9QJWR0MB3"
+};
+
+const COUNTRIES = [
+  "Afghanistan","Albania","Algeria","Andorra","Angola","Antigua and Barbuda","Argentina","Armenia","Australia","Austria",
+  "Azerbaijan","Bahamas","Bahrain","Bangladesh","Barbados","Belarus","Belgium","Belize","Benin","Bhutan","Bolivia",
+  "Bosnia and Herzegovina","Botswana","Brazil","Brunei","Bulgaria","Burkina Faso","Burundi","Cabo Verde","Cambodia",
+  "Cameroon","Canada","Central African Republic","Chad","Chile","China","Colombia","Comoros","Congo (Republic)",
+  "Congo (Democratic Republic)","Costa Rica","Côte d'Ivoire","Croatia","Cuba","Cyprus","Czechia","Denmark","Djibouti",
+  "Dominica","Dominican Republic","Ecuador","Egypt","El Salvador","Equatorial Guinea","Eritrea","Estonia","Eswatini",
+  "Ethiopia","Fiji","Finland","France","Gabon","Gambia","Georgia","Germany","Ghana","Greece","Grenada","Guatemala",
+  "Guinea","Guinea-Bissau","Guyana","Haiti","Honduras","Hungary","Iceland","India","Indonesia","Iran","Iraq","Ireland",
+  "Israel","Italy","Jamaica","Japan","Jordan","Kazakhstan","Kenya","Kiribati","Kosovo","Kuwait","Kyrgyzstan","Laos",
+  "Latvia","Lebanon","Lesotho","Liberia","Libya","Liechtenstein","Lithuania","Luxembourg","Madagascar","Malawi",
+  "Malaysia","Maldives","Mali","Malta","Marshall Islands","Mauritania","Mauritius","Mexico","Micronesia","Moldova",
+  "Monaco","Mongolia","Montenegro","Morocco","Mozambique","Myanmar","Namibia","Nauru","Nepal","Netherlands",
+  "New Zealand","Nicaragua","Niger","Nigeria","North Korea","North Macedonia","Norway","Oman","Pakistan","Palau",
+  "Palestine","Panama","Papua New Guinea","Paraguay","Peru","Philippines","Poland","Portugal","Qatar","Romania","Russia",
+  "Rwanda","Saint Kitts and Nevis","Saint Lucia","Saint Vincent and the Grenadines","Samoa","San Marino",
+  "São Tomé and Príncipe","Saudi Arabia","Senegal","Serbia","Seychelles","Sierra Leone","Singapore","Slovakia",
+  "Slovenia","Solomon Islands","Somalia","South Africa","South Korea","South Sudan","Spain","Sri Lanka","Sudan",
+  "Suriname","Sweden","Switzerland","Syria","Taiwan","Tajikistan","Tanzania","Thailand","Timor-Leste","Togo","Tonga",
+  "Trinidad and Tobago","Tunisia","Türkiye","Turkmenistan","Tuvalu","Uganda","Ukraine","United Arab Emirates",
+  "United Kingdom","United States","Uruguay","Uzbekistan","Vanuatu","Vatican City","Venezuela","Vietnam","Yemen",
+  "Zambia","Zimbabwe"
+];
+
+const TYPES = {
+  recipe:  "Recipe",
+  song:    "Song rec",
+  writing: "Piece of writing",
+  note:    "Note",
+  other:   "Something else"
+};
+
+const app = initializeApp(firebaseConfig);
+const auth = getAuth(app);
+const db = getFirestore(app);
+
+const state = { user: null, isAdmin: false, approved: [], loaded: false };
+
+const $ = (sel) => document.querySelector(sel);
+const view = $("#app");
+
+function esc(str) {
+  return String(str ?? "").replace(/[&<>"']/g, (c) => (
+    { "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" }[c]
+  ));
+}
+
+function safeUrl(url) {
+  try {
+    const u = new URL(url);
+    return (u.protocol === "https:" || u.protocol === "http:") ? u.href : null;
+  } catch { return null; }
+}
+
+function formatDate(ts) {
+  const d = ts?.toDate ? ts.toDate() : null;
+  return d ? d.toLocaleDateString(undefined, { year: "numeric", month: "short", day: "numeric" }) : "";
+}
+
+/* ---------- data ---------- */
+
+async function loadApproved() {
+  const q = query(collection(db, "contributions"), where("status", "==", "approved"), limit(1000));
+  const snap = await getDocs(q);
+  state.approved = snap.docs.map((d) => ({ id: d.id, ...d.data() }))
+    .sort((a, b) => (b.createdAt?.seconds ?? 0) - (a.createdAt?.seconds ?? 0));
+  state.loaded = true;
+}
+
+async function checkAdmin(user) {
+  if (!user) return false;
+  try {
+    const snap = await getDoc(doc(db, "admins", user.uid));
+    return snap.exists();
+  } catch { return false; }
+}
+
+/* ---------- rendering ---------- */
+
+function contributionCard(c, { showStatus = false, actions = "" } = {}) {
+  const link = c.link ? safeUrl(c.link) : null;
+  return `
+    <article class="card">
+      <span class="tag">${esc(TYPES[c.type] ?? c.type)}</span>
+      ${showStatus ? `<span class="tag ${esc(c.status)}">${esc(c.status)}</span>` : ""}
+      <h3>${esc(c.title)}</h3>
+      <p class="meta">
+        ${c.artist ? `${esc(c.artist)} &middot; ` : ""}
+        ${esc(c.country)} &middot; shared by ${esc(c.authorName || "Anonymous")}
+        ${c.createdAt ? ` &middot; ${esc(formatDate(c.createdAt))}` : ""}
+      </p>
+      ${c.body ? `<div class="body">${esc(c.body)}</div>` : ""}
+      ${link ? `<p><a href="${esc(link)}" target="_blank" rel="noopener noreferrer">Listen / read more &rarr;</a></p>` : ""}
+      ${actions}
+    </article>`;
+}
+
+function renderHome() {
+  const counts = {};
+  state.approved.forEach((c) => { counts[c.country] = (counts[c.country] || 0) + 1; });
+  view.innerHTML = `
+    <h1>The Global Archive</h1>
+    <p class="lede">A shared collection of the world: recipes, songs, writing and notes from every country, contributed by the people who know them best.</p>
+    <div class="toolbar">
+      <input type="search" id="countrySearch" placeholder="Search countries…" aria-label="Search countries">
+      <a class="btn btn-primary" href="#/contribute">Add a contribution</a>
+    </div>
+    <ul class="country-grid" id="countryGrid"></ul>`;
+  const grid = $("#countryGrid");
+  const draw = (filter = "") => {
+    const f = filter.trim().toLowerCase();
+    grid.innerHTML = COUNTRIES.filter((c) => c.toLowerCase().includes(f)).map((c) => `
+      <li><a href="#/country/${encodeURIComponent(c)}" class="${counts[c] ? "has-items" : ""}">
+        <span>${esc(c)}</span>
+        ${counts[c] ? `<span class="count">${counts[c]}</span>` : ""}
+      </a></li>`).join("") || `<li class="empty">No matching countries.</li>`;
+  };
+  draw();
+  $("#countrySearch").addEventListener("input", (e) => draw(e.target.value));
+}
+
+function renderCountry(name) {
+  if (!COUNTRIES.includes(name)) { view.innerHTML = `<p class="empty">Country not found.</p>`; return; }
+  view.innerHTML = `
+    <p><a href="#/">&larr; All countries</a></p>
+    <h1>${esc(name)}</h1>
+    <div class="toolbar">
+      <select id="typeFilter" aria-label="Filter by type">
+        <option value="">All types</option>
+        ${Object.entries(TYPES).map(([k, v]) => `<option value="${k}">${v}</option>`).join("")}
+      </select>
+      <a class="btn btn-primary" href="#/contribute?country=${encodeURIComponent(name)}">Contribute to ${esc(name)}</a>
+    </div>
+    <div id="list"></div>`;
+  const draw = () => {
+    const type = $("#typeFilter").value;
+    const items = state.approved.filter((c) => c.country === name && (!type || c.type === type));
+    $("#list").innerHTML = items.length
+      ? items.map((c) => contributionCard(c)).join("")
+      : `<p class="empty">Nothing here yet. Be the first to add something from ${esc(name)}.</p>`;
+  };
+  draw();
+  $("#typeFilter").addEventListener("change", draw);
+}
+
+function renderContribute(params) {
+  if (!state.user) {
+    view.innerHTML = `
+      <h1>Contribute</h1>
+      <p class="lede">Log in or create an account to share something with the archive.</p>
+      <button class="btn btn-primary" id="loginPrompt">Log in or sign up</button>`;
+    $("#loginPrompt").addEventListener("click", () => openAuth("login"));
+    return;
+  }
+  const preset = params.get("country") || "";
+  view.innerHTML = `
+    <h1>Contribute</h1>
+    <p class="lede">Share a recipe, a song, something you wrote, or a note about a country. Submissions are reviewed before they appear publicly.</p>
+    <form id="contribForm" class="card form-card">
+      <label>Country
+        <select id="fCountry" required>
+          <option value="">Choose a country…</option>
+          ${COUNTRIES.map((c) => `<option ${c === preset ? "selected" : ""}>${esc(c)}</option>`).join("")}
+        </select>
+      </label>
+      <label>What are you sharing?
+        <select id="fType" required>
+          ${Object.entries(TYPES).map(([k, v]) => `<option value="${k}">${v}</option>`).join("")}
+        </select>
+      </label>
+      <label>Title
+        <input id="fTitle" maxlength="120" required placeholder="e.g. My grandmother's jollof rice">
+      </label>
+      <label id="artistRow" hidden>Artist
+        <input id="fArtist" maxlength="120" placeholder="Who made it?">
+      </label>
+      <label>
+        <span id="bodyLabel">Your contribution</span>
+        <textarea id="fBody" maxlength="8000" required></textarea>
+        <span class="hint">Up to 8000 characters. Plain text.</span>
+      </label>
+      <label>Link <span class="hint">(optional, e.g. a YouTube or Spotify link)</span>
+        <input id="fLink" type="url" maxlength="500" placeholder="https://…">
+      </label>
+      <p id="formMsg" class="error" hidden></p>
+      <button class="btn btn-primary" type="submit">Submit for review</button>
+    </form>`;
+
+  const typeSel = $("#fType");
+  const sync = () => {
+    const t = typeSel.value;
+    $("#artistRow").hidden = t !== "song";
+    $("#bodyLabel").textContent = {
+      recipe: "Ingredients and method",
+      song: "Why do you recommend it?",
+      writing: "Your writing",
+      note: "Your note",
+      other: "Your contribution"
+    }[t];
+  };
+  typeSel.addEventListener("change", sync);
+  sync();
+
+  $("#contribForm").addEventListener("submit", async (e) => {
+    e.preventDefault();
+    const msg = $("#formMsg");
+    msg.hidden = true;
+    const link = $("#fLink").value.trim();
+    if (link && !safeUrl(link)) {
+      msg.textContent = "That link doesn't look right. It needs to start with http:// or https://";
+      msg.hidden = false;
+      return;
+    }
+    const data = {
+      country: $("#fCountry").value,
+      type: typeSel.value,
+      title: $("#fTitle").value.trim(),
+      body: $("#fBody").value.trim(),
+      authorUid: state.user.uid,
+      authorName: state.user.displayName || "Anonymous",
+      status: "pending",
+      createdAt: serverTimestamp()
+    };
+    if (data.type === "song" && $("#fArtist").value.trim()) data.artist = $("#fArtist").value.trim();
+    if (link) data.link = link;
+    try {
+      await addDoc(collection(db, "contributions"), data);
+      view.innerHTML = `
+        <div class="notice">Thank you! Your contribution was submitted and will appear once it has been reviewed.</div>
+        <a class="btn" href="#/contribute">Add another</a>
+        <a class="btn" href="#/mine">See my contributions</a>`;
+    } catch (err) {
+      console.error(err);
+      msg.textContent = "Couldn't submit. Please check everything is filled in and try again.";
+      msg.hidden = false;
+    }
+  });
+}
+
+async function renderMine() {
+  if (!state.user) { renderContribute(new URLSearchParams()); return; }
+  view.innerHTML = `<h1>My contributions</h1><div id="list"><p class="empty">Loading…</p></div>`;
+  try {
+    const snap = await getDocs(query(collection(db, "contributions"), where("authorUid", "==", state.user.uid)));
+    const items = snap.docs.map((d) => ({ id: d.id, ...d.data() }))
+      .sort((a, b) => (b.createdAt?.seconds ?? 0) - (a.createdAt?.seconds ?? 0));
+    $("#list").innerHTML = items.length
+      ? items.map((c) => contributionCard(c, {
+          showStatus: true,
+          actions: `<div class="actions"><button class="btn btn-small btn-danger" data-delete="${esc(c.id)}">Delete</button></div>`
+        })).join("")
+      : `<p class="empty">You haven't contributed anything yet.</p>`;
+  } catch (err) {
+    console.error(err);
+    $("#list").innerHTML = `<p class="error">Couldn't load your contributions.</p>`;
+  }
+}
+
+async function renderReview() {
+  if (!state.isAdmin) { view.innerHTML = `<p class="empty">This page is for reviewers only.</p>`; return; }
+  view.innerHTML = `<h1>Review queue</h1><div id="list"><p class="empty">Loading…</p></div>`;
+  try {
+    const snap = await getDocs(query(collection(db, "contributions"), where("status", "==", "pending")));
+    const items = snap.docs.map((d) => ({ id: d.id, ...d.data() }))
+      .sort((a, b) => (a.createdAt?.seconds ?? 0) - (b.createdAt?.seconds ?? 0));
+    $("#list").innerHTML = items.length
+      ? items.map((c) => contributionCard(c, {
+          actions: `<div class="actions">
+            <button class="btn btn-small btn-primary" data-approve="${esc(c.id)}">Approve</button>
+            <button class="btn btn-small btn-danger" data-reject="${esc(c.id)}">Reject &amp; delete</button>
+          </div>`
+        })).join("")
+      : `<p class="empty">Nothing waiting for review.</p>`;
+  } catch (err) {
+    console.error(err);
+    $("#list").innerHTML = `<p class="error">Couldn't load the queue.</p>`;
+  }
+}
+
+/* ---------- router ---------- */
+
+async function route() {
+  const hash = location.hash.slice(1) || "/";
+  const [path, qs] = hash.split("?");
+  const params = new URLSearchParams(qs || "");
+  document.querySelectorAll("nav a").forEach((a) => {
+    a.classList.toggle("active", a.getAttribute("href") === "#" + path);
+  });
+  window.scrollTo(0, 0);
+
+  if (!state.loaded && (path === "/" || path.startsWith("/country/"))) {
+    view.innerHTML = `<p class="empty">Loading the archive…</p>`;
+    try { await loadApproved(); }
+    catch (err) {
+      console.error(err);
+      view.innerHTML = `<p class="error">Couldn't load the archive. Check the Firebase config near the top of this file.</p>`;
+      return;
+    }
+  }
+
+  if (path === "/") renderHome();
+  else if (path.startsWith("/country/")) renderCountry(decodeURIComponent(path.slice(9)));
+  else if (path === "/contribute") renderContribute(params);
+  else if (path === "/mine") renderMine();
+  else if (path === "/review") renderReview();
+  else renderHome();
+}
+
+/* ---------- actions (delete / approve / reject) ---------- */
+
+view.addEventListener("click", async (e) => {
+  const del = e.target.closest("[data-delete]");
+  const approve = e.target.closest("[data-approve]");
+  const reject = e.target.closest("[data-reject]");
+  try {
+    if (del && confirm("Delete this contribution permanently?")) {
+      await deleteDoc(doc(db, "contributions", del.dataset.delete));
+      state.loaded = false;
+      renderMine();
+    } else if (approve) {
+      await updateDoc(doc(db, "contributions", approve.dataset.approve), { status: "approved" });
+      state.loaded = false;
+      renderReview();
+    } else if (reject && confirm("Reject and delete this submission?")) {
+      await deleteDoc(doc(db, "contributions", reject.dataset.reject));
+      renderReview();
+    }
+  } catch (err) {
+    console.error(err);
+    alert("That didn't work. Please try again.");
+  }
+});
+
+/* ---------- auth ---------- */
+
+const dialog = $("#authDialog");
+let mode = "login";
+
+function openAuth(m = "login") {
+  setMode(m);
+  $("#authError").hidden = true;
+  dialog.showModal();
+}
+
+function setMode(m) {
+  mode = m;
+  const signup = m === "signup";
+  $("#authTitle").textContent = signup ? "Create an account" : "Log in";
+  $("#authSubmit").textContent = signup ? "Sign up" : "Log in";
+  $("#nameRow").hidden = !signup;
+  $("#authName").required = signup;
+  $("#authPass").autocomplete = signup ? "new-password" : "current-password";
+  $("#authToggle").textContent = signup ? "Already have an account? Log in" : "New here? Create an account";
+}
+
+function authMessage(err) {
+  const map = {
+    "auth/invalid-credential": "Wrong email or password.",
+    "auth/user-not-found": "No account with that email.",
+    "auth/wrong-password": "Wrong email or password.",
+    "auth/email-already-in-use": "An account with that email already exists. Try logging in.",
+    "auth/weak-password": "Password must be at least 6 characters.",
+    "auth/invalid-email": "That email address doesn't look right.",
+    "auth/popup-closed-by-user": "",
+    "auth/too-many-requests": "Too many attempts. Please wait a moment and try again."
+  };
+  return map[err.code] ?? "Something went wrong. Please try again.";
+}
+
+function showAuthError(err) {
+  const text = authMessage(err);
+  const el = $("#authError");
+  el.textContent = text;
+  el.hidden = !text;
+}
+
+$("#authBtn").addEventListener("click", async () => {
+  if (state.user) await signOut(auth);
+  else openAuth("login");
+});
+
+$("#authToggle").addEventListener("click", (e) => {
+  e.preventDefault();
+  setMode(mode === "login" ? "signup" : "login");
+});
+
+$("#googleBtn").addEventListener("click", async () => {
+  try {
+    await signInWithPopup(auth, new GoogleAuthProvider());
+    dialog.close();
+  } catch (err) { showAuthError(err); }
+});
+
+$("#emailForm").addEventListener("submit", async (e) => {
+  e.preventDefault();
+  const email = $("#authEmail").value.trim();
+  const pass = $("#authPass").value;
+  try {
+    if (mode === "signup") {
+      const cred = await createUserWithEmailAndPassword(auth, email, pass);
+      await updateProfile(cred.user, { displayName: $("#authName").value.trim() });
+      state.user = auth.currentUser;
+    } else {
+      await signInWithEmailAndPassword(auth, email, pass);
+    }
+    dialog.close();
+    e.target.reset();
+  } catch (err) { showAuthError(err); }
+});
+
+$("#resetLink").addEventListener("click", async (e) => {
+  e.preventDefault();
+  const email = $("#authEmail").value.trim();
+  const el = $("#authError");
+  if (!email) { el.textContent = "Enter your email above first."; el.hidden = false; return; }
+  try {
+    await sendPasswordResetEmail(auth, email);
+    el.textContent = "Password reset email sent. Check your inbox.";
+    el.hidden = false;
+  } catch (err) { showAuthError(err); }
+});
+
+onAuthStateChanged(auth, async (user) => {
+  state.user = user;
+  state.isAdmin = await checkAdmin(user);
+  $("#authBtn").textContent = user ? "Log out" : "Log in";
+  $("#userName").hidden = !user;
+  $("#userName").textContent = user ? (user.displayName || user.email || "") : "";
+  $("#navMine").hidden = !user;
+  $("#navReview").hidden = !state.isAdmin;
+  route();
+});
+
+window.addEventListener("hashchange", route);
+
+</script>
+</body>
+</html>
