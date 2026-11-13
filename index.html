@@ -1,218 +1,109 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>The Global Archive</title>
-  <meta name="description" content="A shared archive of recipes, songs, writing and notes from every country, contributed by people around the world.">
-  <style>
-:root {
-  --paper: #f6f0e4;
-  --paper-2: #efe6d3;
-  --ink: #2a2420;
-  --muted: #6e6359;
-  --accent: #b5502d;
-  --accent-dark: #8f3d20;
-  --line: #d9cdb6;
-  --card: #fffaf0;
-  --radius: 10px;
-}
-
-* { box-sizing: border-box; }
-
-body {
-  margin: 0;
-  background: var(--paper);
-  color: var(--ink);
-  font-family: Georgia, "Times New Roman", serif;
-  line-height: 1.6;
-  min-height: 100vh;
-  display: flex;
-  flex-direction: column;
-}
-
-a { color: var(--accent-dark); }
-
-.site-header {
-  display: flex;
-  flex-wrap: wrap;
-  align-items: center;
-  gap: 12px 28px;
-  padding: 16px 24px;
-  border-bottom: 2px solid var(--ink);
-  background: var(--paper-2);
-}
-
-.brand {
-  font-size: 1.6rem;
-  font-weight: bold;
-  letter-spacing: 0.02em;
-  color: var(--ink);
-  text-decoration: none;
-}
-
-nav { display: flex; gap: 18px; flex: 1; flex-wrap: wrap; }
-nav a { text-decoration: none; color: var(--ink); font-family: system-ui, sans-serif; font-size: 0.95rem; }
-nav a:hover, nav a.active { color: var(--accent); text-decoration: underline; }
-
-.auth-area { display: flex; align-items: center; gap: 12px; font-family: system-ui, sans-serif; }
-.user-name { font-size: 0.9rem; color: var(--muted); }
-
-main { flex: 1; width: 100%; max-width: 1000px; margin: 0 auto; padding: 32px 20px 60px; }
-
-.site-footer { text-align: center; color: var(--muted); font-size: 0.85rem; padding: 20px; border-top: 1px solid var(--line); }
-
-h1 { font-size: 2.2rem; margin: 0 0 8px; line-height: 1.2; }
-h2 { margin-top: 0; }
-.lede { color: var(--muted); font-size: 1.1rem; max-width: 60ch; }
-
-.btn {
-  font-family: system-ui, sans-serif;
-  font-size: 0.95rem;
-  padding: 8px 16px;
-  border: 1.5px solid var(--ink);
-  background: transparent;
-  color: var(--ink);
-  border-radius: 999px;
-  cursor: pointer;
-}
-.btn:hover { background: var(--ink); color: var(--paper); }
-.btn-primary { background: var(--accent); border-color: var(--accent); color: #fff; }
-.btn-primary:hover { background: var(--accent-dark); border-color: var(--accent-dark); }
-.btn-small { padding: 4px 12px; font-size: 0.85rem; }
-.btn-danger { border-color: #9b2c2c; color: #9b2c2c; }
-.btn-danger:hover { background: #9b2c2c; color: #fff; }
-.btn-google { width: 100%; }
-
-.toolbar { display: flex; flex-wrap: wrap; gap: 12px; margin: 24px 0; font-family: system-ui, sans-serif; }
-
-input, select, textarea {
-  font: inherit;
-  font-family: system-ui, sans-serif;
-  padding: 9px 12px;
-  border: 1.5px solid var(--line);
-  border-radius: 8px;
-  background: #fff;
-  color: var(--ink);
-  width: 100%;
-}
-input:focus, select:focus, textarea:focus { outline: 2px solid var(--accent); border-color: var(--accent); }
-textarea { min-height: 180px; resize: vertical; font-family: Georgia, serif; }
-
-label { display: block; margin-bottom: 14px; font-family: system-ui, sans-serif; font-size: 0.9rem; font-weight: 600; }
-label input, label select, label textarea { margin-top: 5px; font-weight: normal; }
-.hint { font-weight: normal; color: var(--muted); font-size: 0.8rem; }
-
-.toolbar input { max-width: 320px; }
-.toolbar select { max-width: 200px; }
-
-.country-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(180px, 1fr)); gap: 10px; list-style: none; padding: 0; margin: 0; }
-.country-grid a {
-  display: flex; justify-content: space-between; align-items: center;
-  padding: 10px 14px; background: var(--card); border: 1px solid var(--line);
-  border-radius: var(--radius); text-decoration: none; color: var(--ink);
-}
-.country-grid a:hover { border-color: var(--accent); transform: translateY(-1px); }
-.country-grid a.has-items { border-left: 4px solid var(--accent); }
-.count { font-family: system-ui, sans-serif; font-size: 0.8rem; color: var(--muted); }
-
-.card {
-  background: var(--card); border: 1px solid var(--line);
-  border-radius: var(--radius); padding: 20px 22px; margin-bottom: 16px;
-}
-.card h3 { margin: 4px 0 6px; font-size: 1.3rem; }
-.card .body { white-space: pre-wrap; word-wrap: break-word; }
-.card .meta { font-family: system-ui, sans-serif; font-size: 0.82rem; color: var(--muted); }
-.card .actions { margin-top: 12px; display: flex; gap: 8px; flex-wrap: wrap; }
-
-.tag {
-  display: inline-block; font-family: system-ui, sans-serif; font-size: 0.72rem;
-  text-transform: uppercase; letter-spacing: 0.08em; font-weight: 700;
-  background: var(--accent); color: #fff; padding: 2px 9px; border-radius: 999px;
-}
-.tag.pending { background: #8a7a3a; }
-.tag.approved { background: #3f6b4a; }
-
-.form-card { max-width: 680px; }
-.notice { padding: 14px 18px; border-radius: var(--radius); background: #e6efdf; border: 1px solid #b7cfa8; font-family: system-ui, sans-serif; margin-bottom: 20px; }
-.error { color: #9b2c2c; font-family: system-ui, sans-serif; font-size: 0.9rem; }
-.empty { color: var(--muted); font-style: italic; padding: 30px 0; }
-
-dialog {
-  border: 2px solid var(--ink); border-radius: 14px; background: var(--paper);
-  padding: 28px; width: min(420px, 92vw); color: var(--ink);
-}
-dialog::backdrop { background: rgba(42, 36, 32, 0.55); }
-.dialog-close { position: absolute; top: 8px; right: 12px; }
-.dialog-close button { background: none; border: none; font-size: 1.6rem; cursor: pointer; color: var(--ink); }
-.divider { text-align: center; color: var(--muted); font-family: system-ui, sans-serif; font-size: 0.8rem; margin: 16px 0; }
-.auth-switch { font-family: system-ui, sans-serif; font-size: 0.85rem; text-align: center; margin-bottom: 0; }
-
-[hidden] { display: none !important; }
-
-@media (max-width: 600px) {
-  h1 { font-size: 1.7rem; }
-  .site-header { padding: 12px 16px; }
-}
-
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>the global archive</title>
+<meta name="description" content="A shared archive of recipes, songs, writing and notes from every country, added by the people who know them.">
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600&family=Fraunces:ital,opsz,wght@0,9..144,500;0,9..144,600;1,9..144,500&display=swap" rel="stylesheet">
+<style>
+:root{--bg:#fff6f4;--card:#fff;--ink:#3b2a2f;--acc:#e0476b;--on:#fff;--gs:75%;--gl1:91%;--gl2:81%;--cink:rgba(50,30,40,.78)}
+*{box-sizing:border-box}
+html{background:var(--bg)}
+body{margin:0;font:15px/1.55 'DM Sans',system-ui,sans-serif;background:var(--bg);color:var(--ink);
+ --muted:color-mix(in srgb,var(--ink) 58%,var(--bg));--line:color-mix(in srgb,var(--ink) 12%,var(--bg));--soft:color-mix(in srgb,var(--ink) 7%,var(--bg))}
+a{color:inherit}
+h1,h2{font-family:'Fraunces',Georgia,serif;font-weight:500;letter-spacing:-.02em;line-height:1.15;margin:0}
+h1{font-size:clamp(1.8rem,5vw,2.8rem)}h2{font-size:1.4rem}h3{font-size:.95rem;font-weight:600;margin:0;line-height:1.3}
+h1 em,h2 em{color:var(--acc)}
+button,input,textarea,select{font:inherit;color:inherit}button{cursor:pointer}
+:focus-visible{outline:2px solid var(--acc);outline-offset:2px}
+.wrap{max-width:1500px;margin:0 auto;padding:0 clamp(12px,2.5vw,32px) calc(70px + env(safe-area-inset-bottom,0px))}
+.k{font-size:.8rem;color:var(--muted)}.k a{text-decoration:none}.k a:hover{text-decoration:underline}
+.sub{color:var(--muted);max-width:56ch;margin:10px 0 0}
+.row{display:flex;gap:10px;align-items:center;flex-wrap:wrap}.sp{margin-left:auto}
+.gr{background:linear-gradient(150deg,hsl(var(--h) var(--gs) var(--gl1)),hsl(var(--h2) var(--gs) var(--gl2)))}
+.top{position:sticky;top:0;z-index:4;background:color-mix(in srgb,var(--bg) 88%,transparent);backdrop-filter:blur(12px);display:flex;align-items:center;gap:10px;padding:calc(12px + env(safe-area-inset-top,0px)) 0 12px}
+.logo{font:600 1.15rem 'Fraunces',Georgia,serif;text-decoration:none;display:flex;align-items:center;gap:8px;white-space:nowrap}
+.logo i{font-style:normal;display:grid;place-items:center;width:30px;height:30px;border-radius:50%;background:var(--acc);color:var(--on);font-size:.9rem}
+.srch{flex:1;display:flex;align-items:center;gap:8px;background:var(--soft);border-radius:999px;padding:0 16px;max-width:640px;margin:0 auto}
+.srch input{background:none;border:0;padding:11px 0;width:100%;outline:none}
+.ico{width:18px;height:18px;stroke:currentColor;fill:none;stroke-width:2;stroke-linecap:round;stroke-linejoin:round;flex:none;color:var(--muted)}
+.btn{border:0;background:var(--soft);border-radius:999px;padding:9px 18px;font-weight:600;font-size:.88rem;text-decoration:none;display:inline-block;white-space:nowrap}
+.btn:hover{background:color-mix(in srgb,var(--ink) 13%,var(--bg))}
+.btn.p{background:var(--acc);color:var(--on)}.btn.p:hover{filter:brightness(.93)}
+.btn.on{background:var(--ink);color:var(--bg)}.btn.d{color:#d6455d}.btn.s{padding:6px 13px;font-size:.8rem}
+.burger,.avb{border:0;background:var(--soft);width:38px;height:38px;border-radius:50%;display:grid;place-items:center;padding:0;flex:none}
+.avb{color:var(--cink);font-weight:600}
+.av{flex:none;border-radius:50%;display:grid;place-items:center;font-size:.72rem;font-weight:600;width:28px;height:28px;color:var(--cink)}
+.chips{display:flex;gap:8px;overflow-x:auto;padding:4px 0 8px;margin-top:12px;align-items:center;scrollbar-width:none}.chips::-webkit-scrollbar{display:none}
+.chips .btn{flex:none}
+.tag{font-size:.74rem;font-weight:600;background:var(--soft);border-radius:99px;padding:3px 11px;white-space:nowrap}
+.pill{font-size:.72rem;font-weight:600;border-radius:99px;padding:2px 10px;background:var(--soft);color:var(--muted)}
+.pill.pend{background:#fbe9c4;color:#8a6410}.pill.ok{background:#d8efdf;color:#276b3c}
+.intro{padding:18px 0 4px;max-width:720px}.intro h1{margin-bottom:6px}
+.mas{column-width:225px;column-gap:18px;margin-top:14px}
+.pin{display:block;break-inside:avoid;margin-bottom:22px;text-decoration:none}
+.pc{position:relative}
+.cover{border-radius:20px;padding:16px;min-height:140px;display:flex;flex-direction:column;justify-content:space-between;gap:14px;transition:transform .2s,box-shadow .2s;overflow:hidden}
+.pin:hover .cover{transform:translateY(-3px);box-shadow:0 12px 28px rgba(0,0,0,.14)}
+.cg{font-size:2.3rem;line-height:1}
+.cq{font:italic 500 1.08rem/1.35 'Fraunces',Georgia,serif;color:var(--cink);overflow:hidden;word-wrap:break-word}
+.ptag{position:absolute;left:10px;bottom:10px;background:color-mix(in srgb,var(--card) 82%,transparent);backdrop-filter:blur(6px);border-radius:99px;padding:3px 11px;font-size:.74rem;font-weight:600}
+.plk{position:absolute;right:10px;top:10px;background:color-mix(in srgb,var(--card) 82%,transparent);backdrop-filter:blur(6px);border-radius:99px;padding:3px 10px;font-size:.74rem;font-weight:600}
+.pin h3{margin:9px 4px 5px}.pm{display:flex;align-items:center;gap:8px;padding:0 4px;font-size:.8rem;color:var(--muted)}.pm .av{width:22px;height:22px;font-size:.62rem}
+.box{background:var(--card);border-radius:22px;padding:20px;margin-top:14px;box-shadow:0 1px 2px rgba(0,0,0,.04),0 8px 24px rgba(0,0,0,.05)}
+.box p{max-width:78ch}.fm{max-width:640px}
+.tiles{display:flex;gap:10px;flex-wrap:wrap;margin-top:14px}
+.tile{background:var(--card);border-radius:16px;padding:10px 18px;box-shadow:0 1px 2px rgba(0,0,0,.04)}
+.tile b{display:block;font:500 1.4rem 'Fraunces',Georgia,serif}.tile span{font-size:.76rem;color:var(--muted)}
+.f{display:flex;flex-direction:column;gap:5px;margin-bottom:14px}.f label{font-weight:600;font-size:.85rem}
+input,textarea,select{border:2px solid transparent;border-radius:16px;padding:11px 14px;background:var(--soft);width:100%}
+input:focus,textarea:focus,select:focus{outline:none;border-color:var(--acc);background:var(--card)}
+textarea{min-height:110px;resize:vertical}textarea.big{min-height:220px}
+.err{color:#d6455d;min-height:1.3em;font-size:.88rem}
+.empty{color:var(--muted);padding:30px 0;text-align:center}
+.notice{background:var(--card);border-radius:18px;padding:16px 20px;margin:14px 0;border:2px solid var(--acc)}
+.ctiles{display:grid;grid-template-columns:repeat(auto-fill,minmax(170px,1fr));gap:14px;margin-top:14px}
+.ctile{border-radius:20px;padding:16px;min-height:120px;display:flex;flex-direction:column;justify-content:space-between;text-decoration:none;color:var(--cink);transition:transform .2s}
+.ctile:hover{transform:translateY(-3px)}.ctile.zero{opacity:.6}.ctile .k{color:var(--cink);opacity:.8}
+.cn2{font:500 1.3rem/1.15 'Fraunces',Georgia,serif}
+.cban{border-radius:28px;padding:clamp(18px,4vw,36px);margin-top:10px;color:var(--cink)}.cban .k{color:var(--cink)}.cban h1{margin:10px 0}
+.cban .tag{background:color-mix(in srgb,var(--card) 70%,transparent)}
+.pinbig{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);background:var(--card);border-radius:30px;overflow:hidden;margin-top:12px;box-shadow:0 12px 40px rgba(0,0,0,.08)}
+.pl{padding:14px}.pl .cover{min-height:380px;height:100%;max-height:640px;padding:26px}.pl .cg{font-size:3.4rem}.pl .cq{font-size:1.4rem}
+.pr{padding:clamp(18px,3vw,34px)}.pr h1{font-size:clamp(1.6rem,3.4vw,2.3rem);margin:14px 0 8px}
+@media(max-width:820px){.pinbig{grid-template-columns:1fr}.pl .cover{min-height:240px}}
+.body{white-space:pre-wrap;word-wrap:break-word;margin:16px 0;font-size:1.02rem}
+.emb{width:100%;aspect-ratio:16/9;border:0;border-radius:18px;margin-top:12px;background:var(--soft)}.emb.spo{aspect-ratio:auto;height:152px}
+.cm{display:flex;gap:10px;padding:12px 0;border-top:1px solid var(--line);align-items:flex-start}.cm:first-child{border-top:0;padding-top:0}
+.cm .body{margin:2px 0 0;font-size:.95rem}.grow{flex:1;min-width:0}
+.phead{text-align:center;padding:20px 0 6px}.phead .av{width:88px;height:88px;font-size:2rem;margin:0 auto 12px}.phead .tiles{justify-content:center}
+.scrim{position:fixed;inset:0;background:rgba(20,10,20,.35);z-index:7}
+.drawer{position:fixed;top:0;right:0;bottom:0;height:100dvh;width:min(320px,90vw);background:var(--card);z-index:8;padding:18px 16px calc(16px + env(safe-area-inset-bottom,0px));display:flex;flex-direction:column;overflow:auto;border-radius:28px 0 0 28px;box-shadow:-12px 0 40px rgba(0,0,0,.15)}
+.dhead{padding:6px 8px 12px}.dsec{font-size:.72rem;font-weight:600;letter-spacing:.06em;text-transform:uppercase;color:var(--muted);margin:16px 10px 4px}
+.dl{display:block;padding:10px 14px;border-radius:14px;text-decoration:none;font-weight:500}.dl:hover{background:var(--soft)}
+.dout{margin-top:auto;width:100%;text-align:center}
+.sws{display:flex;gap:10px;flex-wrap:wrap;padding:6px 10px 10px}
+.swb{width:26px;height:26px;border-radius:50%;border:2px solid var(--line);padding:0}.swb.on{outline:2px solid var(--acc);outline-offset:2px}
+.modal{position:fixed;inset:0;background:rgba(20,10,20,.5);display:grid;place-items:start center;padding:16px;overflow:auto;z-index:9}
+.sheet{background:var(--card);border-radius:28px;padding:26px;width:100%;max-width:400px;margin:6vh 0}
+.div{text-align:center;margin:16px 0}
+.toast{position:fixed;bottom:calc(20px + env(safe-area-inset-bottom,0px));left:50%;transform:translateX(-50%);background:var(--ink);color:var(--bg);padding:10px 20px;border-radius:99px;font-size:.88rem;z-index:20}
+@media(max-width:640px){.logo span{display:none}.hide-m{display:none}}
+[hidden]{display:none!important}
+@media(prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}}
 </style>
 </head>
 <body>
-  <header class="site-header">
-    <a class="brand" href="#/">The Global Archive</a>
-    <nav id="nav">
-      <a href="#/">Browse</a>
-      <a href="#/contribute">Contribute</a>
-      <a href="#/mine" id="navMine" hidden>My contributions</a>
-      <a href="#/review" id="navReview" hidden>Review queue</a>
-    </nav>
-    <div class="auth-area">
-      <span id="userName" class="user-name" hidden></span>
-      <button id="authBtn" class="btn">Log in</button>
-    </div>
-  </header>
+<div class="wrap" id="app"></div>
+<div id="layer"></div>
+<noscript>This site needs JavaScript.</noscript>
+<script type="module">
+import{initializeApp}from"https://www.gstatic.com/firebasejs/10.14.1/firebase-app.js";
+import{getAuth,onAuthStateChanged,GoogleAuthProvider,signInWithPopup,createUserWithEmailAndPassword,signInWithEmailAndPassword,signOut,sendPasswordResetEmail}from"https://www.gstatic.com/firebasejs/10.14.1/firebase-auth.js";
+import{getFirestore,collection,addDoc,setDoc,getDoc,getDocs,deleteDoc,updateDoc,doc,query,where,limit,serverTimestamp}from"https://www.gstatic.com/firebasejs/10.14.1/firebase-firestore.js";
 
-  <main id="app" aria-live="polite"></main>
-
-  <footer class="site-footer">
-    <p>The Global Archive &mdash; a collection of the world, written by the people in it.</p>
-  </footer>
-
-  <dialog id="authDialog">
-    <form method="dialog" class="dialog-close"><button aria-label="Close">&times;</button></form>
-    <h2 id="authTitle">Log in</h2>
-    <button id="googleBtn" class="btn btn-google" type="button">Continue with Google</button>
-    <p class="divider"><span>or use email</span></p>
-    <form id="emailForm">
-      <label id="nameRow" hidden>Display name
-        <input type="text" id="authName" maxlength="40" autocomplete="nickname">
-      </label>
-      <label>Email
-        <input type="email" id="authEmail" required autocomplete="email">
-      </label>
-      <label>Password
-        <input type="password" id="authPass" required minlength="6" autocomplete="current-password">
-      </label>
-      <p id="authError" class="error" role="alert" hidden></p>
-      <button class="btn btn-primary" type="submit" id="authSubmit">Log in</button>
-    </form>
-    <p class="auth-switch">
-      <a href="#" id="authToggle">New here? Create an account</a> &middot;
-      <a href="#" id="resetLink">Forgot password?</a>
-    </p>
-  </dialog>
-
-  <script type="module">
-import { initializeApp } from "https://www.gstatic.com/firebasejs/10.14.1/firebase-app.js";
-import {
-  getAuth, onAuthStateChanged, GoogleAuthProvider, signInWithPopup,
-  createUserWithEmailAndPassword, signInWithEmailAndPassword, signOut,
-  updateProfile, sendPasswordResetEmail
-} from "https://www.gstatic.com/firebasejs/10.14.1/firebase-auth.js";
-import {
-  getFirestore, collection, addDoc, query, where, getDocs, getDoc,
-  doc, updateDoc, deleteDoc, serverTimestamp, limit
-} from "https://www.gstatic.com/firebasejs/10.14.1/firebase-firestore.js";
 const firebaseConfig = {
   apiKey: "AIzaSyDd5DmV6E8J1jhd0DKhbqMKcb8mD5ANEmg",
   authDomain: "the-global-archive.firebaseapp.com",
@@ -222,7 +113,6 @@ const firebaseConfig = {
   appId: "1:496015789383:web:d2039d67fb9df55be0d062",
   measurementId: "G-W9QJWR0MB3"
 };
-
 const COUNTRIES = [
   "Afghanistan","Albania","Algeria","Andorra","Angola","Antigua and Barbuda","Argentina","Armenia","Australia","Austria",
   "Azerbaijan","Bahamas","Bahrain","Bangladesh","Barbados","Belarus","Belgium","Belize","Benin","Bhutan","Bolivia",
@@ -247,417 +137,362 @@ const COUNTRIES = [
   "Zambia","Zimbabwe"
 ];
 
-const TYPES = {
-  recipe:  "Recipe",
-  song:    "Song rec",
-  writing: "Piece of writing",
-  note:    "Note",
-  other:   "Something else"
-};
+const TYPES={recipe:"recipe",song:"song rec",writing:"writing",note:"note",other:"other"};
+const GLY={recipe:"🍲",song:"🎵",writing:"✍️",note:"📝",other:"✨"};
+const LT=["75%","91%","81%","rgba(50,30,40,.78)"];
+const THEMES={
+ Blush:["#fff6f4","#ffffff","#3b2a2f","#e0476b",...LT],Sage:["#f3f6f1","#ffffff","#26332b","#5d8a6b",...LT],
+ Lilac:["#f6f3fb","#ffffff","#2d2742","#8a6bd6",...LT],Sky:["#f1f7fc","#ffffff","#1f3447","#3b82c4",...LT],
+ Sand:["#faf5ec","#ffffff","#3d3223","#c9792b",...LT],Midnight:["#14121a","#1f1c29","#f0ecf7","#ff7a9c","45%","30%","20%","rgba(255,255,255,.88)"]};
 
-const app = initializeApp(firebaseConfig);
-const auth = getAuth(app);
-const db = getFirestore(app);
+const fbApp=initializeApp(firebaseConfig),auth=getAuth(fbApp),db=getFirestore(fbApp);
+const S={user:null,profile:null,admin:false,authReady:false,items:[],likes:[],likeMap:{},myLikes:new Set(),saves:new Set(),loaded:false,loadErr:false,
+ q:"",type:"",ctype:"",sort:"new",cq:"",menu:false,modal:null,authMode:"login",pendingName:null,after:null};
+let themePick="auto";
+try{themePick=localStorage.getItem("ga_theme")||"auto"}catch{}
 
-const state = { user: null, isAdmin: false, approved: [], loaded: false };
-
-const $ = (sel) => document.querySelector(sel);
-const view = $("#app");
-
-function esc(str) {
-  return String(str ?? "").replace(/[&<>"']/g, (c) => (
-    { "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" }[c]
-  ));
-}
-
-function safeUrl(url) {
-  try {
-    const u = new URL(url);
-    return (u.protocol === "https:" || u.protocol === "http:") ? u.href : null;
-  } catch { return null; }
-}
-
-function formatDate(ts) {
-  const d = ts?.toDate ? ts.toDate() : null;
-  return d ? d.toLocaleDateString(undefined, { year: "numeric", month: "short", day: "numeric" }) : "";
-}
+const $=s=>document.querySelector(s);
+const esc=s=>String(s??"").replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));
+const enc=encodeURIComponent;
+const safeUrl=u=>{try{const x=new URL(u);return x.protocol==="https:"||x.protocol==="http:"?x.href:null}catch{return null}};
+const dt=ts=>{const d=ts&&ts.toDate?ts.toDate():null;return d?d.toLocaleDateString(undefined,{year:"numeric",month:"short",day:"numeric"}):""};
+const ini=n=>(String(n||"?").trim()[0]||"?").toUpperCase();
+const hh=s=>{let h=0;for(const ch of String(s||""))h=(h*31+ch.charCodeAt(0))%360;return h};
+const hs=s=>{const h=hh(s);return `--h:${h};--h2:${(h+45)%360}`};
+const clip=(t,n)=>{t=String(t||"").replace(/\s+/g," ").trim();return t.length>n?t.slice(0,n).trim()+"…":t};
+const toast=m=>{const t=document.createElement("div");t.className="toast";t.textContent=m;document.body.append(t);setTimeout(()=>t.remove(),2200)};
+const lum=h=>{const n=parseInt(h.slice(1),16),f=v=>(v/=255)<=.03928?v/12.92:((v+.055)/1.055)**2.4;return .2126*f(n>>16)+.7152*f(n>>8&255)+.0722*f(n&255)};
+const autoName=()=>{const h=new Date().getHours();return h>=21||h<6?"Midnight":"Blush"};
+function applyTheme(){const t=THEMES[themePick==="auto"?autoName():themePick]||THEMES.Blush,r=document.documentElement.style;
+ r.setProperty("--bg",t[0]);r.setProperty("--card",t[1]);r.setProperty("--ink",t[2]);r.setProperty("--acc",t[3]);
+ r.setProperty("--gs",t[4]);r.setProperty("--gl1",t[5]);r.setProperty("--gl2",t[6]);r.setProperty("--cink",t[7]);
+ r.setProperty("--on",lum(t[3])>.45?"#111":"#fff")}
+applyTheme();setInterval(()=>{if(themePick==="auto")applyTheme()},60000);
 
 /* ---------- data ---------- */
+function rebuildLikes(){S.likeMap={};S.myLikes=new Set();
+ for(const l of S.likes){S.likeMap[l.cid]=(S.likeMap[l.cid]||0)+1;if(S.user&&l.uid===S.user.uid)S.myLikes.add(l.cid)}}
+async function loadPublic(){
+ try{
+  const[a,b]=await Promise.all([
+   getDocs(query(collection(db,"contributions"),where("status","==","approved"),limit(1000))),
+   getDocs(query(collection(db,"likes"),limit(5000)))]);
+  S.items=a.docs.map(d=>({id:d.id,...d.data()})).sort((x,y)=>(y.createdAt?.seconds||0)-(x.createdAt?.seconds||0));
+  S.likes=b.docs.map(d=>d.data());rebuildLikes();S.loaded=true;S.loadErr=false;return true;
+ }catch(e){console.error(e);S.loadErr=true;return false}
+}
+async function ensureProfile(u){
+ try{
+  const r=doc(db,"users",u.uid),s=await getDoc(r);
+  if(s.exists()){S.profile=s.data();return}
+  const name=(S.pendingName||u.displayName||(u.email||"").split("@")[0]||"anonymous").slice(0,40);
+  S.pendingName=null;const p={name,bio:"",home:""};await setDoc(r,p);S.profile=p;
+ }catch(e){console.error(e);S.profile={name:u.displayName||"anonymous",bio:"",home:""}}
+}
+async function checkAdmin(u){try{return(await getDoc(doc(db,"admins",u.uid))).exists()}catch{return false}}
+async function loadSaves(u){try{const s=await getDocs(query(collection(db,"saves"),where("uid","==",u.uid)));S.saves=new Set(s.docs.map(d=>d.data().cid))}catch(e){console.error(e)}}
+const myName=()=>(S.profile&&S.profile.name)||(S.user&&S.user.displayName)||"anonymous";
+function need(){if(S.user)return true;S.modal="auth";S.authMode="login";render(true);return false}
 
-async function loadApproved() {
-  const q = query(collection(db, "contributions"), where("status", "==", "approved"), limit(1000));
-  const snap = await getDocs(q);
-  state.approved = snap.docs.map((d) => ({ id: d.id, ...d.data() }))
-    .sort((a, b) => (b.createdAt?.seconds ?? 0) - (a.createdAt?.seconds ?? 0));
-  state.loaded = true;
+/* ---------- pieces ---------- */
+const hay=c=>[c.title,c.body,c.country,c.artist,c.authorName,TYPES[c.type]].join(" ").toLowerCase();
+function cover(c,full){
+ const ht=[150,190,230,270][hh(c.id)%4];
+ const txt=(c.type==="writing"||c.type==="note")?clip(c.body,full?700:110):(c.type==="song"&&c.artist?c.artist:"");
+ return `<div class="cover gr" style="${hs(c.country)};${full?"":"min-height:"+ht+"px"}"><span class="cg">${GLY[c.type]||"✨"}</span>${txt?`<span class="cq">${esc(txt)}</span>`:""}</div>`;
+}
+function card(c){
+ return `<a class="pin" href="#/c/${esc(c.id)}"><div class="pc">${cover(c,false)}<span class="ptag">${esc(c.country)}</span><span class="plk">♥ ${S.likeMap[c.id]||0}</span></div>
+ <h3>${esc(c.title)}</h3><div class="pm"><span class="av gr" style="${hs(c.authorName)}">${esc(ini(c.authorName))}</span><span>${esc(c.authorName||"anonymous")}</span><span class="sp">${esc(TYPES[c.type]||c.type)}</span></div></a>`;
+}
+const grid=L=>L.length?`<div class="mas">${L.map(card).join("")}</div>`:`<p class="empty">nothing here yet.</p>`;
+function chipsFor(active,act){
+ return `<button class="btn s ${active===""?"on":""}" data-act="${act}" data-t="">all</button>`+Object.entries(TYPES).map(([k,v])=>`<button class="btn s ${active===k?"on":""}" data-act="${act}" data-t="${k}">${GLY[k]} ${v}</button>`).join("");
+}
+function embed(url){
+ let m=url.match(/(?:youtube\.com\/watch\?(?:[^#]*&)?v=|youtu\.be\/|youtube\.com\/shorts\/)([\w-]{6,15})/);
+ if(m)return `<iframe class="emb" src="https://www.youtube-nocookie.com/embed/${m[1]}" allowfullscreen loading="lazy" title="video"></iframe>`;
+ m=url.match(/open\.spotify\.com\/(track|album|playlist|episode)\/(\w{10,30})/);
+ if(m)return `<iframe class="emb spo" src="https://open.spotify.com/embed/${m[1]}/${m[2]}" allow="encrypted-media" loading="lazy" title="spotify"></iframe>`;
+ return "";
+}
+const loginPrompt=w=>`<div class="box"><p>log in to see ${w}.</p><button class="btn p" data-act="login">log in or sign up</button></div>`;
+function tiles(arr){return `<div class="tiles">${arr.map(([n,l])=>`<div class="tile"><b>${n}</b><span>${l}</span></div>`).join("")}</div>`}
+
+/* ---------- views ---------- */
+function top(){
+ const burger=`<button class="burger" data-act="menu" aria-label="menu"><svg class="ico" viewBox="0 0 24 24" style="color:var(--ink)"><path d="M4 7h16M4 12h16M4 17h16"/></svg></button>`;
+ return `<header class="top"><a class="logo" href="#/"><i>◍</i><span>the global archive</span></a>
+ <form id="topSearch" class="srch"><svg class="ico" viewBox="0 0 24 24"><circle cx="11" cy="11" r="7"/><path d="M20 20l-3.5-3.5"/></svg><input id="tq" placeholder="search recipes, songs, countries…" aria-label="search" value="${esc(S.q)}" autocomplete="off"></form>
+ <a class="btn hide-m" href="#/countries">countries</a><a class="btn p" href="#/contribute">+ create</a>
+ ${!S.authReady?"":S.user?`<button class="avb av gr" style="${hs(myName())}" data-act="menu" aria-label="menu">${esc(ini(myName()))}</button>`:`<button class="btn" data-act="login">log in</button>${burger}`}</header>`;
+}
+function resultsHTML(useQ){
+ let L=S.items.filter(c=>(!S.type||c.type===S.type)&&(!useQ||!S.q||hay(c).includes(S.q.toLowerCase())));
+ if(S.sort==="liked")L=[...L].sort((a,b)=>(S.likeMap[b.id]||0)-(S.likeMap[a.id]||0));
+ return grid(L);
+}
+function feed(useQ){
+ const cs=new Set(S.items.map(c=>c.country)),au=new Set(S.items.map(c=>c.authorUid));
+ const head=useQ&&S.q?`<div class="row" style="margin-top:12px"><h2>results for “${esc(S.q)}”</h2><button class="btn s" data-act="clearq">clear</button></div>`
+  :`<section class="intro"><h1>the world, <em>one contribution at a time</em></h1>
+  <p class="sub">recipes, songs, writing and notes about the places we come from, added by the people who know them.</p>
+  <div class="row" style="margin-top:14px"><a class="btn p" href="#/contribute">+ add yours</a><button class="btn" data-act="random">surprise me</button><a class="btn" href="#/countries">browse countries</a></div>
+  <p class="k" style="margin-top:14px">${S.items.length} contributions · ${cs.size} of ${COUNTRIES.length} countries · ${au.size} contributors</p></section>`;
+ return `${head}<div class="chips">${chipsFor(S.type,"type")}<span class="sp"></span>
+ <button class="btn s ${S.sort==="new"?"on":""}" data-act="sort" data-t="new">newest</button><button class="btn s ${S.sort==="liked"?"on":""}" data-act="sort" data-t="liked">most loved</button></div>
+ <div id="results">${resultsHTML(useQ)}</div>`;
+}
+function cmap(){const m={};for(const c of S.items){const e=m[c.country]||(m[c.country]={n:0,t:{}});e.n++;e.t[c.type]=(e.t[c.type]||0)+1}return m}
+function clistHTML(){
+ const m=cmap(),f=S.cq.toLowerCase();
+ const rows=COUNTRIES.filter(c=>c.toLowerCase().includes(f)).map(c=>({c,n:m[c]?m[c].n:0})).sort((a,b)=>b.n-a.n||a.c.localeCompare(b.c));
+ return rows.length?rows.map(r=>`<a class="ctile gr ${r.n?"":"zero"}" style="${hs(r.c)}" href="#/country/${enc(r.c)}"><span class="cn2">${esc(r.c)}</span><span class="k">${r.n?r.n+" contribution"+(r.n>1?"s":""):"be the first"}</span></a>`).join(""):`<p class="empty">no matching countries.</p>`;
+}
+function countries(){
+ return `<div class="intro"><h1>every <em>country</em></h1><p class="sub">the ones with contributions come first. pick one to see what people have shared.</p></div>
+ <div class="srch" style="margin:16px 0 0;max-width:420px"><svg class="ico" viewBox="0 0 24 24"><circle cx="11" cy="11" r="7"/><path d="M20 20l-3.5-3.5"/></svg><input id="cq" placeholder="search countries…" value="${esc(S.cq)}" aria-label="search countries"></div>
+ <div class="ctiles" id="cl">${clistHTML()}</div>`;
+}
+function country(name){
+ if(!COUNTRIES.includes(name))return `<p class="empty">country not found.</p>`;
+ const all=S.items.filter(c=>c.country===name),L=all.filter(c=>!S.ctype||c.type===S.ctype);
+ const likes=all.reduce((n,c)=>n+(S.likeMap[c.id]||0),0);
+ return `<section class="cban gr" style="${hs(name)}"><a class="k" href="#/countries">← countries</a><h1>${esc(name)}</h1>
+ <div class="row"><span class="tag">${all.length} contributions</span><span class="tag">${new Set(all.map(c=>c.authorUid)).size} contributors</span><span class="tag">♥ ${likes}</span>
+ <a class="btn p sp" href="#/contribute?country=${enc(name)}">+ add to ${esc(name)}</a></div></section>
+ <div class="chips">${chipsFor(S.ctype,"ctype")}</div>
+ ${L.length?grid(L):`<p class="empty">${all.length?"nothing of that type yet.":"nothing here yet. be the first to add something from "+esc(name)+"."}</p>`}`;
+}
+function detail(id){
+ const c=S.items.find(x=>x.id===id);
+ if(!c)return `<p class="empty">that contribution doesn't exist, or hasn't been approved yet.</p>`;
+ const liked=S.myLikes.has(id),saved=S.saves.has(id),link=c.link&&safeUrl(c.link);
+ S.after=()=>loadComments(id);
+ return `<a class="k" href="#/country/${enc(c.country)}">← ${esc(c.country)}</a>
+ <article class="pinbig"><div class="pl">${cover(c,true)}${link?embed(link):""}</div>
+ <div class="pr"><div class="row"><button class="btn s ${liked?"on":""}" data-act="like" data-id="${esc(id)}">♥ ${S.likeMap[id]||0}</button>
+ <button class="btn s ${saved?"on":""}" data-act="save" data-id="${esc(id)}">${saved?"saved":"save"}</button>
+ <button class="btn s" data-act="share" data-id="${esc(id)}">share</button>
+ <button class="btn s sp" data-act="report" data-kind="contribution" data-ref="${esc(id)}" data-cid="${esc(id)}">report</button></div>
+ <h1>${esc(c.title)}</h1>
+ <div class="row k"><span class="tag">${GLY[c.type]||""} ${esc(TYPES[c.type]||c.type)}</span>${c.artist?`<span>${esc(c.artist)}</span>`:""}<a href="#/country/${enc(c.country)}">${esc(c.country)}</a><span>·</span>
+ <a class="row" style="gap:6px;text-decoration:none" href="#/u/${esc(c.authorUid)}"><span class="av gr" style="${hs(c.authorName)};width:22px;height:22px;font-size:.62rem">${esc(ini(c.authorName))}</span>${esc(c.authorName||"anonymous")}</a><span>·</span><span>${esc(dt(c.createdAt))}</span></div>
+ ${c.body?`<div class="body">${esc(c.body)}</div>`:""}
+ ${link?`<p><a class="btn s" href="${esc(link)}" target="_blank" rel="noopener noreferrer">open link ↗</a></p>`:""}
+ <h2 style="margin-top:26px;font-size:1.15rem">comments</h2><div id="cmts" data-cid="${esc(id)}" style="margin-top:12px"><p class="k">loading…</p></div>
+ ${S.user?`<form id="cmf" data-cid="${esc(id)}" style="margin-top:14px"><div class="f"><textarea id="ct" maxlength="500" required placeholder="add a comment…" aria-label="add a comment" style="min-height:70px"></textarea></div><button class="btn p">post</button></form>`:`<p class="k" style="margin-top:14px"><button class="btn s" data-act="login">log in</button> to comment</p>`}
+ </div></article>`;
+}
+async function loadComments(id){
+ try{
+  const s=await getDocs(query(collection(db,"comments"),where("cid","==",id),limit(200)));
+  const L=s.docs.map(d=>({id:d.id,...d.data()})).sort((a,b)=>(a.createdAt?.seconds||0)-(b.createdAt?.seconds||0));
+  const el=$("#cmts");if(!el||el.dataset.cid!==id)return;
+  el.innerHTML=L.length?L.map(m=>`<div class="cm"><span class="av gr" style="${hs(m.name)}">${esc(ini(m.name))}</span><div class="grow"><div class="k"><a href="#/u/${esc(m.uid)}"><b>${esc(m.name)}</b></a> · ${esc(dt(m.createdAt))}</div><div class="body">${esc(m.text)}</div></div>
+  ${S.user&&(m.uid===S.user.uid||S.admin)?`<button class="btn s d" data-act="delcm" data-id="${esc(m.id)}" data-cid="${esc(id)}">delete</button>`:S.user?`<button class="btn s" data-act="report" data-kind="comment" data-ref="${esc(m.id)}" data-cid="${esc(id)}">report</button>`:""}</div>`).join(""):`<p class="k">no comments yet.</p>`;
+ }catch(e){console.error(e);const el=$("#cmts");if(el)el.innerHTML=`<p class="err">couldn't load comments.</p>`}
+}
+function contribute(params){
+ if(!S.user)return `<div class="intro"><h1>add to the <em>archive</em></h1><p class="sub">share a recipe, a song, something you wrote, or a note about a country.</p></div>`+loginPrompt("contribute");
+ const pre=params.get("country")||"";
+ S.after=syncType;
+ return `<div class="intro"><h1>add to the <em>archive</em></h1><p class="sub">share a recipe, a song, something you wrote, or a note about a country. it appears once it's been reviewed.</p></div>
+ <form id="cf" class="box fm">
+ <div class="f"><label for="fc">country</label><select id="fc" required><option value="">choose a country…</option>${COUNTRIES.map(c=>`<option ${c===pre?"selected":""}>${esc(c)}</option>`).join("")}</select></div>
+ <div class="f"><label for="ftype">what are you sharing?</label><select id="ftype">${Object.entries(TYPES).map(([k,v])=>`<option value="${k}">${v}</option>`).join("")}</select></div>
+ <div class="f"><label for="ft">title</label><input id="ft" maxlength="120" required placeholder="e.g. my grandmother's jollof rice"></div>
+ <div class="f" id="artistRow" hidden><label for="fa">artist</label><input id="fa" maxlength="120"></div>
+ <div class="f"><label for="fb" id="bodyLabel">your contribution</label><textarea id="fb" class="big" maxlength="8000"></textarea><span class="k">plain text, up to 8000 characters.</span></div>
+ <div class="f"><label for="fl">link (optional)</label><input id="fl" type="url" maxlength="500" placeholder="youtube or spotify links play right on the page"></div>
+ <div class="err" id="ferr"></div><button class="btn p">submit for review</button></form>`;
+}
+function syncType(){
+ const t=$("#ftype");if(!t)return;
+ $("#artistRow").hidden=t.value!=="song";
+ $("#bodyLabel").textContent={recipe:"ingredients and method",song:"why do you recommend it?",writing:"your writing",note:"your note",other:"your contribution"}[t.value];
+ $("#fb").required=t.value!=="song";
+}
+function saved(){
+ if(!S.user)return loginPrompt("your saved contributions");
+ return `<div class="intro"><h1>saved</h1></div>${grid(S.items.filter(c=>S.saves.has(c.id)))}`;
+}
+function mine(){
+ if(!S.user)return loginPrompt("your contributions");
+ S.after=loadMine;
+ return `<div class="intro"><h1>my contributions</h1></div><div id="ml"><p class="k" style="margin-top:12px">loading…</p></div>`;
+}
+async function loadMine(){
+ try{
+  const s=await getDocs(query(collection(db,"contributions"),where("authorUid","==",S.user.uid)));
+  const L=s.docs.map(d=>({id:d.id,...d.data()})).sort((a,b)=>(b.createdAt?.seconds||0)-(a.createdAt?.seconds||0));
+  const el=$("#ml");if(!el)return;
+  el.innerHTML=L.length?L.map(c=>`<div class="box"><div class="row"><span class="tag">${GLY[c.type]||""} ${esc(TYPES[c.type]||c.type)}</span><span class="pill ${c.status==="approved"?"ok":"pend"}">${esc(c.status)}</span><span class="k sp">${esc(c.country)}</span></div>
+  <h3 style="margin-top:10px;font-size:1.05rem">${c.status==="approved"?`<a href="#/c/${esc(c.id)}">${esc(c.title)}</a>`:esc(c.title)}</h3>
+  <div class="row" style="margin-top:12px"><button class="btn s d" data-act="delmine" data-id="${esc(c.id)}">delete</button></div></div>`).join(""):`<p class="empty">you haven't contributed anything yet.</p>`;
+ }catch(e){console.error(e);const el=$("#ml");if(el)el.innerHTML=`<p class="err">couldn't load your contributions.</p>`}
+}
+function profile(uid){
+ const L=S.items.filter(c=>c.authorUid===uid),likes=L.reduce((n,c)=>n+(S.likeMap[c.id]||0),0);
+ S.after=async()=>{
+  let p=null;try{const s=await getDoc(doc(db,"users",uid));if(s.exists())p=s.data()}catch{}
+  const el=$("#ph");if(!el||el.dataset.uid!==uid)return;
+  const name=(p&&p.name)||(L[0]&&L[0].authorName)||"anonymous";
+  el.innerHTML=`<span class="av gr" style="${hs(name)}">${esc(ini(name))}</span><h1>${esc(name)}</h1>
+  <div class="row" style="justify-content:center;margin-top:8px">${p&&p.home?`<a class="btn s" href="#/country/${enc(p.home)}">from ${esc(p.home)}</a>`:""}${S.user&&S.user.uid===uid?`<a class="btn s" href="#/settings">edit profile</a>`:""}</div>${p&&p.bio?`<p class="sub" style="margin:12px auto 0">${esc(p.bio)}</p>`:""}`;
+ };
+ return `<div class="phead"><div id="ph" data-uid="${esc(uid)}"><p class="k">loading…</p></div>
+ ${tiles([[L.length,"contributions"],[new Set(L.map(c=>c.country)).size,"countries"],[likes,"likes received"]])}</div>${grid(L)}`;
+}
+function settings(){
+ if(!S.user)return loginPrompt("settings");
+ const p=S.profile||{};
+ return `<div class="intro"><h1>settings</h1></div><form id="pf" class="box fm"><h2 style="margin-bottom:14px;font-size:1.2rem">profile</h2>
+ <div class="f"><label for="pn">display name</label><input id="pn" maxlength="40" required value="${esc(p.name||"")}"></div>
+ <div class="f"><label for="pb">bio</label><textarea id="pb" maxlength="300">${esc(p.bio||"")}</textarea></div>
+ <div class="f"><label for="ph2">home country</label><select id="ph2"><option value="">—</option>${COUNTRIES.map(c=>`<option ${p.home===c?"selected":""}>${esc(c)}</option>`).join("")}</select></div>
+ <button class="btn p">save profile</button><p class="k">your new name appears on things you post from now on. change colours from the menu.</p></form>`;
+}
+function review(){
+ if(!S.admin)return `<p class="empty">this page is for reviewers only.</p>`;
+ S.after=loadReview;
+ return `<div class="intro"><h1>review queue</h1></div><div id="rv"><p class="k" style="margin-top:12px">loading…</p></div>`;
+}
+async function loadReview(){
+ try{
+  const[p,r]=await Promise.all([getDocs(query(collection(db,"contributions"),where("status","==","pending"),limit(100))),getDocs(query(collection(db,"reports"),limit(100)))]);
+  const el=$("#rv");if(!el)return;
+  const P=p.docs.map(d=>({id:d.id,...d.data()})).sort((a,b)=>(a.createdAt?.seconds||0)-(b.createdAt?.seconds||0));
+  const R=r.docs.map(d=>({id:d.id,...d.data()}));
+  el.innerHTML=`<h2 style="margin-top:20px">pending (${P.length})</h2>`+(P.length?P.map(c=>{const l=c.link&&safeUrl(c.link);return `<div class="box"><div class="row"><span class="tag">${GLY[c.type]||""} ${esc(TYPES[c.type]||c.type)}</span><span class="k sp">${esc(c.country)} · ${esc(c.authorName)}</span></div>
+  <h3 style="margin-top:10px;font-size:1.05rem">${esc(c.title)}</h3>${c.artist?`<div class="k">${esc(c.artist)}</div>`:""}<div class="body">${esc(c.body)}</div>${l?`<p class="k">${esc(l)}</p>`:""}
+  <div class="row"><button class="btn s p" data-act="approve" data-id="${esc(c.id)}">approve</button><button class="btn s d" data-act="reject" data-id="${esc(c.id)}">reject &amp; delete</button></div></div>`}).join(""):`<p class="empty">nothing waiting.</p>`)
+  +`<h2 style="margin-top:26px">reports (${R.length})</h2>`+(R.length?R.map(x=>`<div class="box"><div class="row"><span class="pill">${esc(x.kind)}</span><a class="k" href="#/c/${esc(x.cid)}">view →</a></div>
+  <div class="row" style="margin-top:12px"><button class="btn s" data-act="dismiss" data-id="${esc(x.id)}">dismiss</button><button class="btn s d" data-act="rm" data-id="${esc(x.id)}" data-kind="${esc(x.kind)}" data-ref="${esc(x.ref)}">remove content</button></div></div>`).join(""):`<p class="empty">no reports.</p>`);
+ }catch(e){console.error(e);const el=$("#rv");if(el)el.innerHTML=`<p class="err">couldn't load the queue.</p>`}
 }
 
-async function checkAdmin(user) {
-  if (!user) return false;
-  try {
-    const snap = await getDoc(doc(db, "admins", user.uid));
-    return snap.exists();
-  } catch { return false; }
+/* ---------- chrome ---------- */
+function drawer(){
+ const a=(h,t)=>`<a class="dl" href="${h}" data-close>${t}</a>`;
+ return `<div class="scrim" data-act="close"></div><aside class="drawer"><div class="dhead"><span class="logo"><i>◍</i>the global archive</span></div>
+ <div class="dsec">browse</div>${a("#/","home")}${a("#/countries","countries")}<button class="dl" style="border:0;background:none;text-align:left;width:100%;font:inherit" data-act="random" data-close>surprise me</button>
+ <div class="dsec">you</div>${a("#/contribute","create")}${S.user?a("#/saved","saved")+a("#/mine","my contributions")+a("#/u/"+esc(S.user.uid),"profile")+a("#/settings","settings"):""}${S.admin?a("#/review","review queue"):""}
+ <div class="dsec">colours</div><div class="sws"><button class="swb ${themePick==="auto"?"on":""}" data-act="theme" data-t="auto" title="auto" aria-label="auto theme" style="background:linear-gradient(135deg,#fff6f4 50%,#14121a 50%)"></button>
+ ${Object.keys(THEMES).map(n=>`<button class="swb ${themePick===n?"on":""}" data-act="theme" data-t="${n}" title="${n.toLowerCase()}" aria-label="${n.toLowerCase()} theme" style="background:linear-gradient(135deg,${THEMES[n][0]} 50%,${THEMES[n][3]} 50%)"></button>`).join("")}</div>
+ ${S.user?`<button class="btn dout" data-act="logout">log out</button>`:`<button class="btn p dout" data-act="login">log in / sign up</button>`}</aside>`;
+}
+function authModal(){
+ const su=S.authMode==="signup";
+ return `<div class="modal"><div class="sheet"><div class="row"><h2 style="font-size:1.5rem">${su?"create an account":"welcome back"}</h2><button class="btn s sp" data-act="closemodal" aria-label="close">✕</button></div>
+ <button class="btn" style="width:100%;margin-top:18px;padding:12px" data-act="google">continue with google</button><div class="div k">or use email</div>
+ <form id="af">${su?`<div class="f"><label for="an">display name</label><input id="an" maxlength="40" required autocomplete="nickname"></div>`:""}
+ <div class="f"><label for="ae">email</label><input id="ae" type="email" required autocomplete="email"></div>
+ <div class="f"><label for="ap">password</label><input id="ap" type="password" minlength="6" required autocomplete="${su?"new-password":"current-password"}"></div>
+ <div class="err" id="aerr"></div><button class="btn p" style="width:100%;padding:12px">${su?"sign up":"log in"}</button></form>
+ <div class="row" style="margin-top:14px;justify-content:space-between"><button class="btn s" data-act="amode">${su?"have an account? log in":"new here? sign up"}</button><button class="btn s" data-act="reset">forgot password?</button></div></div></div>`;
+}
+function parseHash(){const h=location.hash.slice(1)||"/";const i=h.indexOf("?");const p=i<0?h:h.slice(0,i);return{parts:p.split("/").filter(Boolean),params:new URLSearchParams(i<0?"":h.slice(i+1))}}
+function route(){
+ const{parts,params}=parseHash(),r=parts[0],arg=parts[1]?decodeURIComponent(parts[1]):"";
+ switch(r){case"explore":return feed(true);case"countries":return countries();case"country":return country(arg);case"c":return detail(arg);
+ case"u":return profile(arg);case"contribute":return contribute(params);case"saved":return saved();case"mine":return mine();
+ case"review":return review();case"settings":return settings();default:S.q="";return feed(false)}
+}
+function render(keep){
+ const y=window.scrollY;applyTheme();S.after=null;
+ let body;
+ if(!S.loaded)body=S.loadErr?`<div class="box"><p class="err">couldn't load the archive. check that the Firebase config and Firestore rules are set up.</p></div>`:`<p class="k" style="margin-top:20px">loading…</p>`;
+ else body=route();
+ $("#app").innerHTML=top()+`<main>${body}</main>`;
+ $("#layer").innerHTML=(S.menu?drawer():"")+(S.modal==="auth"?authModal():"");
+ window.scrollTo(0,keep?y:0);
+ if(S.after)S.after();
 }
 
-/* ---------- rendering ---------- */
-
-function contributionCard(c, { showStatus = false, actions = "" } = {}) {
-  const link = c.link ? safeUrl(c.link) : null;
-  return `
-    <article class="card">
-      <span class="tag">${esc(TYPES[c.type] ?? c.type)}</span>
-      ${showStatus ? `<span class="tag ${esc(c.status)}">${esc(c.status)}</span>` : ""}
-      <h3>${esc(c.title)}</h3>
-      <p class="meta">
-        ${c.artist ? `${esc(c.artist)} &middot; ` : ""}
-        ${esc(c.country)} &middot; shared by ${esc(c.authorName || "Anonymous")}
-        ${c.createdAt ? ` &middot; ${esc(formatDate(c.createdAt))}` : ""}
-      </p>
-      ${c.body ? `<div class="body">${esc(c.body)}</div>` : ""}
-      ${link ? `<p><a href="${esc(link)}" target="_blank" rel="noopener noreferrer">Listen / read more &rarr;</a></p>` : ""}
-      ${actions}
-    </article>`;
-}
-
-function renderHome() {
-  const counts = {};
-  state.approved.forEach((c) => { counts[c.country] = (counts[c.country] || 0) + 1; });
-  view.innerHTML = `
-    <h1>The Global Archive</h1>
-    <p class="lede">A shared collection of the world: recipes, songs, writing and notes from every country, contributed by the people who know them best.</p>
-    <div class="toolbar">
-      <input type="search" id="countrySearch" placeholder="Search countries…" aria-label="Search countries">
-      <a class="btn btn-primary" href="#/contribute">Add a contribution</a>
-    </div>
-    <ul class="country-grid" id="countryGrid"></ul>`;
-  const grid = $("#countryGrid");
-  const draw = (filter = "") => {
-    const f = filter.trim().toLowerCase();
-    grid.innerHTML = COUNTRIES.filter((c) => c.toLowerCase().includes(f)).map((c) => `
-      <li><a href="#/country/${encodeURIComponent(c)}" class="${counts[c] ? "has-items" : ""}">
-        <span>${esc(c)}</span>
-        ${counts[c] ? `<span class="count">${counts[c]}</span>` : ""}
-      </a></li>`).join("") || `<li class="empty">No matching countries.</li>`;
-  };
-  draw();
-  $("#countrySearch").addEventListener("input", (e) => draw(e.target.value));
-}
-
-function renderCountry(name) {
-  if (!COUNTRIES.includes(name)) { view.innerHTML = `<p class="empty">Country not found.</p>`; return; }
-  view.innerHTML = `
-    <p><a href="#/">&larr; All countries</a></p>
-    <h1>${esc(name)}</h1>
-    <div class="toolbar">
-      <select id="typeFilter" aria-label="Filter by type">
-        <option value="">All types</option>
-        ${Object.entries(TYPES).map(([k, v]) => `<option value="${k}">${v}</option>`).join("")}
-      </select>
-      <a class="btn btn-primary" href="#/contribute?country=${encodeURIComponent(name)}">Contribute to ${esc(name)}</a>
-    </div>
-    <div id="list"></div>`;
-  const draw = () => {
-    const type = $("#typeFilter").value;
-    const items = state.approved.filter((c) => c.country === name && (!type || c.type === type));
-    $("#list").innerHTML = items.length
-      ? items.map((c) => contributionCard(c)).join("")
-      : `<p class="empty">Nothing here yet. Be the first to add something from ${esc(name)}.</p>`;
-  };
-  draw();
-  $("#typeFilter").addEventListener("change", draw);
-}
-
-function renderContribute(params) {
-  if (!state.user) {
-    view.innerHTML = `
-      <h1>Contribute</h1>
-      <p class="lede">Log in or create an account to share something with the archive.</p>
-      <button class="btn btn-primary" id="loginPrompt">Log in or sign up</button>`;
-    $("#loginPrompt").addEventListener("click", () => openAuth("login"));
-    return;
-  }
-  const preset = params.get("country") || "";
-  view.innerHTML = `
-    <h1>Contribute</h1>
-    <p class="lede">Share a recipe, a song, something you wrote, or a note about a country. Submissions are reviewed before they appear publicly.</p>
-    <form id="contribForm" class="card form-card">
-      <label>Country
-        <select id="fCountry" required>
-          <option value="">Choose a country…</option>
-          ${COUNTRIES.map((c) => `<option ${c === preset ? "selected" : ""}>${esc(c)}</option>`).join("")}
-        </select>
-      </label>
-      <label>What are you sharing?
-        <select id="fType" required>
-          ${Object.entries(TYPES).map(([k, v]) => `<option value="${k}">${v}</option>`).join("")}
-        </select>
-      </label>
-      <label>Title
-        <input id="fTitle" maxlength="120" required placeholder="e.g. My grandmother's jollof rice">
-      </label>
-      <label id="artistRow" hidden>Artist
-        <input id="fArtist" maxlength="120" placeholder="Who made it?">
-      </label>
-      <label>
-        <span id="bodyLabel">Your contribution</span>
-        <textarea id="fBody" maxlength="8000" required></textarea>
-        <span class="hint">Up to 8000 characters. Plain text.</span>
-      </label>
-      <label>Link <span class="hint">(optional, e.g. a YouTube or Spotify link)</span>
-        <input id="fLink" type="url" maxlength="500" placeholder="https://…">
-      </label>
-      <p id="formMsg" class="error" hidden></p>
-      <button class="btn btn-primary" type="submit">Submit for review</button>
-    </form>`;
-
-  const typeSel = $("#fType");
-  const sync = () => {
-    const t = typeSel.value;
-    $("#artistRow").hidden = t !== "song";
-    $("#bodyLabel").textContent = {
-      recipe: "Ingredients and method",
-      song: "Why do you recommend it?",
-      writing: "Your writing",
-      note: "Your note",
-      other: "Your contribution"
-    }[t];
-  };
-  typeSel.addEventListener("change", sync);
-  sync();
-
-  $("#contribForm").addEventListener("submit", async (e) => {
-    e.preventDefault();
-    const msg = $("#formMsg");
-    msg.hidden = true;
-    const link = $("#fLink").value.trim();
-    if (link && !safeUrl(link)) {
-      msg.textContent = "That link doesn't look right. It needs to start with http:// or https://";
-      msg.hidden = false;
-      return;
-    }
-    const data = {
-      country: $("#fCountry").value,
-      type: typeSel.value,
-      title: $("#fTitle").value.trim(),
-      body: $("#fBody").value.trim(),
-      authorUid: state.user.uid,
-      authorName: state.user.displayName || "Anonymous",
-      status: "pending",
-      createdAt: serverTimestamp()
-    };
-    if (data.type === "song" && $("#fArtist").value.trim()) data.artist = $("#fArtist").value.trim();
-    if (link) data.link = link;
-    try {
-      await addDoc(collection(db, "contributions"), data);
-      view.innerHTML = `
-        <div class="notice">Thank you! Your contribution was submitted and will appear once it has been reviewed.</div>
-        <a class="btn" href="#/contribute">Add another</a>
-        <a class="btn" href="#/mine">See my contributions</a>`;
-    } catch (err) {
-      console.error(err);
-      msg.textContent = "Couldn't submit. Please check everything is filled in and try again.";
-      msg.hidden = false;
-    }
-  });
-}
-
-async function renderMine() {
-  if (!state.user) { renderContribute(new URLSearchParams()); return; }
-  view.innerHTML = `<h1>My contributions</h1><div id="list"><p class="empty">Loading…</p></div>`;
-  try {
-    const snap = await getDocs(query(collection(db, "contributions"), where("authorUid", "==", state.user.uid)));
-    const items = snap.docs.map((d) => ({ id: d.id, ...d.data() }))
-      .sort((a, b) => (b.createdAt?.seconds ?? 0) - (a.createdAt?.seconds ?? 0));
-    $("#list").innerHTML = items.length
-      ? items.map((c) => contributionCard(c, {
-          showStatus: true,
-          actions: `<div class="actions"><button class="btn btn-small btn-danger" data-delete="${esc(c.id)}">Delete</button></div>`
-        })).join("")
-      : `<p class="empty">You haven't contributed anything yet.</p>`;
-  } catch (err) {
-    console.error(err);
-    $("#list").innerHTML = `<p class="error">Couldn't load your contributions.</p>`;
-  }
-}
-
-async function renderReview() {
-  if (!state.isAdmin) { view.innerHTML = `<p class="empty">This page is for reviewers only.</p>`; return; }
-  view.innerHTML = `<h1>Review queue</h1><div id="list"><p class="empty">Loading…</p></div>`;
-  try {
-    const snap = await getDocs(query(collection(db, "contributions"), where("status", "==", "pending")));
-    const items = snap.docs.map((d) => ({ id: d.id, ...d.data() }))
-      .sort((a, b) => (a.createdAt?.seconds ?? 0) - (b.createdAt?.seconds ?? 0));
-    $("#list").innerHTML = items.length
-      ? items.map((c) => contributionCard(c, {
-          actions: `<div class="actions">
-            <button class="btn btn-small btn-primary" data-approve="${esc(c.id)}">Approve</button>
-            <button class="btn btn-small btn-danger" data-reject="${esc(c.id)}">Reject &amp; delete</button>
-          </div>`
-        })).join("")
-      : `<p class="empty">Nothing waiting for review.</p>`;
-  } catch (err) {
-    console.error(err);
-    $("#list").innerHTML = `<p class="error">Couldn't load the queue.</p>`;
-  }
-}
-
-/* ---------- router ---------- */
-
-async function route() {
-  const hash = location.hash.slice(1) || "/";
-  const [path, qs] = hash.split("?");
-  const params = new URLSearchParams(qs || "");
-  document.querySelectorAll("nav a").forEach((a) => {
-    a.classList.toggle("active", a.getAttribute("href") === "#" + path);
-  });
-  window.scrollTo(0, 0);
-
-  if (!state.loaded && (path === "/" || path.startsWith("/country/"))) {
-    view.innerHTML = `<p class="empty">Loading the archive…</p>`;
-    try { await loadApproved(); }
-    catch (err) {
-      console.error(err);
-      view.innerHTML = `<p class="error">Couldn't load the archive. Check the Firebase config near the top of this file.</p>`;
-      return;
-    }
-  }
-
-  if (path === "/") renderHome();
-  else if (path.startsWith("/country/")) renderCountry(decodeURIComponent(path.slice(9)));
-  else if (path === "/contribute") renderContribute(params);
-  else if (path === "/mine") renderMine();
-  else if (path === "/review") renderReview();
-  else renderHome();
-}
-
-/* ---------- actions (delete / approve / reject) ---------- */
-
-view.addEventListener("click", async (e) => {
-  const del = e.target.closest("[data-delete]");
-  const approve = e.target.closest("[data-approve]");
-  const reject = e.target.closest("[data-reject]");
-  try {
-    if (del && confirm("Delete this contribution permanently?")) {
-      await deleteDoc(doc(db, "contributions", del.dataset.delete));
-      state.loaded = false;
-      renderMine();
-    } else if (approve) {
-      await updateDoc(doc(db, "contributions", approve.dataset.approve), { status: "approved" });
-      state.loaded = false;
-      renderReview();
-    } else if (reject && confirm("Reject and delete this submission?")) {
-      await deleteDoc(doc(db, "contributions", reject.dataset.reject));
-      renderReview();
-    }
-  } catch (err) {
-    console.error(err);
-    alert("That didn't work. Please try again.");
-  }
+/* ---------- events ---------- */
+document.addEventListener("click",async e=>{
+ const t=e.target;
+ if(t.classList&&t.classList.contains("modal")){S.modal=null;render(true);return}
+ if(t.closest("[data-close]")){S.menu=false;render(true)}
+ const b=t.closest("[data-act]");if(!b)return;
+ const a=b.dataset.act,d=b.dataset;
+ try{switch(a){
+  case"menu":S.menu=!S.menu;render(true);break;
+  case"close":S.menu=false;render(true);break;
+  case"closemodal":S.modal=null;render(true);break;
+  case"login":S.menu=false;S.modal="auth";S.authMode="login";render(true);break;
+  case"amode":S.authMode=S.authMode==="login"?"signup":"login";render(true);break;
+  case"google":try{await signInWithPopup(auth,new GoogleAuthProvider());S.modal=null}catch(err){authErr(err)}break;
+  case"reset":{const em=$("#ae")?$("#ae").value.trim():"";if(!em){$("#aerr").textContent="enter your email first.";break}
+   try{await sendPasswordResetEmail(auth,em);$("#aerr").textContent="password reset email sent."}catch(err){authErr(err)}break}
+  case"logout":await signOut(auth);S.menu=false;toast("logged out");break;
+  case"theme":themePick=d.t;try{localStorage.setItem("ga_theme",themePick)}catch{}render(true);break;
+  case"type":S.type=d.t;render(true);break;
+  case"ctype":S.ctype=d.t;render(true);break;
+  case"sort":S.sort=d.t;render(true);break;
+  case"clearq":S.q="";render(true);break;
+  case"random":S.menu=false;if(S.items.length){location.hash="#/c/"+S.items[Math.floor(Math.random()*S.items.length)].id}else toast("nothing to show yet");break;
+  case"like":{if(!need())break;const id=d.id,ref=doc(db,"likes",id+"_"+S.user.uid);
+   if(S.myLikes.has(id)){await deleteDoc(ref);S.likes=S.likes.filter(l=>!(l.cid===id&&l.uid===S.user.uid))}
+   else{await setDoc(ref,{cid:id,uid:S.user.uid});S.likes.push({cid:id,uid:S.user.uid})}
+   rebuildLikes();render(true);break}
+  case"save":{if(!need())break;const id=d.id,ref=doc(db,"saves",id+"_"+S.user.uid);
+   if(S.saves.has(id)){await deleteDoc(ref);S.saves.delete(id)}else{await setDoc(ref,{cid:id,uid:S.user.uid});S.saves.add(id)}
+   render(true);break}
+  case"share":{const url=location.href.split("#")[0]+"#/c/"+d.id;
+   try{await navigator.clipboard.writeText(url);toast("link copied")}catch{window.prompt("copy this link",url)}break}
+  case"report":if(!need())break;
+   await addDoc(collection(db,"reports"),{kind:d.kind,ref:d.ref,cid:d.cid,uid:S.user.uid,createdAt:serverTimestamp()});toast("thanks, we'll take a look");break;
+  case"delcm":if(confirm("delete this comment?")){await deleteDoc(doc(db,"comments",d.id));loadComments(d.cid)}break;
+  case"delmine":if(confirm("delete this contribution permanently?")){await deleteDoc(doc(db,"contributions",d.id));await loadPublic();loadMine()}break;
+  case"approve":await updateDoc(doc(db,"contributions",d.id),{status:"approved"});await loadPublic();loadReview();break;
+  case"reject":if(confirm("reject and delete this submission?")){await deleteDoc(doc(db,"contributions",d.id));loadReview()}break;
+  case"dismiss":await deleteDoc(doc(db,"reports",d.id));loadReview();break;
+  case"rm":if(confirm("remove this content?")){await deleteDoc(doc(db,d.kind==="comment"?"comments":"contributions",d.ref));await deleteDoc(doc(db,"reports",d.id));await loadPublic();loadReview()}break;
+ }}catch(err){console.error(err);toast("that didn't work, please try again")}
 });
-
-/* ---------- auth ---------- */
-
-const dialog = $("#authDialog");
-let mode = "login";
-
-function openAuth(m = "login") {
-  setMode(m);
-  $("#authError").hidden = true;
-  dialog.showModal();
+function authErr(err){
+ const m={"auth/invalid-credential":"wrong email or password.","auth/user-not-found":"no account with that email.","auth/wrong-password":"wrong email or password.","auth/email-already-in-use":"that email already has an account. try logging in.","auth/weak-password":"password must be at least 6 characters.","auth/invalid-email":"that email doesn't look right.","auth/popup-closed-by-user":"","auth/cancelled-popup-request":"","auth/too-many-requests":"too many attempts. wait a moment and try again.","auth/unauthorized-domain":"this site's domain isn't authorised in Firebase yet."};
+ const el=$("#aerr");if(el)el.textContent=err&&err.code in m?m[err.code]:"something went wrong. please try again.";
 }
-
-function setMode(m) {
-  mode = m;
-  const signup = m === "signup";
-  $("#authTitle").textContent = signup ? "Create an account" : "Log in";
-  $("#authSubmit").textContent = signup ? "Sign up" : "Log in";
-  $("#nameRow").hidden = !signup;
-  $("#authName").required = signup;
-  $("#authPass").autocomplete = signup ? "new-password" : "current-password";
-  $("#authToggle").textContent = signup ? "Already have an account? Log in" : "New here? Create an account";
-}
-
-function authMessage(err) {
-  const map = {
-    "auth/invalid-credential": "Wrong email or password.",
-    "auth/user-not-found": "No account with that email.",
-    "auth/wrong-password": "Wrong email or password.",
-    "auth/email-already-in-use": "An account with that email already exists. Try logging in.",
-    "auth/weak-password": "Password must be at least 6 characters.",
-    "auth/invalid-email": "That email address doesn't look right.",
-    "auth/popup-closed-by-user": "",
-    "auth/too-many-requests": "Too many attempts. Please wait a moment and try again."
-  };
-  return map[err.code] ?? "Something went wrong. Please try again.";
-}
-
-function showAuthError(err) {
-  const text = authMessage(err);
-  const el = $("#authError");
-  el.textContent = text;
-  el.hidden = !text;
-}
-
-$("#authBtn").addEventListener("click", async () => {
-  if (state.user) await signOut(auth);
-  else openAuth("login");
+document.addEventListener("input",e=>{
+ const id=e.target.id;
+ if(id==="tq"){S.q=e.target.value;if(parseHash().parts[0]==="explore"&&$("#results"))$("#results").innerHTML=resultsHTML(true)}
+ if(id==="cq"){S.cq=e.target.value;$("#cl").innerHTML=clistHTML()}
 });
-
-$("#authToggle").addEventListener("click", (e) => {
-  e.preventDefault();
-  setMode(mode === "login" ? "signup" : "login");
+document.addEventListener("change",e=>{if(e.target.id==="ftype")syncType()});
+document.addEventListener("submit",async e=>{
+ e.preventDefault();const f=e.target;
+ try{switch(f.id){
+  case"topSearch":S.q=$("#tq").value.trim();if(location.hash==="#/explore")render(true);else location.hash="#/explore";break;
+  case"af":{const em=$("#ae").value.trim(),pw=$("#ap").value;
+   try{
+    if(S.authMode==="signup"){S.pendingName=$("#an").value.trim().slice(0,40);await createUserWithEmailAndPassword(auth,em,pw)}
+    else await signInWithEmailAndPassword(auth,em,pw);
+    S.modal=null;render(true);
+   }catch(err){authErr(err)}break}
+  case"cmf":{const text=$("#ct").value.trim();if(!text)break;
+   await addDoc(collection(db,"comments"),{cid:f.dataset.cid,uid:S.user.uid,name:myName().slice(0,60),text,createdAt:serverTimestamp()});
+   $("#ct").value="";loadComments(f.dataset.cid);break}
+  case"pf":{const p={name:$("#pn").value.trim().slice(0,40),bio:$("#pb").value.trim().slice(0,300),home:$("#ph2").value};
+   if(!p.name)break;await setDoc(doc(db,"users",S.user.uid),p);S.profile=p;toast("profile saved");render(true);break}
+  case"cf":{const type=$("#ftype").value,link=$("#fl").value.trim(),err=$("#ferr");err.textContent="";
+   if(link&&!safeUrl(link)){err.textContent="that link needs to start with http:// or https://";break}
+   const data={country:$("#fc").value,type,title:$("#ft").value.trim(),body:$("#fb").value.trim(),authorUid:S.user.uid,authorName:myName().slice(0,60),status:"pending",createdAt:serverTimestamp()};
+   const artist=$("#fa").value.trim();if(type==="song"&&artist)data.artist=artist;if(link)data.link=link;
+   try{await addDoc(collection(db,"contributions"),data)}catch(x){console.error(x);err.textContent="couldn't submit. check everything is filled in and try again.";break}
+   $("main").innerHTML=`<div class="notice">thank you! your contribution was submitted and will appear once it's been reviewed.</div><div class="row"><a class="btn" href="#/contribute">add another</a><a class="btn" href="#/mine">my contributions</a></div>`;break}
+ }}catch(err){console.error(err);toast("that didn't work, please try again")}
 });
-
-$("#googleBtn").addEventListener("click", async () => {
-  try {
-    await signInWithPopup(auth, new GoogleAuthProvider());
-    dialog.close();
-  } catch (err) { showAuthError(err); }
+window.addEventListener("hashchange",()=>{S.menu=false;render(false)});
+onAuthStateChanged(auth,async u=>{
+ S.user=u;S.profile=null;S.admin=false;S.saves=new Set();
+ if(u){await Promise.all([ensureProfile(u),checkAdmin(u).then(v=>{S.admin=v}),loadSaves(u)])}
+ rebuildLikes();S.authReady=true;render(true);
 });
-
-$("#emailForm").addEventListener("submit", async (e) => {
-  e.preventDefault();
-  const email = $("#authEmail").value.trim();
-  const pass = $("#authPass").value;
-  try {
-    if (mode === "signup") {
-      const cred = await createUserWithEmailAndPassword(auth, email, pass);
-      await updateProfile(cred.user, { displayName: $("#authName").value.trim() });
-      state.user = auth.currentUser;
-    } else {
-      await signInWithEmailAndPassword(auth, email, pass);
-    }
-    dialog.close();
-    e.target.reset();
-  } catch (err) { showAuthError(err); }
-});
-
-$("#resetLink").addEventListener("click", async (e) => {
-  e.preventDefault();
-  const email = $("#authEmail").value.trim();
-  const el = $("#authError");
-  if (!email) { el.textContent = "Enter your email above first."; el.hidden = false; return; }
-  try {
-    await sendPasswordResetEmail(auth, email);
-    el.textContent = "Password reset email sent. Check your inbox.";
-    el.hidden = false;
-  } catch (err) { showAuthError(err); }
-});
-
-onAuthStateChanged(auth, async (user) => {
-  state.user = user;
-  state.isAdmin = await checkAdmin(user);
-  $("#authBtn").textContent = user ? "Log out" : "Log in";
-  $("#userName").hidden = !user;
-  $("#userName").textContent = user ? (user.displayName || user.email || "") : "";
-  $("#navMine").hidden = !user;
-  $("#navReview").hidden = !state.isAdmin;
-  route();
-});
-
-window.addEventListener("hashchange", route);
-
+render(false);
+loadPublic().then(()=>render(true));
 </script>
 </body>
 </html>
