@@ -52,18 +52,30 @@ button,input,textarea,select{font:inherit;color:inherit}button{cursor:pointer}
 .fact p{font:400 1.5rem/1.28 'Roboto',system-ui,sans-serif;margin:0}
 .nudge{border:2px dashed var(--line);border-radius:28px;padding:22px;display:flex;flex-direction:column;gap:8px;align-items:flex-start}.nudge p{margin:0}
 .ann{background:var(--soft);border-radius:18px;padding:12px 18px;margin-top:14px;font-weight:500}
-.mas{column-width:225px;column-gap:18px;margin-top:14px}.mas.board{column-width:200px;column-gap:14px}
-.pin{display:block;break-inside:avoid;margin-bottom:22px;text-decoration:none}.board .pin{margin-bottom:14px}
-.pc{position:relative}
-.cover{border-radius:22px;padding:16px;min-height:140px;display:flex;flex-direction:column;justify-content:space-between;gap:14px;transition:transform .2s,box-shadow .2s;overflow:hidden}
-.pin:hover .cover,.pin:hover .timg{transform:translateY(-3px);box-shadow:0 12px 28px rgba(0,0,0,.16)}
-.pc .cover{padding-bottom:48px}
-.timg{display:block;width:100%;border-radius:22px;object-fit:cover;background:var(--soft);transition:transform .2s,box-shadow .2s}
-.cg{font-size:2.2rem;line-height:1}
-.cq{font:italic 400 1.2rem/1.3 'Roboto',system-ui,sans-serif;color:var(--cink);overflow:hidden;word-wrap:break-word}.cq.big{font-size:2.3rem;font-style:normal}
-.ptag{position:absolute;left:10px;bottom:10px;background:color-mix(in srgb,var(--card) 82%,transparent);backdrop-filter:blur(6px);border-radius:99px;padding:3px 11px 3px 6px;font-size:.74rem;font-weight:600;display:flex;gap:6px;align-items:center}
-.plk{position:absolute;right:10px;top:10px;background:color-mix(in srgb,var(--card) 82%,transparent);backdrop-filter:blur(6px);border-radius:99px;padding:3px 10px;font-size:.74rem;font-weight:600}
-.pcap{padding:8px 4px 0;font-size:.84rem;line-height:1.4;color:var(--ink);display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}
+.mas{display:grid;grid-template-columns:repeat(auto-fill,minmax(165px,1fr));grid-auto-rows:52px;grid-auto-flow:dense;gap:12px;margin-top:16px;padding:12px 6px 20px}
+@media(max-width:640px){.mas{grid-template-columns:repeat(2,minmax(0,1fr));gap:10px;padding:10px 2px 16px}}
+.c2{grid-column:span 2}.r2{grid-row:span 2}.r3{grid-row:span 3}.r4{grid-row:span 4}.r5{grid-row:span 5}
+.sb{position:relative;display:block;text-decoration:none;min-width:0;min-height:0;transform:translate(var(--x,0),var(--y,0)) rotate(var(--r,0deg));filter:drop-shadow(0 6px 9px rgba(0,0,0,.2));transition:transform .22s,filter .22s;z-index:1}
+.sb:hover,.sb:focus-visible{transform:rotate(0deg) scale(1.04);z-index:5;filter:drop-shadow(0 14px 20px rgba(0,0,0,.28))}
+.ti{height:100%;display:flex;flex-direction:column;justify-content:space-between;gap:6px;padding:14px 15px 11px;border-radius:10px;overflow:hidden;color:var(--cink)}
+.cq{font:400 1.2rem/1.3 'Roboto',system-ui,sans-serif;font-style:normal;color:var(--cink);overflow:hidden;word-wrap:break-word;overflow-wrap:anywhere}
+.sb .cq{font-size:var(--fs,1.2rem);font-weight:var(--fw,400);display:-webkit-box;-webkit-box-orient:vertical;-webkit-line-clamp:var(--lc,6);flex:1;min-height:0}
+.sb .pm{padding:0;color:var(--cink);opacity:.85;font-size:.72rem;gap:6px;flex:none}
+.sb .pm span{display:flex;align-items:center;gap:5px;min-width:0;overflow:hidden;white-space:nowrap;text-overflow:ellipsis}
+.sb.pol .ti{background:#fff;color:#222;padding:8px 8px 9px;gap:7px;border-radius:4px;--cink:#222}
+.timg{display:block;width:100%;flex:1;min-height:0;object-fit:cover;background:#ddd;border-radius:2px}
+.pcap{padding:0 2px;font-size:.78rem;line-height:1.3;color:#222;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden;flex:none}
+.sb.pol .pm{color:#555}
+.sb.bd .ti{aspect-ratio:1;height:auto;width:min(100%,100%);align-self:center;margin:auto;border-radius:50%;justify-content:center;align-items:center;text-align:center;padding:12px}
+.sb.bd{display:grid;align-items:center}.sb.bd .cq{flex:none;-webkit-line-clamp:4}
+.sb.bd .pm{justify-content:center}.sb.bd .pm .tc{display:none}
+.sb.tk .ti{border-radius:6px;-webkit-mask:radial-gradient(circle 9px at 0 50%,#0000 97%,#000) left/52% 100% no-repeat,radial-gradient(circle 9px at 100% 50%,#0000 97%,#000) right/52% 100% no-repeat;mask:radial-gradient(circle 9px at 0 50%,#0000 97%,#000) left/52% 100% no-repeat,radial-gradient(circle 9px at 100% 50%,#0000 97%,#000) right/52% 100% no-repeat}
+.sb.tp::before{content:"";position:absolute;top:-8px;left:50%;width:56px;height:18px;margin-left:-28px;background:rgba(255,255,255,.6);transform:rotate(-4deg);box-shadow:0 1px 2px rgba(0,0,0,.14);z-index:2}
+.sb.pn::before{content:"";position:absolute;top:-7px;left:50%;width:15px;height:15px;margin-left:-7px;border-radius:50%;background:radial-gradient(circle at 35% 30%,#fff9 0,#fff0 35%),radial-gradient(circle,var(--pin,#e5484d) 40%,#00000055 100%);box-shadow:0 2px 3px rgba(0,0,0,.35);z-index:2}
+.cover{border-radius:22px;padding:22px;min-height:200px;display:flex;flex-direction:column;justify-content:space-between;gap:14px;overflow:hidden}
+.cg{font-size:2.2rem;line-height:1}.cq.big{font-size:2.3rem;font-weight:700}
+.ptag{display:flex;gap:6px;align-items:center}
+.pcap2{display:none}
 .pm{display:flex;align-items:center;gap:8px;padding:6px 4px 0;font-size:.78rem;color:var(--muted)}
 .flag{border-radius:3px;object-fit:cover;box-shadow:0 0 0 1px color-mix(in srgb,var(--ink) 14%,transparent);flex:none;display:block}
 .box{background:var(--card);border:1px solid var(--line);border-radius:24px;padding:20px;margin-top:14px}.box p{max-width:78ch}.fm{max-width:680px}
@@ -103,7 +115,7 @@ textarea{min-height:110px;resize:vertical}textarea.big{min-height:220px}textarea
 .aud{display:flex;gap:12px;align-items:center;background:var(--soft);border-radius:18px;padding:14px 16px}.aud .gl{font-size:1.8rem}.aud audio{width:100%}
 .cm{display:flex;gap:10px;padding:12px 0;border-top:1px solid var(--line);align-items:flex-start}.cm:first-child{border-top:0;padding-top:0}.cm .body{margin:2px 0 0;font-size:.95rem}
 .phead{text-align:center;padding:22px 0 6px}.phead .av{margin:0 auto 12px}.phead .tiles{justify-content:center}.phead .un{color:var(--muted);margin-top:2px}
-.tl{margin-top:22px;max-width:760px}.tlm{margin:24px 0 10px;font:italic 400 1.5rem 'Roboto',system-ui,sans-serif;color:var(--muted)}
+.tl{margin-top:22px;max-width:760px}.tlm{margin:24px 0 10px;font:400 1.5rem 'Roboto',system-ui,sans-serif;color:var(--muted)}
 .tli{position:relative;display:flex;gap:14px;text-decoration:none;padding:0 0 16px 28px;border-left:2px solid var(--line);margin-left:10px}
 .tli::before{content:"";position:absolute;left:-8px;top:12px;width:14px;height:14px;border-radius:50%;background:var(--brand);border:3px solid var(--bg)}
 .tld{font:400 1.5rem/1.2 'Roboto',system-ui,sans-serif;min-width:1.7em;padding-top:4px}
@@ -236,7 +248,12 @@ const av=(name,photo,s=28)=>photo?`<img class="av" alt="" src="${esc(photo)}" st
 let gid=0;
 const globe=(s=36)=>{const i="g"+(++gid);return `<svg class="globe" width="${s}" height="${s}" viewBox="0 0 32 32" aria-hidden="true"><defs><clipPath id="${i}"><circle cx="16" cy="16" r="15.5"/></clipPath></defs><circle cx="16" cy="16" r="15.5" fill="var(--sea)"/><g clip-path="url(#${i})"><g fill="#fff" transform="translate(2.6 2.6) scale(.84)"><path d="M2 8c3-3 8-4 10-2s0 4-2 5-1 3 1 4 3 3 1 5-3 4-4 6c-3-1-5-5-6-9S0 11 2 8z"/><path d="M17 4c3-1 7-1 10 2 3 2 5 5 3 6s-3 1-4 3 0 4-2 6-4 2-5 0-1-4 0-6-2-3-3-5-1-3 1-6z"/><path d="M23 25c2-1 5 0 5 2s-2 4-4 3-3-4-1-5z"/></g></g></svg>`};
 const tagify=t=>String(t||"").split(/(#[\p{L}\p{N}_]+)/gu).map(p=>/^#[\p{L}\p{N}_]+$/u.test(p)?`<a class="ht" href="#/explore?q=${enc(p)}">${esc(p)}</a>`:esc(p)).join("");
-const noteBg=c=>{const b=c.type==="note"&&CCOL[CC[c.country]];return b?`background:${b};--cink:${lum(b)>.45?"#111":"#fff"}`:""};
+const mixc=(h,t,p)=>{const a=parseInt(h.slice(1),16),b=t==="w"?[255,255,255]:[0,0,0],r=[a>>16,a>>8&255,a&255].map((v,i)=>Math.round(v+(b[i]-v)*p));return"#"+r.map(v=>v.toString(16).padStart(2,"0")).join("")};
+const baseCol=c=>CCOL[CC[c.country]]||("#"+[0,8,4].map(o=>Math.floor(128+(hh(c.country)+o*40)%90).toString(16).padStart(2,"0")).join(""));
+const SHADES=[["w",.62],["w",.38],["w",0],["b",.18],["b",.38],["w",.22]];
+const shadeOf=c=>{const sh=SHADES[hh(c.id||c.country)%SHADES.length],b=mixc(baseCol(c),sh[0],sh[1]);return b};
+const noteBg=c=>{const b=shadeOf(c);return `background:${b};--cink:${lum(b)>.42?"#111":"#fff"}`};
+const tileStyle=c=>{const h=hh(c.id),n=hh(c.id+"x");const t=(c.title||c.text||c.caption||"").length;return""};
 const uname=x=>x.authorHandle?"@"+x.authorHandle:(x.authorName||"anonymous");
 
 /* ---------- writing skins: sandboxed + sanitised ---------- */
@@ -356,17 +373,32 @@ function closeBell(){if(S.nopen){S.nopen=false;markRead()}}
 
 /* ---------- pieces ---------- */
 const hay=c=>[c.caption,c.title,c.country,c.authorName,c.authorHandle,TYPES[c.type]].join(" ").toLowerCase();
+const TILT=[-2.6,1.4,-1,2.2,-1.8,.8,2.8,-.4],DECO=["pn","tp","","pn","tk","tp","","tk"];
+function lay(c){
+ const h=hh(c.id||"x"),H=(r)=>r*52+(r-1)*12;let cls="",fs=1.2,fw=400,r=3,w=1;
+ if(c.thumb){const ar=c.ar||1;if(ar>=1.4){w=2;r=4}else if(ar>=.85){r=4}else r=5;return{cls:(w===2?"c2 ":"")+"r"+r,fs,fw,lc:2,r,w,pol:1,h}}
+ const n=(c.title||c.text||c.caption||"").replace(/\s+/g," ").trim().length,odd=h%2;
+ if(n<=12){w=1;r=3;fs=1.7;fw=700;cls="bd"}
+ else if(n<=36){if(h%3===0){w=2;r=2;fs=1.75;fw=500}else{w=1;r=3;fs=1.4;fw=500}}
+ else if(n<=80){if(odd){w=2;r=3;fs=1.4;fw=400}else{w=1;r=4;fs=1.2;fw=400}}
+ else if(n<=140){if(odd){w=2;r=3;fs=1.08;fw=400}else{w=2;r=4;fs=1.22;fw=400}}
+ else{w=2;r=4;fs=.96;fw=400}
+ const lc=Math.max(2,Math.floor((H(r)-62)/(fs*16*1.3)));
+ return{cls:(w===2?"c2 ":"")+"r"+r+(cls?" "+cls:""),fs,fw,lc,r,w,h};
+}
 function card(c){
- const body=c.thumb?`<img class="timg" loading="lazy" alt="" src="${esc(c.thumb)}" style="aspect-ratio:${c.ar||1}">`
-  :`<div class="cover ${noteBg(c)?"":"gr"}" style="${noteBg(c)||hs(c.country)};min-height:${[130,170,210,250][hh(c.id)%4]}px"><span class="cg">${GLY[c.type]||"✨"}</span><span class="cq">${esc(clip(c.title||c.text||c.caption,110))}</span></div>`;
- return `<a class="pin" href="#/c/${esc(c.id)}"><div class="pc">${body}<span class="ptag">${flag(c.country,18)}${esc(c.country)}</span><span class="plk">♥ ${S.likeMap[c.id]||0}</span></div>
- <div class="pcap">${esc(clip(c.caption,120))}</div>
- <div class="pm"><span>${esc(uname(c))}</span><span class="sp">${GLY[c.type]||""} ${esc(TYPES[c.type]||c.type)}</span></div></a>`;
+ const L=lay(c),h=L.h,rot=TILT[h%TILT.length],dx=(h%5-2)*1.5,dy=(h%3-1)*2;
+ let deco=DECO[(h>>3)%DECO.length];if(L.cls.includes("bd"))deco=deco==="tk"?"pn":deco;if(L.w===2&&deco==="tk"&&L.r<3)deco="tp";
+ const pin=["#e5484d","#3e63dd","#30a46c","#f5a623"][(h>>5)%4];
+ const st=`--r:${rot}deg;--x:${dx}px;--y:${dy}px;--pin:${pin}`;
+ const meta=`<div class="pm"><span>${flag(c.country,16)}<span class="tc">${esc(c.country)}</span></span><span class="sp">♥ ${S.likeMap[c.id]||0}</span></div>`;
+ if(c.thumb)return `<a class="sb pol ${L.cls} ${deco==="tk"?"pn":deco}" style="${st}" href="#/c/${esc(c.id)}"><div class="ti"><img class="timg" loading="lazy" alt="" src="${esc(c.thumb)}"><div class="pcap">${esc(clip(c.caption||c.title,70)||c.country)}</div>${meta}</div></a>`;
+ return `<a class="sb ${L.cls} ${deco}" style="${st}" href="#/c/${esc(c.id)}"><div class="ti" style="${noteBg(c)};--fs:${L.fs}rem;--fw:${L.fw};--lc:${L.lc}"><span class="cq">${esc(clip(c.title||c.text||c.caption,170))}</span>${meta}</div></a>`;
 }
 function grid(L,msg,paged,board){
  if(!L.length)return `<p class="empty">${msg||"nothing here yet."}</p>`;
  const sh=paged?L.slice(0,S.show):L;
- return `<div class="mas ${board?"board":""}">${sh.map(card).join("")}</div>${paged&&L.length>S.show?`<div class="row" style="justify-content:center;margin-top:10px"><button class="btn" data-act="more">show more</button></div>`:""}`;
+ return `<div class="mas">${sh.map(card).join("")}</div>${paged&&L.length>S.show?`<div class="row" style="justify-content:center;margin-top:10px"><button class="btn" data-act="more">show more</button></div>`:""}`;
 }
 function embed(url){
  let m=url.match(/(?:youtube\.com\/watch\?(?:[^#]*&)?v=|youtu\.be\/|youtube\.com\/shorts\/)([\w-]{6,15})/);
@@ -400,7 +432,7 @@ function drawBell(){const b=$("#bellw");if(b)b.innerHTML=bellHTML();const p=$("#
 
 function highlights(){
  const c=S.spot&&S.items.find(x=>x.id===S.spot.cid);
- const spot=c?`<a class="spot gr" style="${hs(c.country)}" href="#/c/${esc(c.id)}"><span class="lbl">✦ contribution of the week</span><span class="cq">${esc(clip(c.title||c.caption,200))}</span>
+ const spot=c?`<a class="spot" style="${noteBg(c)}" href="#/c/${esc(c.id)}"><span class="lbl">✦ contribution of the week</span><span class="cq">${esc(clip(c.title||c.caption,200))}</span>
   <span class="row k" style="color:inherit"><span class="row" style="gap:6px">${flag(c.country,20)}${esc(c.country)}</span><span class="sp">by ${esc(uname(c))}</span></span></a>`
   :S.admin?`<div class="nudge"><span class="lbl">✦ contribution of the week</span><p>nothing is spotlighted this week yet.</p><a class="btn s p" href="#/calendar">open calendar</a></div>`:"";
  const f=S.fact;
@@ -451,7 +483,7 @@ function mediaHTML(c,link){
  if(c.imgs>0&&c.thumb)h+=`<img class="mimg" alt="" src="${esc(c.thumb)}">`;
  if(c.audio)h+=`<div class="aud" id="aud"><span class="gl">🎵</span><div class="grow"><b>${esc(c.audio.name||"audio")}</b><div class="k">${((c.audio.size||0)/1048576).toFixed(1)} mb</div></div><button class="btn p s" data-act="playaud" data-id="${esc(c.id)}" data-parts="${c.audio.parts||1}">▶ play</button></div>`;
  if(link)h+=embed(link);
- if(!h)h=`<div class="cover ${noteBg(c)?"":"gr"}" style="${noteBg(c)||hs(c.country)}"><span class="cg">${GLY[c.type]||"✨"}</span><span class="cq big">${esc(c.country)}</span></div>`;
+ if(!h)h=`<div class="cover" style="${noteBg(c)}"><span class="cg">${GLY[c.type]||"✨"}</span><span class="cq big">${esc(c.country)}</span></div>`;
  return h;
 }
 function bodyHTML(c){
@@ -574,7 +606,7 @@ function timeline(L){
  for(const c of L){
   const d=tdate(c.createdAt),m=d?d.toLocaleDateString(undefined,{month:"long",year:"numeric"}).toLowerCase():"earlier";
   if(m!==last){out+=`<div class="tlm">${esc(m)}</div>`;last=m}
-  out+=`<a class="tli" href="#/c/${esc(c.id)}"><span class="tld">${d?d.getDate():""}</span><span class="tlb gr" style="${hs(c.country)}"><span class="grow"><span class="k">${GLY[c.type]||""} ${esc(c.country)} · ♥ ${S.likeMap[c.id]||0}</span><span class="cq">${esc(clip(c.title||c.caption,150))}</span></span>${c.thumb?`<img class="tlimg" src="${esc(c.thumb)}" alt="">`:""}</span></a>`;
+  out+=`<a class="tli" href="#/c/${esc(c.id)}"><span class="tld">${d?d.getDate():""}</span><span class="tlb" style="${noteBg(c)}"><span class="grow"><span class="k">${GLY[c.type]||""} ${esc(c.country)} · ♥ ${S.likeMap[c.id]||0}</span><span class="cq">${esc(clip(c.title||c.caption,150))}</span></span>${c.thumb?`<img class="tlimg" src="${esc(c.thumb)}" alt="">`:""}</span></a>`;
  }
  return `<div class="tl">${out}</div>`;
 }
