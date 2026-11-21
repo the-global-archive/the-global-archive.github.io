@@ -56,7 +56,7 @@ button,input,textarea,select{font:inherit;color:inherit}button{cursor:pointer}
 @media(max-width:640px){.mas{grid-template-columns:repeat(2,minmax(0,1fr));gap:10px;padding:10px 2px 16px}}
 .c2{grid-column:span 2}.r2{grid-row:span 2}.r3{grid-row:span 3}.r4{grid-row:span 4}.r5{grid-row:span 5}
 .sb{position:relative;display:block;text-decoration:none;min-width:0;min-height:0;transform:translate(var(--x,0),var(--y,0)) rotate(var(--r,0deg));filter:drop-shadow(0 6px 9px rgba(0,0,0,.2));transition:transform .22s,filter .22s;z-index:1}
-.sb:hover,.sb:focus-visible{transform:rotate(0deg) scale(1.04);z-index:5;filter:drop-shadow(0 14px 20px rgba(0,0,0,.28))}
+.sb:hover,.sb:focus-visible{transform:scale(1.03);z-index:5;filter:drop-shadow(0 14px 20px rgba(0,0,0,.28))}
 .ti{height:100%;display:flex;flex-direction:column;justify-content:space-between;gap:6px;padding:14px 15px 11px;border-radius:10px;overflow:hidden;color:var(--cink)}
 .cq{font:400 1.2rem/1.3 'Roboto',system-ui,sans-serif;font-style:normal;color:var(--cink);overflow:hidden;word-wrap:break-word;overflow-wrap:anywhere}
 .sb .cq{font-size:var(--fs,1.2rem);font-weight:var(--fw,400);display:-webkit-box;-webkit-box-orient:vertical;-webkit-line-clamp:var(--lc,6);flex:1;min-height:0}
@@ -373,12 +373,12 @@ function closeBell(){if(S.nopen){S.nopen=false;markRead()}}
 
 /* ---------- pieces ---------- */
 const hay=c=>[c.caption,c.title,c.country,c.authorName,c.authorHandle,TYPES[c.type]].join(" ").toLowerCase();
-const TILT=[-2.6,1.4,-1,2.2,-1.8,.8,2.8,-.4],DECO=["pn","tp","","pn","tk","tp","","tk"];
+const TILT=[-2.6,1.4,-1,2.2,-1.8,.8,2.8,-.4],DECO=["pn","tp","","pn","","tp","",""];
 function lay(c){
  const h=hh(c.id||"x"),H=(r)=>r*52+(r-1)*12;let cls="",fs=1.2,fw=400,r=3,w=1;
  if(c.thumb){const ar=c.ar||1;if(ar>=1.4){w=2;r=4}else if(ar>=.85){r=4}else r=5;return{cls:(w===2?"c2 ":"")+"r"+r,fs,fw,lc:2,r,w,pol:1,h}}
  const n=(c.title||c.text||c.caption||"").replace(/\s+/g," ").trim().length,odd=h%2;
- if(n<=12){w=1;r=3;fs=1.7;fw=700;cls="bd"}
+ if(n<=12){w=1;r=2;fs=1.6;fw=700}
  else if(n<=36){if(h%3===0){w=2;r=2;fs=1.75;fw=500}else{w=1;r=3;fs=1.4;fw=500}}
  else if(n<=80){if(odd){w=2;r=3;fs=1.4;fw=400}else{w=1;r=4;fs=1.2;fw=400}}
  else if(n<=140){if(odd){w=2;r=3;fs=1.08;fw=400}else{w=2;r=4;fs=1.22;fw=400}}
@@ -387,7 +387,7 @@ function lay(c){
  return{cls:(w===2?"c2 ":"")+"r"+r+(cls?" "+cls:""),fs,fw,lc,r,w,h};
 }
 function card(c){
- const L=lay(c),h=L.h,rot=TILT[h%TILT.length],dx=(h%5-2)*1.5,dy=(h%3-1)*2;
+ const L=lay(c),h=L.h,rot=0,dx=0,dy=0;
  let deco=DECO[(h>>3)%DECO.length];if(L.cls.includes("bd"))deco=deco==="tk"?"pn":deco;if(L.w===2&&deco==="tk"&&L.r<3)deco="tp";
  const pin=["#e5484d","#3e63dd","#30a46c","#f5a623"][(h>>5)%4];
  const st=`--r:${rot}deg;--x:${dx}px;--y:${dy}px;--pin:${pin}`;
