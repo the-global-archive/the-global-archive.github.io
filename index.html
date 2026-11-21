@@ -4,41 +4,41 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <title>the global archive</title>
-<meta name="description" content="a shared archive of recipes, songs, writing and notes from every country, shared by the people who know them.">
-<link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600&family=Instrument+Serif:ital@0;1&display=swap" rel="stylesheet">
+<meta name="description" content="a shared archive of recipes, songs, writing, photos and notes from every country, shared by the people who know them.">
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600&family=Instrument+Serif:ital@0;1&family=Roboto:wght@500;700&display=swap" rel="stylesheet">
 <style>
-:root{--bg:#fff6f9;--card:#fff;--ink:#4a2f3a;--acc:#f2a0bf;--gs:82%;--gl1:94%;--gl2:87%}
+:root{--brand:#111;--bg:#f3f3f4;--card:#fff;--ink:#111;--on:#fff;--sea:#111;--gs:82%;--gl1:94%;--gl2:87%}
 *{box-sizing:border-box}
 html{background:var(--bg)}
 body{margin:0;font:15px/1.55 'DM Sans',system-ui,sans-serif;background:var(--bg);color:var(--ink);
- --muted:color-mix(in srgb,var(--ink) 58%,var(--bg));--line:color-mix(in srgb,var(--acc) 30%,var(--bg));--soft:color-mix(in srgb,var(--acc) 16%,var(--bg));
- --accs:color-mix(in srgb,var(--acc) 40%,var(--card));--cink:color-mix(in srgb,var(--ink) 85%,transparent)}
+ --muted:color-mix(in srgb,var(--ink) 58%,var(--bg));--line:color-mix(in srgb,var(--ink) 13%,var(--bg));--soft:color-mix(in srgb,var(--brand) 11%,var(--bg));
+ --accs:color-mix(in srgb,var(--brand) 26%,var(--card));--cink:color-mix(in srgb,var(--ink) 88%,transparent)}
 a{color:inherit}
 h1,h2{font-family:'Instrument Serif',Georgia,serif;font-weight:400;letter-spacing:-.01em;line-height:1.1;margin:0;text-wrap:balance}
 h1{font-size:clamp(2.2rem,5.5vw,3.4rem)}h2{font-size:1.7rem}h3{font-size:1rem;font-weight:600;margin:0}
-h1 em,h2 em{font-style:italic;background:linear-gradient(transparent 62%,color-mix(in srgb,var(--acc) 65%,transparent) 62%)}
+h1 em,h2 em{font-style:italic;color:var(--brand)}
 button,input,textarea,select{font:inherit;color:inherit}button{cursor:pointer}
-:focus-visible{outline:2px solid var(--acc);outline-offset:2px}
+:focus-visible{outline:2px solid var(--brand);outline-offset:2px}
 .wrap{max-width:1500px;margin:0 auto;padding:0 clamp(12px,2.5vw,32px) calc(70px + env(safe-area-inset-bottom,0px))}
 .k{font-size:.8rem;color:var(--muted)}.k a{text-decoration:none}.k a:hover{text-decoration:underline}
 .sub{color:var(--muted);max-width:56ch;margin:12px 0 0;font-size:1rem}
-.row{display:flex;gap:10px;align-items:center;flex-wrap:wrap}.sp{margin-left:auto}
+.row{display:flex;gap:10px;align-items:center;flex-wrap:wrap}.sp{margin-left:auto}.grow{flex:1;min-width:0}
 .gr{background:linear-gradient(150deg,hsl(var(--h) var(--gs) var(--gl1)),hsl(var(--h2) var(--gs) var(--gl2)))}
-.top{position:sticky;top:0;z-index:4;background:color-mix(in srgb,var(--bg) 88%,transparent);backdrop-filter:blur(12px);display:flex;align-items:center;gap:12px;padding:calc(12px + env(safe-area-inset-top,0px)) 0 12px}
-.logo{display:flex;align-items:center;gap:10px;text-decoration:none;font:italic 400 1.75rem/1 'Instrument Serif',Georgia,serif;letter-spacing:-.01em;white-space:nowrap}
+.ico{width:18px;height:18px;stroke:currentColor;fill:none;stroke-width:1.9;stroke-linecap:round;stroke-linejoin:round;flex:none}
+.top{position:sticky;top:0;z-index:4;background:color-mix(in srgb,var(--bg) 88%,transparent);backdrop-filter:blur(12px);display:flex;align-items:center;gap:10px;padding:calc(12px + env(safe-area-inset-top,0px)) 0 12px}
+.logo{display:flex;align-items:center;gap:10px;text-decoration:none;font:700 1.35rem/1 'Roboto',system-ui,sans-serif;font-style:normal;letter-spacing:-.01em;white-space:nowrap;color:var(--brand)}
 .globe{flex:none;display:block}
-.srch{flex:1;display:flex;align-items:center;gap:8px;background:var(--soft);border-radius:999px;padding:0 16px;max-width:640px;margin:0 auto}
+.srch{flex:1;display:flex;align-items:center;gap:8px;background:var(--soft);border-radius:999px;padding:0 16px;max-width:640px;margin:0 auto}.srch .ico{color:var(--muted)}
 .srch input{background:none;border:0;padding:11px 0;width:100%;outline:none}
-.ico{width:18px;height:18px;stroke:currentColor;fill:none;stroke-width:2;stroke-linecap:round;stroke-linejoin:round;flex:none;color:var(--muted)}
-.btn{border:0;background:var(--soft);border-radius:999px;padding:9px 18px;font-weight:600;font-size:.88rem;text-decoration:none;display:inline-block;white-space:nowrap}
-.btn:hover{background:color-mix(in srgb,var(--acc) 30%,var(--bg))}
-.btn.p{background:var(--acc);color:var(--ink)}.btn.p:hover{filter:brightness(.95)}
-.btn.on{background:var(--accs);box-shadow:inset 0 0 0 1.5px var(--acc)}.btn.d{color:#c9455f}.btn.s{padding:6px 13px;font-size:.8rem}
-.burger,.avb{border:0;background:var(--soft);width:38px;height:38px;border-radius:50%;display:grid;place-items:center;padding:0;flex:none}
-.avb{color:var(--cink);font-weight:600}
-.av{flex:none;border-radius:50%;display:grid;place-items:center;font-size:.72rem;font-weight:600;width:28px;height:28px;color:var(--cink)}
-.chips{display:flex;gap:8px;overflow-x:auto;padding:4px 0 8px;margin-top:12px;align-items:center;scrollbar-width:none}.chips::-webkit-scrollbar{display:none}
-.chips .btn{flex:none}
+.btn{border:0;background:var(--soft);border-radius:999px;padding:9px 18px;font-weight:600;font-size:.88rem;text-decoration:none;display:inline-flex;align-items:center;gap:6px;white-space:nowrap}
+.btn:hover{background:color-mix(in srgb,var(--brand) 20%,var(--bg))}
+.btn.p{background:var(--brand);color:var(--on)}.btn.p:hover{filter:brightness(.93)}
+.btn.on{background:var(--accs);box-shadow:inset 0 0 0 1.5px var(--brand)}.btn.d{color:#d2506a}.btn.s{padding:6px 13px;font-size:.8rem}
+.btn[disabled]{opacity:.6;cursor:default}
+.ib{border:0;background:var(--soft);width:38px;height:38px;border-radius:50%;display:grid;place-items:center;padding:0;flex:none;position:relative}
+.bdg{position:absolute;top:-3px;right:-3px;min-width:18px;height:18px;border-radius:9px;background:#e5484d;color:#fff;font-size:.68rem;font-weight:700;display:grid;place-items:center;padding:0 4px}
+.av{flex:none;border-radius:50%;display:grid;place-items:center;font-weight:600;width:28px;height:28px;color:var(--cink)}
+.chips{display:flex;gap:8px;overflow-x:auto;padding:4px 0 8px;margin-top:12px;align-items:center;scrollbar-width:none}.chips::-webkit-scrollbar{display:none}.chips .btn{flex:none}
 .tag{font-size:.74rem;font-weight:600;background:var(--soft);border-radius:99px;padding:3px 11px;white-space:nowrap}
 .pill{font-size:.72rem;font-weight:600;border-radius:99px;padding:2px 10px;background:var(--soft);color:var(--muted)}
 .pill.pend{background:#fdf0c9;color:#8a6410}.pill.ok{background:#daf2e2;color:#276b3c}.pill.bad{background:#fbd9df;color:#b03a52}
@@ -47,71 +47,98 @@ button,input,textarea,select{font:inherit;color:inherit}button{cursor:pointer}
 .hl{display:grid;grid-template-columns:minmax(0,1.5fr) minmax(0,1fr);gap:16px;margin-top:22px}.hl.one{grid-template-columns:1fr}
 @media(max-width:760px){.hl{grid-template-columns:1fr}}
 .spot{display:flex;flex-direction:column;justify-content:space-between;gap:18px;border-radius:28px;padding:26px;min-height:210px;text-decoration:none;color:var(--cink);transition:transform .2s,box-shadow .2s}
-.spot:hover{transform:translateY(-3px);box-shadow:0 14px 30px rgba(0,0,0,.1)}
-.spot .cq{font-size:1.65rem;line-height:1.25}
-.fact{background:var(--card);border-radius:28px;padding:26px;display:flex;flex-direction:column;gap:12px;justify-content:space-between;box-shadow:0 1px 2px rgba(0,0,0,.03),0 10px 28px color-mix(in srgb,var(--acc) 22%,transparent)}
+.spot:hover{transform:translateY(-3px);box-shadow:0 14px 30px rgba(0,0,0,.12)}.spot .cq{font-size:1.65rem;line-height:1.25}
+.fact{background:var(--card);border:1px solid var(--line);border-radius:28px;padding:26px;display:flex;flex-direction:column;gap:12px;justify-content:space-between}
 .fact p{font:400 1.5rem/1.28 'Instrument Serif',Georgia,serif;margin:0}
 .nudge{border:2px dashed var(--line);border-radius:28px;padding:22px;display:flex;flex-direction:column;gap:8px;align-items:flex-start}.nudge p{margin:0}
-.mas{column-width:225px;column-gap:18px;margin-top:14px}
-.pin{display:block;break-inside:avoid;margin-bottom:22px;text-decoration:none}
+.ann{background:var(--soft);border-radius:18px;padding:12px 18px;margin-top:14px;font-weight:500}
+.mas{column-width:225px;column-gap:18px;margin-top:14px}.mas.board{column-width:200px;column-gap:14px}
+.pin{display:block;break-inside:avoid;margin-bottom:22px;text-decoration:none}.board .pin{margin-bottom:14px}
 .pc{position:relative}
 .cover{border-radius:22px;padding:16px;min-height:140px;display:flex;flex-direction:column;justify-content:space-between;gap:14px;transition:transform .2s,box-shadow .2s;overflow:hidden}
-.pin:hover .cover{transform:translateY(-3px);box-shadow:0 12px 28px rgba(0,0,0,.12)}
+.pin:hover .cover,.pin:hover .timg{transform:translateY(-3px);box-shadow:0 12px 28px rgba(0,0,0,.16)}
 .pc .cover{padding-bottom:48px}
+.timg{display:block;width:100%;border-radius:22px;object-fit:cover;background:var(--soft);transition:transform .2s,box-shadow .2s}
 .cg{font-size:2.2rem;line-height:1}
-.cq{font:italic 400 1.2rem/1.3 'Instrument Serif',Georgia,serif;color:var(--cink);overflow:hidden;word-wrap:break-word}
-.cq.big{font-size:2.3rem;font-style:normal}
-.ptag{position:absolute;left:10px;bottom:10px;background:color-mix(in srgb,var(--card) 80%,transparent);backdrop-filter:blur(6px);border-radius:99px;padding:3px 11px;font-size:.74rem;font-weight:600}
-.plk{position:absolute;right:10px;top:10px;background:color-mix(in srgb,var(--card) 80%,transparent);backdrop-filter:blur(6px);border-radius:99px;padding:3px 10px;font-size:.74rem;font-weight:600}
-.pm{display:flex;align-items:center;gap:8px;padding:8px 4px 0;font-size:.8rem;color:var(--muted)}.pm .av{width:22px;height:22px;font-size:.62rem}
-.box{background:var(--card);border-radius:24px;padding:20px;margin-top:14px;box-shadow:0 1px 2px rgba(0,0,0,.03),0 8px 24px color-mix(in srgb,var(--acc) 16%,transparent)}
-.box p{max-width:78ch}.fm{max-width:640px}
+.cq{font:italic 400 1.2rem/1.3 'Instrument Serif',Georgia,serif;color:var(--cink);overflow:hidden;word-wrap:break-word}.cq.big{font-size:2.3rem;font-style:normal}
+.ptag{position:absolute;left:10px;bottom:10px;background:color-mix(in srgb,var(--card) 82%,transparent);backdrop-filter:blur(6px);border-radius:99px;padding:3px 11px 3px 6px;font-size:.74rem;font-weight:600;display:flex;gap:6px;align-items:center}
+.plk{position:absolute;right:10px;top:10px;background:color-mix(in srgb,var(--card) 82%,transparent);backdrop-filter:blur(6px);border-radius:99px;padding:3px 10px;font-size:.74rem;font-weight:600}
+.pcap{padding:8px 4px 0;font-size:.84rem;line-height:1.4;color:var(--ink);display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}
+.pm{display:flex;align-items:center;gap:8px;padding:6px 4px 0;font-size:.78rem;color:var(--muted)}
+.flag{border-radius:3px;object-fit:cover;box-shadow:0 0 0 1px color-mix(in srgb,var(--ink) 14%,transparent);flex:none;display:block}
+.box{background:var(--card);border:1px solid var(--line);border-radius:24px;padding:20px;margin-top:14px}.box p{max-width:78ch}.fm{max-width:680px}
 .tiles{display:flex;gap:10px;flex-wrap:wrap;margin-top:14px}
-.tile{background:var(--card);border-radius:18px;padding:10px 18px;box-shadow:0 1px 2px rgba(0,0,0,.03)}
-.tile b{display:block;font:400 1.6rem 'Instrument Serif',Georgia,serif}.tile span{font-size:.76rem;color:var(--muted)}
-.f{display:flex;flex-direction:column;gap:5px;margin-bottom:14px}.f label{font-weight:600;font-size:.85rem}
+.tile{background:var(--card);border:1px solid var(--line);border-radius:18px;padding:8px 16px}
+.tile b{display:block;font:400 1.5rem 'Instrument Serif',Georgia,serif}.tile span{font-size:.74rem;color:var(--muted)}
+.f{display:flex;flex-direction:column;gap:5px;margin-bottom:14px}.f label,.lb{font-weight:600;font-size:.85rem}
 input,textarea,select{border:2px solid transparent;border-radius:16px;padding:11px 14px;background:var(--soft);width:100%}
-input:focus,textarea:focus,select:focus{outline:none;border-color:var(--acc);background:var(--card)}
-textarea{min-height:110px;resize:vertical}textarea.big{min-height:200px}
-.err{color:#c9455f;min-height:1.3em;font-size:.88rem}
+input[type=checkbox]{width:auto}
+input:focus,textarea:focus,select:focus{outline:none;border-color:var(--brand);background:var(--card)}
+textarea{min-height:110px;resize:vertical}textarea.big{min-height:220px}textarea.mono{font:.85rem/1.5 ui-monospace,Menlo,Consolas,monospace;min-height:130px}
+.atw{display:flex;align-items:center;background:var(--soft);border-radius:16px;border:2px solid transparent}.atw:focus-within{border-color:var(--brand);background:var(--card)}
+.atw span{padding-left:14px;color:var(--muted);font-weight:600}.atw input{background:none;border:0;padding-left:3px}.atw input:focus{background:none}
+.err{color:#d2506a;min-height:1.3em;font-size:.88rem}
 .empty{color:var(--muted);padding:30px 0;text-align:center}
-.notice{background:var(--card);border-radius:18px;padding:16px 20px;margin:14px 0;border:2px solid var(--acc)}
-.ctiles{display:grid;grid-template-columns:repeat(auto-fill,minmax(170px,1fr));gap:14px;margin-top:14px}
-.ctile{border-radius:22px;padding:16px;min-height:120px;display:flex;flex-direction:column;justify-content:space-between;text-decoration:none;color:var(--cink);transition:transform .2s}
-.ctile:hover{transform:translateY(-3px)}.ctile.zero{opacity:.65}.ctile .k{color:var(--cink);opacity:.8}
-.cn2{font:400 1.6rem/1.1 'Instrument Serif',Georgia,serif}
-.cban{border-radius:30px;padding:clamp(18px,4vw,36px);margin-top:10px;color:var(--cink)}.cban .k{color:var(--cink)}.cban h1{margin:10px 0}
-.cban .tag{background:color-mix(in srgb,var(--card) 70%,transparent)}
-.pinbig{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);background:var(--card);border-radius:30px;overflow:hidden;margin-top:12px;box-shadow:0 12px 40px color-mix(in srgb,var(--acc) 22%,transparent)}
-.pl{padding:14px}.pl .cover{min-height:360px;max-height:600px;padding:26px}.pl .cg{font-size:3.4rem}
+.notice{background:var(--card);border-radius:18px;padding:16px 20px;margin:14px 0;border:2px solid var(--brand)}
+.clist{display:grid;grid-template-columns:repeat(auto-fill,minmax(250px,1fr));gap:4px 22px;margin-top:14px}
+.crow{display:flex;align-items:center;gap:14px;padding:10px 12px;border-radius:14px;text-decoration:none;border-bottom:1px solid var(--line)}.crow:hover{background:var(--soft)}.crow.zero{opacity:.62}
+.cban{position:relative;overflow:hidden;border-radius:30px;padding:clamp(18px,4vw,34px);margin-top:10px;color:#fff;background:#222}
+.cban::before{content:"";position:absolute;inset:-30px;background:var(--flag) center/cover;filter:blur(26px) saturate(1.15);opacity:.9}
+.cban::after{content:"";position:absolute;inset:0;background:linear-gradient(180deg,rgba(0,0,0,.18),rgba(0,0,0,.5))}
+.cbi{position:relative;z-index:1}.cbi .k,.cbi a{color:#fff}.cbi h1{margin:0;color:#fff}.cbi .tag{background:rgba(255,255,255,.22);color:#fff}.cbi .btn.p{background:#fff;color:#111}
+.cbi .flag{box-shadow:0 4px 18px rgba(0,0,0,.35)}
+.pinbig{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);background:var(--card);border:1px solid var(--line);border-radius:30px;overflow:hidden;margin-top:12px}
+.pl{padding:14px;display:flex;flex-direction:column;gap:12px;align-content:start}.pl .cover{min-height:340px;padding:26px}.pl .cg{font-size:3.4rem}
+.mimg{width:100%;border-radius:20px;display:block;background:var(--soft)}
 .pr{padding:clamp(18px,3vw,32px)}
-@media(max-width:820px){.pinbig{grid-template-columns:1fr}.pl .cover{min-height:220px}}
-.body{white-space:pre-wrap;word-wrap:break-word;margin:16px 0;font-size:1.03rem}
+@media(max-width:820px){.pinbig{grid-template-columns:1fr}.pl .cover{min-height:200px}}
+.ptitle{font-size:2rem;margin:16px 0 6px}.cap{margin:6px 0 0;font-size:1.02rem}.ht{color:var(--brand);font-weight:600;text-decoration:none}.ht:hover{text-decoration:underline}
+.sec{margin:18px 0 6px;font-size:.78rem;text-transform:lowercase;letter-spacing:.05em;color:var(--muted)}
+.ing{margin:0;padding-left:20px}.ing li{margin:3px 0}
+.body{white-space:pre-wrap;word-wrap:break-word;margin:12px 0;font-size:1.02rem}
+.wfr{width:100%;border:1px solid var(--line);border-radius:18px;background:transparent;display:block;min-height:120px}
 .acts{margin-top:14px;padding-top:14px;border-top:1px solid var(--line)}
-.emb{width:100%;aspect-ratio:16/9;border:0;border-radius:18px;margin-top:12px;background:var(--soft)}.emb.spo{aspect-ratio:auto;height:152px}
-.cm{display:flex;gap:10px;padding:12px 0;border-top:1px solid var(--line);align-items:flex-start}.cm:first-child{border-top:0;padding-top:0}
-.cm .body{margin:2px 0 0;font-size:.95rem}.grow{flex:1;min-width:0}
-.phead{text-align:center;padding:22px 0 6px}.phead .av{width:92px;height:92px;font-size:2.1rem;margin:0 auto 12px}.phead .tiles{justify-content:center}
-.tl{margin-top:22px;max-width:760px}
-.tlm{margin:24px 0 10px;font:italic 400 1.5rem 'Instrument Serif',Georgia,serif;color:var(--muted)}
+.emb{width:100%;aspect-ratio:16/9;border:0;border-radius:18px;background:var(--soft)}.emb.spo{aspect-ratio:auto;height:152px}
+.aud{display:flex;gap:12px;align-items:center;background:var(--soft);border-radius:18px;padding:14px 16px}.aud .gl{font-size:1.8rem}.aud audio{width:100%}
+.cm{display:flex;gap:10px;padding:12px 0;border-top:1px solid var(--line);align-items:flex-start}.cm:first-child{border-top:0;padding-top:0}.cm .body{margin:2px 0 0;font-size:.95rem}
+.phead{text-align:center;padding:22px 0 6px}.phead .av{margin:0 auto 12px}.phead .tiles{justify-content:center}.phead .un{color:var(--muted);margin-top:2px}
+.tl{margin-top:22px;max-width:760px}.tlm{margin:24px 0 10px;font:italic 400 1.5rem 'Instrument Serif',Georgia,serif;color:var(--muted)}
 .tli{position:relative;display:flex;gap:14px;text-decoration:none;padding:0 0 16px 28px;border-left:2px solid var(--line);margin-left:10px}
-.tli::before{content:"";position:absolute;left:-8px;top:12px;width:14px;height:14px;border-radius:50%;background:var(--acc);border:3px solid var(--bg)}
+.tli::before{content:"";position:absolute;left:-8px;top:12px;width:14px;height:14px;border-radius:50%;background:var(--brand);border:3px solid var(--bg)}
 .tld{font:400 1.5rem/1.2 'Instrument Serif',Georgia,serif;min-width:1.7em;padding-top:4px}
-.tlb{flex:1;border-radius:20px;padding:12px 16px;display:flex;flex-direction:column;gap:4px;color:var(--cink);transition:transform .2s}.tli:hover .tlb{transform:translateX(3px)}
-.tlb .k{color:var(--cink);opacity:.8}.tlb .cq{font-size:1.15rem}
-.scrim{position:fixed;inset:0;background:rgba(40,20,30,.3);z-index:7}
-.drawer{position:fixed;top:0;right:0;bottom:0;height:100dvh;width:min(320px,90vw);background:var(--card);z-index:8;padding:18px 16px calc(16px + env(safe-area-inset-bottom,0px));display:flex;flex-direction:column;overflow:auto;border-radius:28px 0 0 28px;box-shadow:-12px 0 40px rgba(0,0,0,.12)}
-.dhead{padding:6px 8px 12px}.dsec{font-size:.72rem;font-weight:600;letter-spacing:.06em;color:var(--muted);margin:16px 10px 4px}
-.dl{display:block;padding:10px 14px;border-radius:14px;text-decoration:none;font-weight:500}.dl:hover{background:var(--soft)}
-.dout{margin-top:auto;width:100%;text-align:center}
-.sws{display:flex;gap:10px;flex-wrap:wrap;padding:6px 10px 10px}
+.tlb{flex:1;border-radius:20px;padding:12px 16px;display:flex;gap:12px;align-items:center;color:var(--cink);transition:transform .2s}.tli:hover .tlb{transform:translateX(3px)}
+.tlb .k{color:var(--cink);opacity:.8}.tlb .cq{font-size:1.15rem;display:block}.tlimg{width:64px;height:64px;border-radius:14px;object-fit:cover;flex:none}
+.scrim{position:fixed;inset:0;background:rgba(0,0,0,.35);z-index:7}.scrim.clear{background:transparent}
+.drawer{position:fixed;top:0;right:0;bottom:0;height:100dvh;width:min(330px,90vw);background:var(--card);z-index:8;padding:16px 14px calc(16px + env(safe-area-inset-bottom,0px));display:flex;flex-direction:column;overflow:auto;border-radius:28px 0 0 28px;box-shadow:-12px 0 40px rgba(0,0,0,.2)}
+.dprof{display:flex;align-items:center;gap:12px;padding:12px;border-radius:20px;background:var(--soft);text-decoration:none}.dprof .k{display:block}
+.dsec{font-size:.72rem;font-weight:600;letter-spacing:.06em;color:var(--muted);margin:14px 12px 4px}
+.dl{display:flex;align-items:center;gap:12px;padding:10px 12px;border-radius:14px;text-decoration:none;font-weight:500;border:0;background:none;width:100%;text-align:left;font:inherit;font-weight:500}.dl:hover{background:var(--soft)}.dl .ico{color:var(--muted)}
+.hr{border:0;border-top:1px solid var(--line);margin:10px 0;width:100%}
+.dout{margin-top:auto;width:100%;justify-content:center}
+.seg{display:flex;gap:6px;flex-wrap:wrap;padding:4px 10px}.sws{display:flex;gap:10px;flex-wrap:wrap;padding:8px 12px 10px}
 .swb{width:28px;height:28px;border-radius:50%;border:3px solid var(--card);box-shadow:0 0 0 1.5px var(--line);padding:0}.swb.on{box-shadow:0 0 0 2.5px var(--ink)}
-.modal{position:fixed;inset:0;background:rgba(40,20,30,.4);display:grid;place-items:start center;padding:16px;overflow:auto;z-index:9}
-.sheet{background:var(--card);border-radius:28px;padding:26px;width:100%;max-width:400px;margin:6vh 0}
+.npanel{position:fixed;top:calc(58px + env(safe-area-inset-top,0px));right:12px;width:min(380px,calc(100vw - 24px));max-height:70vh;overflow:auto;background:var(--card);border:1px solid var(--line);border-radius:22px;box-shadow:0 18px 50px rgba(0,0,0,.25);z-index:8;padding:8px}
+.nrow{display:flex;gap:10px;align-items:flex-start;padding:10px 12px;border-radius:14px;text-decoration:none;font-size:.9rem}.nrow:hover{background:var(--soft)}.nrow.new{background:var(--soft)}
+.nrow .dotn{width:8px;height:8px;border-radius:50%;background:#e5484d;margin-top:7px;flex:none}
+.modal{position:fixed;inset:0;background:rgba(0,0,0,.45);display:grid;place-items:start center;padding:16px;overflow:auto;z-index:9}
+.sheet{background:var(--card);border-radius:28px;padding:26px;width:100%;max-width:420px;margin:5vh 0}
 .div{text-align:center;margin:16px 0}
 .toast{position:fixed;bottom:calc(20px + env(safe-area-inset-bottom,0px));left:50%;transform:translateX(-50%);background:var(--ink);color:var(--bg);padding:10px 20px;border-radius:99px;font-size:.88rem;z-index:20}
 .urow{display:flex;gap:12px;align-items:center;flex-wrap:wrap;padding:10px 0;border-top:1px solid var(--line)}.urow:first-child{border-top:0}
-@media(max-width:640px){.logo span{display:none}.hide-m{display:none}}
+.tp{display:grid;grid-template-columns:repeat(auto-fill,minmax(88px,1fr));gap:8px}
+.tpb{border:2px solid transparent;background:var(--soft);border-radius:18px;padding:12px 8px;display:flex;flex-direction:column;align-items:center;gap:4px;font-weight:600;font-size:.84rem}.tpb span{font-size:1.5rem}.tpb.on{border-color:var(--brand);background:var(--card)}
+.ups{display:flex;gap:8px;flex-wrap:wrap;margin-top:8px}.ups .u{position:relative}.ups img{width:72px;height:72px;object-fit:cover;border-radius:14px;display:block}
+.ups .u button{position:absolute;top:-6px;right:-6px;width:22px;height:22px;border-radius:50%;border:0;background:var(--ink);color:var(--bg);font-size:.7rem;padding:0}
+.hint{background:var(--soft);border-radius:14px;padding:10px 14px;font-size:.82rem;color:var(--muted)}.hint code{font:.8rem ui-monospace,Menlo,monospace;color:var(--ink)}
+.cal{display:grid;grid-template-columns:repeat(7,minmax(0,1fr)) 46px;gap:6px;margin-top:12px}
+.cal .hd{font-size:.72rem;color:var(--muted);text-align:center;font-weight:600}
+.cd,.cw{border:1px solid var(--line);background:var(--card);border-radius:14px;min-height:56px;display:flex;flex-direction:column;align-items:flex-start;justify-content:space-between;padding:6px 9px;position:relative}
+.cd b{font-weight:600}.cd.dim{opacity:.4}.cd.today{box-shadow:inset 0 0 0 2px var(--brand)}.cd .dot{width:8px;height:8px;border-radius:50%;background:var(--brand);align-self:flex-end}
+.cw{align-items:center;justify-content:center;font-size:1.1rem;color:var(--muted)}.cw.has{color:var(--brand);background:var(--soft)}
+.cd.sel,.cw.sel{outline:2px solid var(--brand);outline-offset:1px}
+.pickl{max-height:260px;overflow:auto;margin-top:8px;display:flex;flex-direction:column;gap:4px}
+.pk{border:0;background:var(--soft);border-radius:12px;padding:8px 12px;text-align:left;display:flex;gap:10px;align-items:center}.pk.on{background:var(--accs);box-shadow:inset 0 0 0 1.5px var(--brand)}
+@media(max-width:640px){.logo span{display:none}.hide-m{display:none}.cd{min-height:46px;padding:4px 6px}}
 [hidden]{display:none!important}
 @media(prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}}
 </style>
@@ -123,7 +150,7 @@ textarea{min-height:110px;resize:vertical}textarea.big{min-height:200px}
 <script type="module">
 import{initializeApp}from"https://www.gstatic.com/firebasejs/10.14.1/firebase-app.js";
 import{getAuth,onAuthStateChanged,GoogleAuthProvider,signInWithPopup,createUserWithEmailAndPassword,signInWithEmailAndPassword,signOut,sendPasswordResetEmail}from"https://www.gstatic.com/firebasejs/10.14.1/firebase-auth.js";
-import{getFirestore,collection,addDoc,setDoc,getDoc,getDocs,deleteDoc,updateDoc,doc,query,where,limit,serverTimestamp}from"https://www.gstatic.com/firebasejs/10.14.1/firebase-firestore.js";
+import{getFirestore,collection,addDoc,setDoc,getDoc,getDocs,deleteDoc,updateDoc,doc,query,where,limit,serverTimestamp,writeBatch,onSnapshot}from"https://www.gstatic.com/firebasejs/10.14.1/firebase-firestore.js";
 
 const firebaseConfig = {
   apiKey: "AIzaSyDd5DmV6E8J1jhd0DKhbqMKcb8mD5ANEmg",
@@ -134,44 +161,47 @@ const firebaseConfig = {
   appId: "1:496015789383:web:d2039d67fb9df55be0d062",
   measurementId: "G-W9QJWR0MB3"
 };
-const COUNTRIES = [
-  "Afghanistan","Albania","Algeria","Andorra","Angola","Antigua and Barbuda","Argentina","Armenia","Australia","Austria",
-  "Azerbaijan","Bahamas","Bahrain","Bangladesh","Barbados","Belarus","Belgium","Belize","Benin","Bhutan","Bolivia",
-  "Bosnia and Herzegovina","Botswana","Brazil","Brunei","Bulgaria","Burkina Faso","Burundi","Cabo Verde","Cambodia",
-  "Cameroon","Canada","Central African Republic","Chad","Chile","China","Colombia","Comoros","Congo (Republic)",
-  "Congo (Democratic Republic)","Costa Rica","Côte d'Ivoire","Croatia","Cuba","Cyprus","Czechia","Denmark","Djibouti",
-  "Dominica","Dominican Republic","Ecuador","Egypt","El Salvador","Equatorial Guinea","Eritrea","Estonia","Eswatini",
-  "Ethiopia","Fiji","Finland","France","Gabon","Gambia","Georgia","Germany","Ghana","Greece","Grenada","Guatemala",
-  "Guinea","Guinea-Bissau","Guyana","Haiti","Honduras","Hungary","Iceland","India","Indonesia","Iran","Iraq","Ireland",
-  "Israel","Italy","Jamaica","Japan","Jordan","Kazakhstan","Kenya","Kiribati","Kosovo","Kuwait","Kyrgyzstan","Laos",
-  "Latvia","Lebanon","Lesotho","Liberia","Libya","Liechtenstein","Lithuania","Luxembourg","Madagascar","Malawi",
-  "Malaysia","Maldives","Mali","Malta","Marshall Islands","Mauritania","Mauritius","Mexico","Micronesia","Moldova",
-  "Monaco","Mongolia","Montenegro","Morocco","Mozambique","Myanmar","Namibia","Nauru","Nepal","Netherlands",
-  "New Zealand","Nicaragua","Niger","Nigeria","North Korea","North Macedonia","Norway","Oman","Pakistan","Palau",
-  "Palestine","Panama","Papua New Guinea","Paraguay","Peru","Philippines","Poland","Portugal","Qatar","Romania","Russia",
-  "Rwanda","Saint Kitts and Nevis","Saint Lucia","Saint Vincent and the Grenadines","Samoa","San Marino",
-  "São Tomé and Príncipe","Saudi Arabia","Senegal","Serbia","Seychelles","Sierra Leone","Singapore","Slovakia",
-  "Slovenia","Solomon Islands","Somalia","South Africa","South Korea","South Sudan","Spain","Sri Lanka","Sudan",
-  "Suriname","Sweden","Switzerland","Syria","Taiwan","Tajikistan","Tanzania","Thailand","Timor-Leste","Togo","Tonga",
-  "Trinidad and Tobago","Tunisia","Türkiye","Turkmenistan","Tuvalu","Uganda","Ukraine","United Arab Emirates",
-  "United Kingdom","United States","Uruguay","Uzbekistan","Vanuatu","Vatican City","Venezuela","Vietnam","Yemen",
-  "Zambia","Zimbabwe"
-];
+const CCRAW="Afghanistan|af;Albania|al;Algeria|dz;Andorra|ad;Angola|ao;Antigua and Barbuda|ag;Argentina|ar;Armenia|am;Australia|au;Austria|at;Azerbaijan|az;Bahamas|bs;Bahrain|bh;Bangladesh|bd;Barbados|bb;Belarus|by;Belgium|be;Belize|bz;Benin|bj;Bhutan|bt;Bolivia|bo;Bosnia and Herzegovina|ba;Botswana|bw;Brazil|br;Brunei|bn;Bulgaria|bg;Burkina Faso|bf;Burundi|bi;Cabo Verde|cv;Cambodia|kh;Cameroon|cm;Canada|ca;Central African Republic|cf;Chad|td;Chile|cl;China|cn;Colombia|co;Comoros|km;Congo (Republic)|cg;Congo (Democratic Republic)|cd;Costa Rica|cr;Côte d'Ivoire|ci;Croatia|hr;Cuba|cu;Cyprus|cy;Czechia|cz;Denmark|dk;Djibouti|dj;Dominica|dm;Dominican Republic|do;Ecuador|ec;Egypt|eg;El Salvador|sv;Equatorial Guinea|gq;Eritrea|er;Estonia|ee;Eswatini|sz;Ethiopia|et;Fiji|fj;Finland|fi;France|fr;Gabon|ga;Gambia|gm;Georgia|ge;Germany|de;Ghana|gh;Greece|gr;Grenada|gd;Guatemala|gt;Guinea|gn;Guinea-Bissau|gw;Guyana|gy;Haiti|ht;Honduras|hn;Hungary|hu;Iceland|is;India|in;Indonesia|id;Iran|ir;Iraq|iq;Ireland|ie;Israel|il;Italy|it;Jamaica|jm;Japan|jp;Jordan|jo;Kazakhstan|kz;Kenya|ke;Kiribati|ki;Kosovo|xk;Kuwait|kw;Kyrgyzstan|kg;Laos|la;Latvia|lv;Lebanon|lb;Lesotho|ls;Liberia|lr;Libya|ly;Liechtenstein|li;Lithuania|lt;Luxembourg|lu;Madagascar|mg;Malawi|mw;Malaysia|my;Maldives|mv;Mali|ml;Malta|mt;Marshall Islands|mh;Mauritania|mr;Mauritius|mu;Mexico|mx;Micronesia|fm;Moldova|md;Monaco|mc;Mongolia|mn;Montenegro|me;Morocco|ma;Mozambique|mz;Myanmar|mm;Namibia|na;Nauru|nr;Nepal|np;Netherlands|nl;New Zealand|nz;Nicaragua|ni;Niger|ne;Nigeria|ng;North Korea|kp;North Macedonia|mk;Norway|no;Oman|om;Pakistan|pk;Palau|pw;Palestine|ps;Panama|pa;Papua New Guinea|pg;Paraguay|py;Peru|pe;Philippines|ph;Poland|pl;Portugal|pt;Qatar|qa;Romania|ro;Russia|ru;Rwanda|rw;Saint Kitts and Nevis|kn;Saint Lucia|lc;Saint Vincent and the Grenadines|vc;Samoa|ws;San Marino|sm;São Tomé and Príncipe|st;Saudi Arabia|sa;Senegal|sn;Serbia|rs;Seychelles|sc;Sierra Leone|sl;Singapore|sg;Slovakia|sk;Slovenia|si;Solomon Islands|sb;Somalia|so;South Africa|za;South Korea|kr;South Sudan|ss;Spain|es;Sri Lanka|lk;Sudan|sd;Suriname|sr;Sweden|se;Switzerland|ch;Syria|sy;Taiwan|tw;Tajikistan|tj;Tanzania|tz;Thailand|th;Timor-Leste|tl;Togo|tg;Tonga|to;Trinidad and Tobago|tt;Tunisia|tn;Türkiye|tr;Turkmenistan|tm;Tuvalu|tv;Uganda|ug;Ukraine|ua;United Arab Emirates|ae;United Kingdom|gb;United States|us;Uruguay|uy;Uzbekistan|uz;Vanuatu|vu;Vatican City|va;Venezuela|ve;Vietnam|vn;Yemen|ye;Zambia|zm;Zimbabwe|zw";
+const CC={},COUNTRIES=CCRAW.split(";").map(s=>{const[n,c]=s.split("|");CC[n]=c;return n});
 
 const ADMIN_UID="Tad0H9Mj8OTawmEc7H6QCQGkPiq1";
-const TYPES={recipe:"recipe",song:"song rec",writing:"writing",note:"note",other:"other"};
-const GLY={recipe:"🍲",song:"🎵",writing:"✍️",note:"📝",other:"✨"};
-const THEMES={pink:["#fff6f9","#4a2f3a","#f2a0bf"],blue:["#f3f9ff","#27405a","#94c2ee"],lavender:["#f8f5ff","#3a2f58","#bfa8ee"],
- mint:["#f2fbf6","#27483a","#8fd3b6"],peach:["#fff7f1","#533426","#f8b995"],butter:["#fffbe9","#4d4220","#f2d36e"]};
+const TYPES={recipe:"recipe",song:"song",writing:"writing",image:"photos",note:"note",link:"link",other:"other"};
+const PT=["recipe","song","writing","image","note","link"];
+const GLY={recipe:"🍲",song:"🎵",writing:"✍️",image:"🖼️",note:"📝",link:"🔗",other:"✨"};
+const FM={recipe:{t:"dish name",tr:1,x:"method",xr:1,xp:"how do you make it? steps, tips, the story behind it…",img:"photos (optional)",ing:1},
+ song:{t:"song title and artist",tr:1,x:"why this song? (optional)",xp:"what does it mean to you or to the place?",img:"cover image (optional)",aud:1,link:"or paste a link (youtube, spotify)"},
+ writing:{t:"title",tr:1,x:"your writing",xr:1,xp:"write here. you can use simple html like <b>, <i> and <center>.",big:1,img:"illustration (optional)",css:1},
+ image:{t:"title (optional)",x:"description (optional)",xp:"tell us about the photos…",img:"photos (up to 4)",imgr:1},
+ note:{x:"your note",xr:1,xp:"a tip, a memory, a saying, a place to see…"},
+ link:{t:"title (optional)",x:"say something about it (optional)",xp:"why should people look at it?",link:"link (youtube, spotify or any website)",lr:1}};
+const THEMES={light:["#111111","#f3f3f4","#ffffff","#111111"],dark:["#ffffff","#0a0a0b","#131315","#ececec"],
+ pink:["#e07fa6","#fff5f9","#ffffff","#3a2230"],blue:["#6c9bd8","#f3f8ff","#ffffff","#1d2f47"],green:["#5db487","#f2fbf6","#ffffff","#1c3a2b"],
+ lilac:["#9a86e0","#f6f3ff","#ffffff","#2a2347"],peach:["#e8956f","#fff6f1","#ffffff","#45291c"],yellow:["#d4a83a","#fffbec","#ffffff","#43391a"],teal:["#4fb8b0","#f0fbfa","#ffffff","#18393a"]};
+const COLORS=["pink","blue","green","lilac","peach","yellow","teal"];
+const DEF_ABOUT="the global archive is a place where people share a piece of the places they come from: recipes, songs, writing, photos and notes. every post belongs to a country, so you can wander the world through the people who know it best.\n\nnew posts are looked at by a person before they appear. comments and likes show up straight away. if you see something that doesn't belong, use the report button.";
+
+const ICONS={
+ home:'<path d="M3 11l9-8 9 8"/><path d="M5 10v10h14V10"/>',globe:'<circle cx="12" cy="12" r="9"/><path d="M3 12h18M12 3c3 3.5 3 14.5 0 18M12 3c-3 3.5-3 14.5 0 18"/>',
+ shuffle:'<path d="M16 3h5v5M4 20L21 3M21 16v5h-5M15 15l6 6M4 4l5 5"/>',info:'<circle cx="12" cy="12" r="9"/><path d="M12 11v6M12 7.5v.5"/>',
+ settings:'<circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.7 1.7 0 00.3 1.8l.1.1a2 2 0 11-2.8 2.8l-.1-.1a1.7 1.7 0 00-1.8-.3 1.7 1.7 0 00-1 1.5V21a2 2 0 11-4 0v-.1a1.7 1.7 0 00-1.1-1.5 1.7 1.7 0 00-1.8.3l-.1.1a2 2 0 11-2.8-2.8l.1-.1a1.7 1.7 0 00.3-1.8 1.7 1.7 0 00-1.5-1H3a2 2 0 110-4h.1a1.7 1.7 0 001.5-1.1 1.7 1.7 0 00-.3-1.8l-.1-.1a2 2 0 112.8-2.8l.1.1a1.7 1.7 0 001.8.3H9a1.7 1.7 0 001-1.5V3a2 2 0 114 0v.1a1.7 1.7 0 001 1.5 1.7 1.7 0 001.8-.3l.1-.1a2 2 0 112.8 2.8l-.1.1a1.7 1.7 0 00-.3 1.8V9a1.7 1.7 0 001.5 1H21a2 2 0 110 4h-.1a1.7 1.7 0 00-1.5 1z"/>',
+ flag:'<path d="M4 22V4M4 4h13l-2 4 2 4H4"/>',calendar:'<rect x="3" y="5" width="18" height="16" rx="3"/><path d="M3 10h18M8 3v4M16 3v4"/>',
+ sliders:'<path d="M4 6h8M18 6h2M4 12h2M12 12h8M4 18h10M20 18h0"/><circle cx="15" cy="6" r="2"/><circle cx="9" cy="12" r="2"/><circle cx="17" cy="18" r="2"/>',
+ bell:'<path d="M6 8a6 6 0 0112 0c0 7 3 9 3 9H3s3-2 3-9"/><path d="M10 21a2 2 0 004 0"/>',menu:'<path d="M4 7h16M4 12h16M4 17h16"/>',
+ pencil:'<path d="M4 20h4L19 9l-4-4L4 16z"/><path d="M13.5 6.5l4 4"/>',sun:'<circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M2 12h2M20 12h2M5 5l1.5 1.5M17.5 17.5L19 19M5 19l1.5-1.5M17.5 6.5L19 5"/>',
+ moon:'<path d="M20 14A8 8 0 1110 4a7 7 0 0010 10z"/>',clock:'<circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/>',logout:'<path d="M9 21H5V3h4M16 17l5-5-5-5M21 12H9"/>',
+ chev:'<path d="M9 6l6 6-6 6"/>',search:'<circle cx="11" cy="11" r="7"/><path d="M20 20l-3.5-3.5"/>',bookmark:'<path d="M6 3h12v18l-6-4-6 4z"/>',file:'<path d="M6 3h8l4 4v14H6z"/><path d="M14 3v4h4"/>',user:'<circle cx="12" cy="8" r="4"/><path d="M4 21c1-4 4-6 8-6s7 2 8 6"/>',
+ palette:'<path d="M12 3a9 9 0 100 18c1.5 0 2-1 1.5-2s0-2 1.5-2h2a3 3 0 003-3c0-6-4-11-8-11z"/><circle cx="8" cy="11" r="1"/><circle cx="12" cy="7.5" r="1"/><circle cx="16" cy="11" r="1"/>'};
+const ic=(n,s=18)=>`<svg class="ico" width="${s}" height="${s}" viewBox="0 0 24 24" aria-hidden="true">${ICONS[n]||""}</svg>`;
 
 const fbApp=initializeApp(firebaseConfig),auth=getAuth(fbApp),db=getFirestore(fbApp);
 const S={user:null,profile:null,admin:false,banned:false,authReady:false,items:[],likes:[],likeMap:{},myLikes:new Set(),saves:new Set(),following:new Set(),
- loaded:false,loadErr:false,spot:null,fact:null,q:"",sort:"new",ctype:"",cq:"",menu:false,modal:null,authMode:"login",pendingName:null,after:null,
- atab:"queue",pf:null,userList:[],banSet:new Set(),uq:""};
-let themePick="pink";
-try{const t=localStorage.getItem("ga_theme");if(THEMES[t])themePick=t}catch{}
+ loaded:false,loadErr:false,spot:null,fact:null,cfg:{},q:"",sort:"new",cq:"",menu:false,nopen:false,modal:null,authMode:"login",pendingName:null,after:null,
+ atab:"gen",pf:null,userList:[],banSet:new Set(),uq:"",notifs:[],show:40,pend:{},pt:"",styled:false,files:{imgs:[],audio:null,avatar:null,rmav:false},
+ cal:{off:0,facts:null,spots:null,sel:null,pick:"",pq:""}};
+let themePick="auto";
+try{const t=localStorage.getItem("ga_theme");if(t==="auto"||THEMES[t])themePick=t}catch{}
 
-const $=s=>document.querySelector(s);
+const $=s=>document.querySelector(s),$$=s=>[...document.querySelectorAll(s)];
 const esc=s=>String(s??"").replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));
 const enc=encodeURIComponent;
 const safeUrl=u=>{try{const x=new URL(u);return x.protocol==="https:"||x.protocol==="http:"?x.href:null}catch{return null}};
@@ -183,39 +213,107 @@ const hs=s=>{const h=hh(s);return `--h:${h};--h2:${(h+45)%360}`};
 const clip=(t,n)=>{t=String(t||"").replace(/\s+/g," ").trim();return t.length>n?t.slice(0,n).trim()+"…":t};
 const pad=n=>String(n).padStart(2,"0");
 const dkey=d=>d.getFullYear()+"-"+pad(d.getMonth()+1)+"-"+pad(d.getDate());
+const parseK=k=>{const[y,m,d]=k.split("-").map(Number);return new Date(y,m-1,d)};
 const mondayOf=d=>{const x=new Date(d.getFullYear(),d.getMonth(),d.getDate());x.setDate(x.getDate()-((x.getDay()+6)%7));return x};
 const addDays=(d,n)=>{const x=new Date(d);x.setDate(x.getDate()+n);return x};
 const fmtD=d=>d.toLocaleDateString(undefined,{weekday:"short",day:"numeric",month:"short"});
 const toast=m=>{const t=document.createElement("div");t.className="toast";t.textContent=m;document.body.append(t);setTimeout(()=>t.remove(),2400)};
-function applyTheme(){const t=THEMES[themePick]||THEMES.pink,r=document.documentElement.style;r.setProperty("--bg",t[0]);r.setProperty("--ink",t[1]);r.setProperty("--acc",t[2])}
-applyTheme();
+const lum=h=>{const n=parseInt(h.slice(1),16),f=v=>(v/=255)<=.03928?v/12.92:((v+.055)/1.055)**2.4;return .2126*f(n>>16)+.7152*f(n>>8&255)+.0722*f(n&255)};
+const autoName=()=>{const h=new Date().getHours();return h>=20||h<7?"dark":"light"};
+function applyTheme(){
+ const t=THEMES[themePick==="auto"?autoName():themePick]||THEMES.light,r=document.documentElement.style,dk=lum(t[1])<.2;
+ [["--brand",t[0]],["--bg",t[1]],["--card",t[2]],["--ink",t[3]],["--on",lum(t[0])>.45?"#111":"#fff"],["--sea",lum(t[0])>.75?"#4a4a55":t[0]],
+  ["--gs",dk?"34%":"82%"],["--gl1",dk?"20%":"94%"],["--gl2",dk?"26%":"87%"]].forEach(([k,v])=>r.setProperty(k,v));
+ r.colorScheme=dk?"dark":"light";
+}
+applyTheme();setInterval(()=>{if(themePick==="auto")applyTheme()},60000);
 
+const flag=(n,w=28)=>{const c=CC[n];return c?`<img class="flag" src="https://flagcdn.com/w80/${c}.png" width="${w}" height="${Math.round(w*.72)}" alt="" loading="lazy">`:""};
+const av=(name,photo,s=28)=>photo?`<img class="av" alt="" src="${esc(photo)}" style="width:${s}px;height:${s}px;object-fit:cover">`:`<span class="av gr" style="${hs(name)};width:${s}px;height:${s}px;font-size:${Math.round(s*.4)}px">${esc(ini(name))}</span>`;
 let gid=0;
-const globe=(s=36)=>{const i="g"+(++gid);return `<svg class="globe" width="${s}" height="${s}" viewBox="0 0 32 32" aria-hidden="true"><defs><clipPath id="${i}"><circle cx="16" cy="16" r="15.5"/></clipPath></defs><circle cx="16" cy="16" r="15.5" fill="var(--acc)"/><g clip-path="url(#${i})"><g fill="#fff" transform="translate(2.6 2.6) scale(.84)"><path d="M2 8c3-3 8-4 10-2s0 4-2 5-1 3 1 4 3 3 1 5-3 4-4 6c-3-1-5-5-6-9S0 11 2 8z"/><path d="M17 4c3-1 7-1 10 2 3 2 5 5 3 6s-3 1-4 3 0 4-2 6-4 2-5 0-1-4 0-6-2-3-3-5-1-3 1-6z"/><path d="M23 25c2-1 5 0 5 2s-2 4-4 3-3-4-1-5z"/></g></g></svg>`};
+const globe=(s=36)=>{const i="g"+(++gid);return `<svg class="globe" width="${s}" height="${s}" viewBox="0 0 32 32" aria-hidden="true"><defs><clipPath id="${i}"><circle cx="16" cy="16" r="15.5"/></clipPath></defs><circle cx="16" cy="16" r="15.5" fill="var(--sea)"/><g clip-path="url(#${i})"><g fill="#fff" transform="translate(2.6 2.6) scale(.84)"><path d="M2 8c3-3 8-4 10-2s0 4-2 5-1 3 1 4 3 3 1 5-3 4-4 6c-3-1-5-5-6-9S0 11 2 8z"/><path d="M17 4c3-1 7-1 10 2 3 2 5 5 3 6s-3 1-4 3 0 4-2 6-4 2-5 0-1-4 0-6-2-3-3-5-1-3 1-6z"/><path d="M23 25c2-1 5 0 5 2s-2 4-4 3-3-4-1-5z"/></g></g></svg>`};
+const tagify=t=>String(t||"").split(/(#[\p{L}\p{N}_]+)/gu).map(p=>/^#[\p{L}\p{N}_]+$/u.test(p)?`<a class="ht" href="#/explore?q=${enc(p)}">${esc(p)}</a>`:esc(p)).join("");
+const uname=x=>x.authorHandle?"@"+x.authorHandle:(x.authorName||"anonymous");
+
+/* ---------- writing skins: sandboxed + sanitised ---------- */
+const cleanCss=s=>String(s||"").slice(0,6000).replace(/@import[^;]*;?/gi,"").replace(/url\s*\([^)]*\)?/gi,"").replace(/expression\s*\(/gi,"(").replace(/javascript:/gi,"").replace(/behavior\s*:/gi,"x:").replace(/-moz-binding/gi,"x").replace(/[<>]/g,"");
+const OKT=new Set("p br b i u s em strong del ins blockquote h1 h2 h3 h4 hr ul ol li div span center small sub sup pre code table thead tbody tr td th".split(" "));
+const BADT=new Set("script style iframe object embed link meta form input button textarea select svg math base audio video img a".split(" "));
+function cleanHtml(h){
+ const d=new DOMParser().parseFromString("<body>"+String(h||"").slice(0,12000)+"</body>","text/html");
+ (function walk(n){[...n.childNodes].forEach(c=>{
+  if(c.nodeType===3)return;
+  if(c.nodeType!==1){c.remove();return}
+  const t=c.tagName.toLowerCase();
+  if(BADT.has(t)){c.remove();return}
+  if(!OKT.has(t)){walk(c);c.replaceWith(...c.childNodes);return}
+  [...c.attributes].forEach(a=>{const k=a.name.toLowerCase();
+   if(k==="class")c.setAttribute("class",a.value.replace(/[^\w\- ]/g,""));
+   else if(k==="style")c.setAttribute("style",cleanCss(a.value));
+   else if(!(k==="align"&&/^(left|right|center|justify)$/.test(a.value)))c.removeAttribute(a.name)});
+  walk(c)})})(d.body);
+ return d.body.innerHTML;
+}
+function workDoc(text,css,styled){
+ const ink=getComputedStyle(document.body).color;
+ return `<!doctype html><meta charset="utf-8"><meta http-equiv="Content-Security-Policy" content="default-src 'none'; style-src 'unsafe-inline'"><style>html,body{margin:0}body{padding:18px 20px;font:17px/1.7 Georgia,'Times New Roman',serif;color:${ink};background:transparent;word-wrap:break-word}.work{white-space:pre-wrap}</style>${styled&&css?`<style>${cleanCss(css)}</style>`:""}<body><div class="work">${cleanHtml(text)}</div></body>`;
+}
+
+/* ---------- media helpers ---------- */
+function readImg(file,max,q){return new Promise((res,rej)=>{const u=URL.createObjectURL(file),im=new Image();
+ im.onload=()=>{const s=Math.min(1,max/Math.max(im.width,im.height)),w=Math.max(1,Math.round(im.width*s)),h=Math.max(1,Math.round(im.height*s)),c=document.createElement("canvas");c.width=w;c.height=h;
+  const x=c.getContext("2d");x.fillStyle="#fff";x.fillRect(0,0,w,h);x.drawImage(im,0,0,w,h);URL.revokeObjectURL(u);res({url:c.toDataURL("image/jpeg",q),w,h})};
+ im.onerror=()=>{URL.revokeObjectURL(u);rej(new Error("bad image"))};im.src=u})}
+async function prepImg(file){
+ let full;for(const[m,q]of[[1100,.78],[900,.7],[700,.65]]){full=await readImg(file,m,q);if(full.url.length<900000)break}
+ if(full.url.length>=900000)throw new Error("too big");
+ let th=await readImg(file,360,.62);if(th.url.length>55000)th=await readImg(file,260,.55);
+ return{full:full.url,thumb:th.url,w:full.w,h:full.h};
+}
+const b64=buf=>{let s="";const a=new Uint8Array(buf);for(let i=0;i<a.length;i+=32768)s+=String.fromCharCode.apply(null,a.subarray(i,i+32768));return btoa(s)};
+async function playAudio(cid,parts){let s="";for(let k=0;k<parts;k++){const d=await getDoc(doc(db,"media",cid+"_a"+k));if(!d.exists())throw new Error("missing");s+=d.data().data}
+ const bin=atob(s),u=new Uint8Array(bin.length);for(let i=0;i<bin.length;i++)u[i]=bin.charCodeAt(i);return URL.createObjectURL(new Blob([u],{type:"audio/mpeg"}))}
+async function delPost(c){
+ const j=[deleteDoc(doc(db,"contributions",c.id))];
+ for(let i=0;i<(c.imgs||0);i++)j.push(deleteDoc(doc(db,"media",c.id+"_i"+i)));
+ for(let k=0;k<(c.audio&&c.audio.parts||0);k++)j.push(deleteDoc(doc(db,"media",c.id+"_a"+k)));
+ await Promise.all(j);
+}
 
 /* ---------- data ---------- */
 function rebuildLikes(){S.likeMap={};S.myLikes=new Set();
  for(const l of S.likes){S.likeMap[l.cid]=(S.likeMap[l.cid]||0)+1;if(S.user&&l.uid===S.user.uid)S.myLikes.add(l.cid)}}
 async function loadHome(){
- try{const[a,b]=await Promise.all([getDoc(doc(db,"spotlight",dkey(mondayOf(new Date())))),getDoc(doc(db,"facts",dkey(new Date())))]);
-  S.spot=a.exists()?a.data():null;S.fact=b.exists()?b.data():null}catch(e){console.error(e)}
+ try{const[a,b,c]=await Promise.all([getDoc(doc(db,"spotlight",dkey(mondayOf(new Date())))),getDoc(doc(db,"facts",dkey(new Date()))),getDoc(doc(db,"site","config"))]);
+  S.spot=a.exists()?a.data():null;S.fact=b.exists()?b.data():null;S.cfg=c.exists()?c.data():{}}catch(e){console.error(e)}
 }
 async function loadPublic(){
  try{
   const[a,b]=await Promise.all([
-   getDocs(query(collection(db,"contributions"),where("status","==","approved"),limit(1000))),
+   getDocs(query(collection(db,"contributions"),where("status","==","approved"),limit(600))),
    getDocs(query(collection(db,"likes"),limit(5000)))]);
   S.items=a.docs.map(d=>({id:d.id,...d.data()})).sort((x,y)=>(y.createdAt?.seconds||0)-(x.createdAt?.seconds||0));
   S.likes=b.docs.map(d=>d.data());rebuildLikes();S.loaded=true;S.loadErr=false;
   await loadHome();return true;
  }catch(e){console.error(e);S.loadErr=true;return false}
 }
+const slug=s=>String(s||"").toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g,"").replace(/[^a-z0-9_.]/g,"");
+async function autoUsername(u,p){
+ const base=(slug(p.name)||slug((u.email||"").split("@")[0])||"user").slice(0,14).padEnd(3,"x");
+ for(let i=0;i<6;i++){
+  const un=i?base+Math.floor(1000+Math.random()*9000):base,np={...p,username:un};
+  try{const b=writeBatch(db);b.set(doc(db,"usernames",un),{uid:u.uid});b.set(doc(db,"users",u.uid),np);await b.commit();return np}catch(e){console.error(e)}
+ }
+ return p;
+}
 async function ensureProfile(u){
  try{
-  const r=doc(db,"users",u.uid),s=await getDoc(r);
-  if(s.exists()){S.profile=s.data();return}
-  const name=(S.pendingName||u.displayName||(u.email||"").split("@")[0]||"anonymous").slice(0,40);
-  S.pendingName=null;const p={name,bio:"",home:""};await setDoc(r,p);S.profile=p;
+  const r=doc(db,"users",u.uid),s=await getDoc(r);let p;
+  if(s.exists())p=s.data();
+  else{const name=(S.pendingName||u.displayName||(u.email||"").split("@")[0]||"anonymous").slice(0,40);S.pendingName=null;p={name,bio:"",home:""}}
+  if(!p.username)p=await autoUsername(u,p);
+  else if(!s.exists())await setDoc(r,p);
+  S.profile=p;if(p.theme&&(p.theme==="auto"||THEMES[p.theme])){themePick=p.theme;try{localStorage.setItem("ga_theme",themePick)}catch{}applyTheme()}
  }catch(e){console.error(e);S.profile={name:u.displayName||"anonymous",bio:"",home:""}}
 }
 async function loadBan(u){try{return(await getDoc(doc(db,"bans",u.uid))).exists()}catch{return false}}
@@ -226,26 +324,45 @@ async function loadMyStuff(u){
  }catch(e){console.error(e)}
 }
 const myName=()=>(S.profile&&S.profile.name)||(S.user&&S.user.displayName)||"anonymous";
+const myHandle=()=>(S.profile&&S.profile.username)||"";
 function need(){
- if(!S.user){S.modal="auth";S.authMode="login";render(true);return false}
+ if(!S.user){S.menu=false;S.modal="auth";S.authMode="login";render(true);return false}
  if(S.banned){toast("this account has been suspended");return false}
  return true;
 }
+async function notify(to,type,o={}){
+ if(!to||!S.user||to===S.user.uid)return;
+ const data={to,from:S.user.uid,fromName:myName().slice(0,60),type,read:false,createdAt:serverTimestamp()};
+ if(o.cid)data.cid=o.cid;if(o.text)data.text=String(o.text).slice(0,200);
+ try{if(o.id)await setDoc(doc(db,"notifs",o.id),data);else await addDoc(collection(db,"notifs"),data)}catch{}
+}
+let unN=null;
+function listenNotifs(u){
+ if(unN){unN();unN=null}S.notifs=[];if(!u)return;
+ unN=onSnapshot(query(collection(db,"notifs"),where("to","==",u.uid),limit(60)),snap=>{
+  const t=x=>x.createdAt&&x.createdAt.seconds!=null?x.createdAt.seconds:9e9;
+  S.notifs=snap.docs.map(d=>({id:d.id,...d.data()})).sort((a,b)=>t(b)-t(a));
+  if(S.notifs.length>50)S.notifs.slice(40).forEach(n=>deleteDoc(doc(db,"notifs",n.id)).catch(()=>{}));
+  drawBell();
+ },e=>console.error(e));
+}
+const unread=()=>S.notifs.filter(n=>!n.read).length;
+function markRead(){S.notifs.filter(n=>!n.read).forEach(n=>updateDoc(doc(db,"notifs",n.id),{read:true}).catch(()=>{}))}
+function closeBell(){if(S.nopen){S.nopen=false;markRead()}}
 
 /* ---------- pieces ---------- */
-const hay=c=>[c.caption,c.country,c.authorName,TYPES[c.type]].join(" ").toLowerCase();
-function cover(c,full){
- if(full)return `<div class="cover gr" style="${hs(c.country)}"><span class="cg">${GLY[c.type]||"✨"}</span><span class="cq big">${esc(c.country)}</span></div>`;
- const ht=[150,190,230,270][hh(c.id)%4];
- return `<div class="cover gr" style="${hs(c.country)};min-height:${ht}px"><span class="cg">${GLY[c.type]||"✨"}</span><span class="cq">${esc(clip(c.caption,125))}</span></div>`;
-}
+const hay=c=>[c.caption,c.title,c.country,c.authorName,c.authorHandle,TYPES[c.type]].join(" ").toLowerCase();
 function card(c){
- return `<a class="pin" href="#/c/${esc(c.id)}"><div class="pc">${cover(c,false)}<span class="ptag">${esc(c.country)}</span><span class="plk">♥ ${S.likeMap[c.id]||0}</span></div>
- <div class="pm"><span class="av gr" style="${hs(c.authorName)}">${esc(ini(c.authorName))}</span><span>${esc(c.authorName||"anonymous")}</span><span class="sp">${esc(TYPES[c.type]||c.type)}</span></div></a>`;
+ const body=c.thumb?`<img class="timg" loading="lazy" alt="" src="${esc(c.thumb)}" style="aspect-ratio:${c.ar||1}">`
+  :`<div class="cover gr" style="${hs(c.country)};min-height:${[130,170,210,250][hh(c.id)%4]}px"><span class="cg">${GLY[c.type]||"✨"}</span><span class="cq">${esc(clip(c.title||c.text||c.caption,110))}</span></div>`;
+ return `<a class="pin" href="#/c/${esc(c.id)}"><div class="pc">${body}<span class="ptag">${flag(c.country,18)}${esc(c.country)}</span><span class="plk">♥ ${S.likeMap[c.id]||0}</span></div>
+ <div class="pcap">${esc(clip(c.caption,120))}</div>
+ <div class="pm"><span>${esc(uname(c))}</span><span class="sp">${GLY[c.type]||""} ${esc(TYPES[c.type]||c.type)}</span></div></a>`;
 }
-const grid=(L,msg)=>L.length?`<div class="mas">${L.map(card).join("")}</div>`:`<p class="empty">${msg||"nothing here yet."}</p>`;
-function chipsFor(active,act){
- return `<button class="btn s ${active===""?"on":""}" data-act="${act}" data-t="">all</button>`+Object.entries(TYPES).map(([k,v])=>`<button class="btn s ${active===k?"on":""}" data-act="${act}" data-t="${k}">${GLY[k]} ${v}</button>`).join("");
+function grid(L,msg,paged,board){
+ if(!L.length)return `<p class="empty">${msg||"nothing here yet."}</p>`;
+ const sh=paged?L.slice(0,S.show):L;
+ return `<div class="mas ${board?"board":""}">${sh.map(card).join("")}</div>${paged&&L.length>S.show?`<div class="row" style="justify-content:center;margin-top:10px"><button class="btn" data-act="more">show more</button></div>`:""}`;
 }
 function embed(url){
  let m=url.match(/(?:youtube\.com\/watch\?(?:[^#]*&)?v=|youtu\.be\/|youtube\.com\/shorts\/)([\w-]{6,15})/);
@@ -257,22 +374,34 @@ function embed(url){
 const loginPrompt=w=>`<div class="box"><p>log in to see ${w}.</p><button class="btn p" data-act="login">log in or sign up</button></div>`;
 const tiles=arr=>`<div class="tiles">${arr.map(([n,l])=>`<div class="tile"><b>${n}</b><span>${l}</span></div>`).join("")}</div>`;
 const banBanner=()=>S.banned?`<div class="notice">this account has been suspended. you can still browse, but you can't post, like, comment or follow.</div>`:"";
+const appear=()=>`<div class="seg">${[["auto","auto","clock"],["light","light","sun"],["dark","dark","moon"]].map(([v,n,i])=>`<button class="btn s ${themePick===v?"on":""}" data-act="theme" data-t="${v}">${ic(i,15)} ${n}</button>`).join("")}</div>
+ <div class="sws">${COLORS.map(n=>`<button class="swb ${themePick===n?"on":""}" data-act="theme" data-t="${n}" title="${n}" aria-label="${n} theme" style="background:${THEMES[n][0]}"></button>`).join("")}</div>`;
 
 /* ---------- views ---------- */
 function top(){
- const burger=`<button class="burger" data-act="menu" aria-label="menu"><svg class="ico" viewBox="0 0 24 24" style="color:var(--ink)"><path d="M4 7h16M4 12h16M4 17h16"/></svg></button>`;
- return `<header class="top"><a class="logo" href="#/">${globe(36)}<span>the global archive</span></a>
- <form id="topSearch" class="srch"><svg class="ico" viewBox="0 0 24 24"><circle cx="11" cy="11" r="7"/><path d="M20 20l-3.5-3.5"/></svg><input id="tq" placeholder="search recipes, songs, countries…" aria-label="search" value="${esc(S.q)}" autocomplete="off"></form>
- ${!S.authReady?"":S.user?`<button class="avb av gr" style="${hs(myName())}" data-act="menu" aria-label="menu">${esc(ini(myName()))}</button>`:`<button class="btn" data-act="login">log in</button>${burger}`}</header>`;
+ return `<header class="top"><a class="logo" href="#/">${globe(34)}<span>the global archive</span></a>
+ <form id="topSearch" class="srch">${ic("search")}<input id="tq" placeholder="search recipes, songs, #tags, countries…" aria-label="search" value="${esc(S.q)}" autocomplete="off"></form>
+ ${S.authReady&&!S.user?`<button class="btn" data-act="login">log in</button>`:""}
+ <span id="bellw">${bellHTML()}</span><button class="ib" data-act="menu" aria-label="menu">${ic("menu",20)}</button></header>`;
 }
+const bellHTML=()=>{const n=unread();return `<button class="ib" data-act="bell" aria-label="notifications${n?", "+n+" new":""}">${ic("bell",20)}${n?`<span class="bdg">${n>9?"9+":n}</span>`:""}</button>`};
+const nHref=n=>n.type==="follow"||n.type==="heart"?"#/u/"+n.from:n.type==="pending"||n.type==="report"?"#/reports":n.cid?"#/c/"+n.cid:"#/";
+const nText=n=>({like:"liked your post",comment:"commented: “"+clip(n.text,70)+"”",follow:"started following you",heart:"hearted your profile",approved:"your post was approved ✓",pending:"submitted a post for review",report:"sent a report"+(n.text?" ("+n.text+")":"")}[n.type]||"");
+function npanelInner(){
+ if(!S.user)return `<p class="empty">log in to see notifications.</p>`;
+ return S.notifs.length?S.notifs.map(n=>`<a class="nrow ${n.read?"":"new"}" href="${esc(nHref(n))}">${n.read?`<span style="width:8px"></span>`:`<span class="dotn"></span>`}<span class="grow">${n.type==="approved"?"":`<b>${esc(n.fromName||"someone")}</b> `}${esc(nText(n))}</span></a>`).join(""):`<p class="empty">nothing yet. likes, comments and follows will show up here.</p>`;
+}
+const npanel=()=>`<div class="scrim clear" data-act="closebell"></div><div class="npanel" id="npanel" role="dialog" aria-label="notifications">${npanelInner()}</div>`;
+function drawBell(){const b=$("#bellw");if(b)b.innerHTML=bellHTML();const p=$("#npanel");if(p)p.innerHTML=npanelInner()}
+
 function highlights(){
  const c=S.spot&&S.items.find(x=>x.id===S.spot.cid);
- const spot=c?`<a class="spot gr" style="${hs(c.country)}" href="#/c/${esc(c.id)}"><span class="lbl">✦ contribution of the week</span><span class="cq">${esc(clip(c.caption,230))}</span>
-  <span class="row k" style="color:inherit"><span>${GLY[c.type]||""} ${esc(c.country)}</span><span class="sp">by ${esc(c.authorName||"anonymous")}</span></span></a>`
-  :S.admin?`<div class="nudge"><span class="lbl">✦ contribution of the week</span><p>nothing is spotlighted this week yet.</p><a class="btn s p" href="#/admin" data-tab="spot">choose one</a></div>`:"";
+ const spot=c?`<a class="spot gr" style="${hs(c.country)}" href="#/c/${esc(c.id)}"><span class="lbl">✦ contribution of the week</span><span class="cq">${esc(clip(c.title||c.caption,200))}</span>
+  <span class="row k" style="color:inherit"><span class="row" style="gap:6px">${flag(c.country,20)}${esc(c.country)}</span><span class="sp">by ${esc(uname(c))}</span></span></a>`
+  :S.admin?`<div class="nudge"><span class="lbl">✦ contribution of the week</span><p>nothing is spotlighted this week yet.</p><a class="btn s p" href="#/calendar">open calendar</a></div>`:"";
  const f=S.fact;
  const fact=f?`<div class="fact"><span class="lbl">☁ fun fact of the day</span><p>${esc(f.text)}</p>${f.country&&COUNTRIES.includes(f.country)?`<a class="k" href="#/country/${enc(f.country)}">more from ${esc(f.country)} →</a>`:""}</div>`
-  :S.admin?`<div class="nudge"><span class="lbl">☁ fun fact of the day</span><p>no fun fact set for today.</p><a class="btn s p" href="#/admin" data-tab="facts">add one</a></div>`:"";
+  :S.admin?`<div class="nudge"><span class="lbl">☁ fun fact of the day</span><p>no fun fact set for today.</p><a class="btn s p" href="#/calendar">open calendar</a></div>`:"";
  if(!spot&&!fact)return "";
  return `<div class="hl ${spot&&fact?"":"one"}">${spot}${fact}</div>`;
 }
@@ -281,14 +410,14 @@ function resultsHTML(useQ){
  const fol=S.sort==="following"&&S.user;
  if(fol)L=L.filter(c=>S.following.has(c.authorUid));
  if(S.sort==="liked")L=[...L].sort((a,b)=>(S.likeMap[b.id]||0)-(S.likeMap[a.id]||0));
- return grid(L,fol?"follow people and their posts will show up here.":S.items.length?"nothing matches.":"no posts yet. be the first to share a piece of home.");
+ return grid(L,fol?"follow people and their posts will show up here.":S.items.length?"nothing matches.":"no posts yet. be the first to share a piece of home.",true);
 }
 function feed(useQ){
  const cs=new Set(S.items.map(c=>c.country)),au=new Set(S.items.map(c=>c.authorUid));
  const head=useQ&&S.q?`<div class="row" style="margin-top:14px"><h2>results for “${esc(S.q)}”</h2><button class="btn s" data-act="clearq">clear</button></div>`
-  :`<section class="intro"><h1>the world, <em>one contribution at a time</em></h1>
-  <p class="sub">recipes, songs, writing and notes about the places we come from, shared by the people who know them.</p>
-  <div class="row" style="margin-top:16px"><a class="btn p" href="#/contribute">share a piece of home</a><button class="btn" data-act="random">surprise me</button><a class="btn" href="#/countries">browse countries</a></div>
+  :`${S.cfg.announcement?`<div class="ann">📣 ${esc(S.cfg.announcement)}</div>`:""}<section class="intro"><h1>the world, <em>one contribution at a time</em></h1>
+  <p class="sub">recipes, songs, writing, photos and notes about the places we come from, shared by the people who know them.</p>
+  <div class="row" style="margin-top:16px"><a class="btn p" href="#/contribute">share a piece of home</a><button class="btn" data-act="random">${ic("shuffle",16)} surprise me</button><a class="btn" href="#/countries">${ic("globe",16)} browse countries</a></div>
   <p class="k" style="margin-top:14px">${S.items.length} posts · ${cs.size} of ${COUNTRIES.length} countries · ${au.size} contributors</p></section>${highlights()}`;
  const sorts=[["new","latest"],["liked","most loved"]];if(S.user)sorts.push(["following","following"]);
  return `${banBanner()}${head}<div class="chips">${sorts.map(([k,v])=>`<button class="btn s ${S.sort===k?"on":""}" data-act="sort" data-t="${k}">${v}</button>`).join("")}</div>
@@ -297,69 +426,123 @@ function feed(useQ){
 function clistHTML(){
  const m={};for(const c of S.items)m[c.country]=(m[c.country]||0)+1;const f=S.cq.toLowerCase();
  const rows=COUNTRIES.filter(c=>c.toLowerCase().includes(f)).map(c=>({c,n:m[c]||0})).sort((a,b)=>b.n-a.n||a.c.localeCompare(b.c));
- return rows.length?rows.map(r=>`<a class="ctile gr ${r.n?"":"zero"}" style="${hs(r.c)}" href="#/country/${enc(r.c)}"><span class="cn2">${esc(r.c)}</span><span class="k">${r.n?r.n+" post"+(r.n>1?"s":""):"be the first"}</span></a>`).join(""):`<p class="empty">no matching countries.</p>`;
+ return rows.length?rows.map(r=>`<a class="crow ${r.n?"":"zero"}" href="#/country/${enc(r.c)}">${flag(r.c,32)}<span class="grow">${esc(r.c)}</span><span class="k">${r.n?r.n+" post"+(r.n>1?"s":""):""}</span></a>`).join(""):`<p class="empty">no matching countries.</p>`;
 }
 function countries(){
- return `<div class="intro"><h1>every <em>country</em></h1><p class="sub">the ones with posts come first. pick one to see what people have shared.</p></div>
- <div class="srch" style="margin:16px 0 0;max-width:420px"><svg class="ico" viewBox="0 0 24 24"><circle cx="11" cy="11" r="7"/><path d="M20 20l-3.5-3.5"/></svg><input id="cq" placeholder="search countries…" value="${esc(S.cq)}" aria-label="search countries"></div>
- <div class="ctiles" id="cl">${clistHTML()}</div>`;
+ return `<div class="intro"><h1>every <em>country</em></h1><p class="sub">the ones with posts come first. pick one to see its board.</p></div>
+ <div class="srch" style="margin:16px 0 0;max-width:420px">${ic("search")}<input id="cq" placeholder="search countries…" value="${esc(S.cq)}" aria-label="search countries"></div>
+ <div class="clist" id="cl">${clistHTML()}</div>`;
 }
 function country(name){
  if(!COUNTRIES.includes(name))return `<p class="empty">country not found.</p>`;
- const all=S.items.filter(c=>c.country===name),L=all.filter(c=>!S.ctype||c.type===S.ctype);
- const likes=all.reduce((n,c)=>n+(S.likeMap[c.id]||0),0);
- return `<section class="cban gr" style="${hs(name)}"><a class="k" href="#/countries">← countries</a><h1>${esc(name)}</h1>
- <div class="row"><span class="tag">${all.length} posts</span><span class="tag">${new Set(all.map(c=>c.authorUid)).size} contributors</span><span class="tag">♥ ${likes}</span>
- <a class="btn p sp" href="#/contribute?country=${enc(name)}">+ post about ${esc(name)}</a></div></section>
- <div class="chips">${chipsFor(S.ctype,"ctype")}</div>
- ${L.length?grid(L):`<p class="empty">${all.length?"nothing of that kind yet.":"nothing here yet. be the first to share something from "+esc(name)+"."}</p>`}`;
+ const L=S.items.filter(c=>c.country===name),likes=L.reduce((n,c)=>n+(S.likeMap[c.id]||0),0);
+ return `<section class="cban" style="--flag:url(https://flagcdn.com/w320/${CC[name]}.png)"><div class="cbi"><a class="k" href="#/countries">← all countries</a>
+ <div class="row" style="gap:16px;margin:10px 0 14px">${flag(name,64)}<h1>${esc(name)}</h1></div>
+ <div class="row"><span class="tag">${L.length} posts</span><span class="tag">${new Set(L.map(c=>c.authorUid)).size} contributors</span><span class="tag">♥ ${likes}</span>
+ <a class="btn p sp" href="#/contribute?country=${enc(name)}">+ post about ${esc(name)}</a></div></div></section>
+ ${L.length?grid(L,"",false,true):`<p class="empty">nothing here yet. be the first to share something from ${esc(name)}.</p>`}`;
+}
+function mediaHTML(c,link){
+ let h="";
+ if(c.imgs>0&&c.thumb)h+=`<img class="mimg" alt="" src="${esc(c.thumb)}">`;
+ if(c.audio)h+=`<div class="aud" id="aud"><span class="gl">🎵</span><div class="grow"><b>${esc(c.audio.name||"audio")}</b><div class="k">${((c.audio.size||0)/1048576).toFixed(1)} mb</div></div><button class="btn p s" data-act="playaud" data-id="${esc(c.id)}" data-parts="${c.audio.parts||1}">▶ play</button></div>`;
+ if(link)h+=embed(link);
+ if(!h)h=`<div class="cover gr" style="${hs(c.country)}"><span class="cg">${GLY[c.type]||"✨"}</span><span class="cq big">${esc(c.country)}</span></div>`;
+ return h;
+}
+function bodyHTML(c){
+ if(c.type==="recipe"){
+  const L=String(c.ing||"").split("\n").map(x=>x.trim()).filter(Boolean);
+  return (L.length?`<h3 class="sec">ingredients</h3><ul class="ing">${L.map(x=>`<li>${esc(x)}</li>`).join("")}</ul>`:"")+(c.text?`<h3 class="sec">method</h3><div class="body">${esc(c.text)}</div>`:"");
+ }
+ if(c.type==="writing"&&c.text)return `<div class="row" style="margin:16px 0 8px">${c.css?`<button class="btn s ${S.styled?"on":""}" data-act="togstyle" id="tsb">${ic("palette",15)}${S.styled?"view plain":"view with author's style"}</button>`:""}</div><iframe id="wf" class="wfr" sandbox="allow-same-origin" title="writing" srcdoc="${esc(workDoc(c.text,c.css,S.styled))}"></iframe>`;
+ return c.text?`<div class="body">${esc(c.text)}</div>`:"";
 }
 function detail(id){
- const c=S.items.find(x=>x.id===id);
- if(!c)return `<p class="empty">that post doesn't exist, or hasn't been approved yet.</p>`;
- const liked=S.myLikes.has(id),saved=S.saves.has(id),link=c.link&&safeUrl(c.link),mineP=S.user&&S.user.uid===c.authorUid,fl=S.following.has(c.authorUid);
- S.after=()=>loadComments(id);
- return `<a class="k" href="#/country/${enc(c.country)}">← ${esc(c.country)}</a>${banBanner()}
- <article class="pinbig"><div class="pl">${cover(c,true)}${link?embed(link):""}</div>
- <div class="pr"><div class="row"><a class="row" style="gap:10px;text-decoration:none" href="#/u/${esc(c.authorUid)}"><span class="av gr" style="${hs(c.authorName)};width:40px;height:40px;font-size:.9rem">${esc(ini(c.authorName))}</span><b>${esc(c.authorName||"anonymous")}</b></a>
+ let c=S.items.find(x=>x.id===id)||S.pend[id];
+ if(!c){
+  if(S.user&&S.pend[id]===undefined){S.after=async()=>{let v=false;try{const d=await getDoc(doc(db,"contributions",id));if(d.exists())v={id,...d.data()}}catch{}S.pend[id]=v;render(true)};return `<p class="k" style="margin-top:20px">loading…</p>`}
+  return `<p class="empty">that post doesn't exist, or hasn't been approved yet.</p>`;
+ }
+ const liked=S.myLikes.has(id),saved=S.saves.has(id),link=c.link&&safeUrl(c.link),mineP=S.user&&S.user.uid===c.authorUid,fl=S.following.has(c.authorUid),pend=c.status==="pending";
+ S.after=()=>{loadComments(id);loadMedia(c)};
+ return `<a class="k row" style="gap:8px;text-decoration:none" href="#/country/${enc(c.country)}">← ${flag(c.country,20)} ${esc(c.country)}</a>${banBanner()}
+ <article class="pinbig"><div class="pl" id="media">${mediaHTML(c,link)}</div>
+ <div class="pr">${pend?`<div class="notice" style="margin:0 0 14px">${S.admin?"this post is waiting for approval.":"your post is waiting for review. only you can see it for now."}</div>`:""}
+  <div class="row"><a class="row" style="gap:10px;text-decoration:none" href="#/u/${esc(c.authorUid)}">${av(c.authorName,mineP&&S.profile&&S.profile.photo,40)}<span><b>${esc(c.authorName||"anonymous")}</b>${c.authorHandle?`<br><span class="k">@${esc(c.authorHandle)}</span>`:""}</span></a>
   ${mineP?"":`<button class="btn s ${fl?"on":""}" data-act="follow" data-uid="${esc(c.authorUid)}">${fl?"following":"follow"}</button>`}
-  ${mineP?"":`<button class="btn s sp" data-act="report" data-kind="contribution" data-ref="${esc(id)}" data-cid="${esc(id)}">report</button>`}</div>
- <div class="body">${esc(c.caption)}</div>
- ${link?`<p><a class="btn s" href="${esc(link)}" target="_blank" rel="noopener noreferrer">open link ↗</a></p>`:""}
- <div class="row k"><span class="tag">${GLY[c.type]||""} ${esc(TYPES[c.type]||c.type)}</span><a href="#/country/${enc(c.country)}">${esc(c.country)}</a><span>·</span><span>${esc(dt(c.createdAt))}</span></div>
- <div class="row acts"><button class="btn s ${liked?"on":""}" data-act="like" data-id="${esc(id)}">♥ ${S.likeMap[id]||0}</button>
- <button class="btn s ${saved?"on":""}" data-act="save" data-id="${esc(id)}">${saved?"saved":"save"}</button>
- <button class="btn s" data-act="share" data-id="${esc(id)}">share</button>
- ${mineP||S.admin?`<button class="btn s d sp" data-act="delpost" data-id="${esc(id)}">delete post</button>`:""}</div>
- <h2 style="margin-top:26px">comments</h2><div id="cmts" data-cid="${esc(id)}" style="margin-top:12px"><p class="k">loading…</p></div>
- ${S.user?`<form id="cmf" data-cid="${esc(id)}" style="margin-top:14px"><div class="f"><textarea id="ct" maxlength="500" required placeholder="add a comment…" aria-label="add a comment" style="min-height:70px"></textarea></div><button class="btn p">post</button></form>`:`<p class="k" style="margin-top:14px"><button class="btn s" data-act="login">log in</button> to comment</p>`}
+  ${mineP||pend?"":`<button class="btn s sp" data-act="report" data-kind="contribution" data-ref="${esc(id)}" data-cid="${esc(id)}">${ic("flag",14)} report</button>`}</div>
+  ${c.title?`<h2 class="ptitle">${esc(c.title)}</h2>`:`<div style="height:14px"></div>`}
+  <p class="cap">${tagify(c.caption)}</p>
+  ${bodyHTML(c)}
+  ${link?`<p><a class="btn s" href="${esc(link)}" target="_blank" rel="noopener noreferrer">open link ↗</a></p>`:""}
+  <div class="row k" style="margin-top:12px"><span class="tag">${GLY[c.type]||""} ${esc(TYPES[c.type]||c.type)}</span><a href="#/country/${enc(c.country)}">${esc(c.country)}</a><span>·</span><span>${esc(dt(c.createdAt))}</span></div>
+  <div class="row acts">${pend?"":`<button class="btn s ${liked?"on":""}" data-act="like" data-id="${esc(id)}">♥ ${S.likeMap[id]||0}</button>
+  <button class="btn s ${saved?"on":""}" data-act="save" data-id="${esc(id)}">${saved?"saved":"save"}</button>
+  <button class="btn s" data-act="share" data-id="${esc(id)}">share</button>`}
+  ${S.admin&&pend?`<button class="btn s p" data-act="approve" data-id="${esc(id)}">approve</button>`:""}
+  ${S.admin&&!pend?`<button class="btn s" data-act="featwk" data-id="${esc(id)}">✦ feature this week</button>`:""}
+  ${mineP||S.admin?`<button class="btn s d sp" data-act="delpost" data-id="${esc(id)}">delete post</button>`:""}</div>
+  ${pend?"":`<h2 style="margin-top:26px">comments</h2><div id="cmts" data-cid="${esc(id)}" style="margin-top:12px"><p class="k">loading…</p></div>
+  ${S.user?`<form id="cmf" data-cid="${esc(id)}" data-to="${esc(c.authorUid)}" style="margin-top:14px"><div class="f"><textarea id="ct" maxlength="500" required placeholder="add a comment…" aria-label="add a comment" style="min-height:70px"></textarea></div><button class="btn p">post</button></form>`:`<p class="k" style="margin-top:14px"><button class="btn s" data-act="login">log in</button> to comment</p>`}`}
  </div></article>`;
+}
+async function loadMedia(c){
+ if(!(c.imgs>0))return;
+ try{
+  const ds=await Promise.all([...Array(c.imgs).keys()].map(i=>getDoc(doc(db,"media",c.id+"_i"+i))));
+  const el=$("#media");if(!el||!S.items.concat(Object.values(S.pend).filter(Boolean)).some(x=>x.id===c.id))return;
+  const imgs=ds.filter(d=>d.exists()).map(d=>`<img class="mimg" alt="" src="${esc(d.data().data)}">`).join("");
+  if(imgs){const keep=[...el.children].filter(x=>!x.classList.contains("mimg")).map(x=>x.outerHTML).join("");el.innerHTML=imgs+keep}
+ }catch(e){console.error(e)}
 }
 async function loadComments(id){
  try{
   const s=await getDocs(query(collection(db,"comments"),where("cid","==",id),limit(200)));
   const L=s.docs.map(d=>({id:d.id,...d.data()})).sort((a,b)=>(a.createdAt?.seconds||0)-(b.createdAt?.seconds||0));
   const el=$("#cmts");if(!el||el.dataset.cid!==id)return;
-  el.innerHTML=L.length?L.map(m=>`<div class="cm"><span class="av gr" style="${hs(m.name)}">${esc(ini(m.name))}</span><div class="grow"><div class="k"><a href="#/u/${esc(m.uid)}"><b>${esc(m.name)}</b></a> · ${esc(dt(m.createdAt))}</div><div class="body">${esc(m.text)}</div></div>
-  ${S.user&&(m.uid===S.user.uid||S.admin)?`<button class="btn s d" data-act="delcm" data-id="${esc(m.id)}" data-cid="${esc(id)}">delete</button>`:S.user?`<button class="btn s" data-act="report" data-kind="comment" data-ref="${esc(m.id)}" data-cid="${esc(id)}">report</button>`:""}</div>`).join(""):`<p class="k">no comments yet.</p>`;
+  el.innerHTML=L.length?L.map(m=>`<div class="cm">${av(m.name,"",30)}<div class="grow"><div class="k"><a href="#/u/${esc(m.uid)}"><b>${esc(m.name)}</b></a>${m.handle?" @"+esc(m.handle):""} · ${esc(dt(m.createdAt))}</div><div class="body">${esc(m.text)}</div></div>
+  ${S.user&&(m.uid===S.user.uid||S.admin)?`<button class="btn s d" data-act="delcm" data-id="${esc(m.id)}" data-cid="${esc(id)}">delete</button>`:""}${S.user&&m.uid!==S.user.uid?`<button class="btn s" data-act="report" data-kind="comment" data-ref="${esc(m.id)}" data-cid="${esc(id)}" aria-label="report comment">${ic("flag",14)}</button>`:""}</div>`).join(""):`<p class="k">no comments yet.</p>`;
  }catch(e){console.error(e);const el=$("#cmts");if(el)el.innerHTML=`<p class="err">couldn't load comments.</p>`}
 }
 function contribute(params){
- const h=`<div class="intro"><h1>share a piece of <em>home</em></h1><p class="sub">a recipe, a song, something you wrote, or a note about a country. every post goes to a country, and appears once it's been reviewed.</p></div>`;
+ const h=`<div class="intro"><h1>share a piece of <em>home</em></h1><p class="sub">pick what you're sharing, choose a country, and add a caption with #tags so people can find it.${S.admin?" as admin your posts go live straight away.":" posts appear once they've been reviewed."}</p></div>`;
  if(!S.user)return h+loginPrompt("post");
  if(S.banned)return h+banBanner();
  const pre=params.get("country")||"";
- S.after=syncType;
- return `${h}<form id="cf" class="box fm">
- <div class="f"><label for="fc">country</label><select id="fc" required><option value="">choose a country…</option>${COUNTRIES.map(c=>`<option ${c===pre?"selected":""}>${esc(c)}</option>`).join("")}</select></div>
- <div class="f"><label for="ftype">what kind of post?</label><select id="ftype">${Object.entries(TYPES).map(([k,v])=>`<option value="${k}">${GLY[k]} ${v}</option>`).join("")}</select></div>
- <div class="f"><label for="fb">caption</label><textarea id="fb" class="big" maxlength="5000" required></textarea><span class="k">up to 5000 characters, plain text.</span></div>
- <div class="f"><label for="fl">link (optional)</label><input id="fl" type="url" maxlength="500" placeholder="youtube or spotify links play right on the post"></div>
- <div class="err" id="ferr"></div><button class="btn p">submit for review</button></form>`;
+ S.after=()=>{syncType();drawUps()};
+ return `${h}<form id="cf" class="box fm" novalidate>
+ <div class="f"><span class="lb">what are you sharing?</span><div class="tp">${PT.map(k=>`<button type="button" class="tpb ${S.pt===k?"on":""}" data-act="ptype" data-t="${k}"><span>${GLY[k]}</span>${TYPES[k]}</button>`).join("")}</div></div>
+ <p class="hint" id="pick">choose one above to get started.</p>
+ <div id="fcommon" hidden>
+ <div class="f"><label for="fc">country</label><select id="fc"><option value="">choose a country…</option>${COUNTRIES.map(c=>`<option ${c===pre?"selected":""}>${esc(c)}</option>`).join("")}</select></div>
+ <div class="f" id="g_t"><label for="ft" id="l_t">title</label><input id="ft" maxlength="120"></div>
+ <div class="f" id="g_ing"><label for="fing">ingredients</label><textarea id="fing" maxlength="5000" placeholder="one per line"></textarea></div>
+ <div class="f"><label for="fx" id="l_x">text</label><textarea id="fx" maxlength="12000"></textarea></div>
+ <div class="f" id="g_css"><details><summary class="lb" style="cursor:pointer">style your writing (optional, like ao3 work skins)</summary>
+  <div class="hint" style="margin:10px 0">your writing sits in an element called <code>.work</code>. add css to change how it looks, e.g. <code>.work{background:#fdf6e3;color:#3b2f1e;font-family:Georgia;text-align:center}</code> and give parts of your text a class: <code>&lt;span class="big"&gt;hello&lt;/span&gt;</code> then <code>.big{font-size:2em;color:crimson}</code>. readers only see your style if they press “view with author's style”, and it never changes the page around it. no images or links are allowed.</div>
+  <textarea id="fcss" class="mono" maxlength="6000" placeholder=".work{ ... }"></textarea>
+  <div class="row" style="margin-top:8px"><button type="button" class="btn s" data-act="prevcss">preview</button></div>
+  <iframe id="pvf" class="wfr" sandbox="allow-same-origin" title="preview" hidden style="margin-top:10px"></iframe></details></div>
+ <div class="f" id="g_img"><span class="lb" id="l_img">photos</span><label class="btn s" for="fimgs" style="align-self:flex-start">choose images</label><input id="fimgs" type="file" accept="image/*" multiple hidden><div class="ups" id="ups"></div><span class="k">photos are shrunk before upload. up to 4.</span></div>
+ <div class="f" id="g_aud"><span class="lb">upload an mp3 (optional)</span><label class="btn s" for="faud" style="align-self:flex-start">choose audio</label><input id="faud" type="file" accept="audio/*,.mp3" hidden><span class="k" id="audprev">up to 4 mb, about 4 minutes.</span></div>
+ <div class="f" id="g_link"><label for="fl" id="l_link">link</label><input id="fl" type="url" maxlength="500" placeholder="https://"></div>
+ <div class="f"><label for="fcap">caption <span class="k">· what viewers see, with #tags</span></label><input id="fcap" maxlength="300" placeholder="e.g. grandma's sunday soup #recipe #comfortfood"></div>
+ <div class="err" id="ferr"></div><button class="btn p" id="fsub">${S.admin?"post":"submit for review"}</button></div></form>`;
 }
 function syncType(){
- const t=$("#ftype");if(!t)return;
- $("#fb").placeholder={recipe:"ingredients, method, and the story behind it…",song:"song title, artist, and why you love it…",writing:"your piece of writing…",note:"a note about this place…",other:"what do you want to share?"}[t.value]||"";
+ const t=S.pt,F=FM[t];
+ $$(".tpb").forEach(b=>b.classList.toggle("on",b.dataset.t===t));
+ const c=$("#fcommon");if(!c)return;c.hidden=!t;const p=$("#pick");if(p)p.hidden=!!t;if(!F)return;
+ const sh=(id,v)=>{const e=$("#"+id);if(e)e.hidden=!v};
+ sh("g_t",F.t);sh("g_ing",F.ing);sh("g_css",F.css);sh("g_img",F.img);sh("g_aud",F.aud);sh("g_link",F.link);
+ if(F.t)$("#l_t").textContent=F.t;$("#l_x").textContent=F.x;$("#fx").placeholder=F.xp||"";$("#fx").className=F.big?"big":"";
+ if(F.img)$("#l_img").textContent=F.img;if(F.link)$("#l_link").textContent=F.link;
+}
+function drawUps(){
+ const u=$("#ups");if(!u)return;
+ u.innerHTML=S.files.imgs.map((x,i)=>`<div class="u"><img src="${esc(x.thumb)}" alt=""><button type="button" data-act="rmimg" data-i="${i}" aria-label="remove">✕</button></div>`).join("");
+ const a=$("#audprev");if(a&&S.files.audio)a.textContent="✓ "+S.files.audio.name+" ("+(S.files.audio.size/1048576).toFixed(1)+" mb)";
 }
 function saved(){
  if(!S.user)return loginPrompt("your saved posts");
@@ -374,9 +557,10 @@ async function loadMine(){
  try{
   const s=await getDocs(query(collection(db,"contributions"),where("authorUid","==",S.user.uid)));
   const L=s.docs.map(d=>({id:d.id,...d.data()})).sort((a,b)=>(b.createdAt?.seconds||0)-(a.createdAt?.seconds||0));
+  L.forEach(c=>{if(c.status!=="approved")S.pend[c.id]=c});
   const el=$("#ml");if(!el)return;
-  el.innerHTML=L.length?L.map(c=>`<div class="box"><div class="row"><span class="tag">${GLY[c.type]||""} ${esc(TYPES[c.type]||c.type)}</span><span class="pill ${c.status==="approved"?"ok":"pend"}">${esc(c.status)}</span><span class="k sp">${esc(c.country)}</span></div>
-  <p style="margin:10px 0 0">${c.status==="approved"?`<a href="#/c/${esc(c.id)}">${esc(clip(c.caption,160))}</a>`:esc(clip(c.caption,160))}</p>
+  el.innerHTML=L.length?L.map(c=>`<div class="box"><div class="row"><span class="tag">${GLY[c.type]||""} ${esc(TYPES[c.type]||c.type)}</span><span class="pill ${c.status==="approved"?"ok":"pend"}">${esc(c.status)}</span><span class="k sp row" style="gap:6px">${flag(c.country,18)}${esc(c.country)}</span></div>
+  <p style="margin:10px 0 0"><a href="#/c/${esc(c.id)}">${esc(clip(c.title||c.caption,160))}</a></p>
   <div class="row" style="margin-top:12px"><button class="btn s d" data-act="delmine" data-id="${esc(c.id)}">delete</button></div></div>`).join(""):`<p class="empty">you haven't posted anything yet.</p>`;
  }catch(e){console.error(e);const el=$("#ml");if(el)el.innerHTML=`<p class="err">couldn't load your posts.</p>`}
 }
@@ -386,17 +570,18 @@ function timeline(L){
  for(const c of L){
   const d=tdate(c.createdAt),m=d?d.toLocaleDateString(undefined,{month:"long",year:"numeric"}).toLowerCase():"earlier";
   if(m!==last){out+=`<div class="tlm">${esc(m)}</div>`;last=m}
-  out+=`<a class="tli" href="#/c/${esc(c.id)}"><span class="tld">${d?d.getDate():""}</span><span class="tlb gr" style="${hs(c.country)}"><span class="k">${GLY[c.type]||""} ${esc(c.country)} · ♥ ${S.likeMap[c.id]||0}</span><span class="cq">${esc(clip(c.caption,170))}</span></span></a>`;
+  out+=`<a class="tli" href="#/c/${esc(c.id)}"><span class="tld">${d?d.getDate():""}</span><span class="tlb gr" style="${hs(c.country)}"><span class="grow"><span class="k">${GLY[c.type]||""} ${esc(c.country)} · ♥ ${S.likeMap[c.id]||0}</span><span class="cq">${esc(clip(c.title||c.caption,150))}</span></span>${c.thumb?`<img class="tlimg" src="${esc(c.thumb)}" alt="">`:""}</span></a>`;
  }
  return `<div class="tl">${out}</div>`;
 }
 function drawHead(){
  const el=$("#ph"),P=S.pf;if(!el||!P||el.dataset.uid!==P.uid)return;
  const L=S.items.filter(c=>c.authorUid===P.uid),me=S.user&&S.user.uid===P.uid;
- const name=(P.p&&P.p.name)||(L[0]&&L[0].authorName)||"anonymous",fl=S.following.has(P.uid),hd=S.user&&P.hearts.has(S.user.uid);
- el.innerHTML=`<span class="av gr" style="${hs(name)}">${esc(ini(name))}</span><h1>${esc(name)}</h1>
- <div class="row" style="justify-content:center;margin-top:10px">${P.p&&P.p.home?`<a class="btn s" href="#/country/${enc(P.p.home)}">from ${esc(P.p.home)}</a>`:""}
- ${me?`<a class="btn s" href="#/settings">edit profile</a>`:`<button class="btn s p ${fl?"on":""}" data-act="follow" data-uid="${esc(P.uid)}">${fl?"following":"follow"}</button><button class="btn s ${hd?"on":""}" data-act="heart" data-uid="${esc(P.uid)}">${hd?"♥ hearted":"♡ heart"}</button>`}</div>
+ const name=(P.p&&P.p.name)||(L[0]&&L[0].authorName)||"anonymous",hnd=P.p&&P.p.username,fl=S.following.has(P.uid),hd=S.user&&P.hearts.has(S.user.uid);
+ el.innerHTML=`${av(name,P.p&&P.p.photo,96)}<h1>${esc(name)}</h1>${hnd?`<div class="un">@${esc(hnd)}</div>`:""}
+ <div class="row" style="justify-content:center;margin-top:12px">${P.p&&P.p.home?`<a class="btn s" href="#/country/${enc(P.p.home)}">${flag(P.p.home,18)} from ${esc(P.p.home)}</a>`:""}
+ ${me?`<button class="btn s" data-act="editprof">${ic("pencil",15)} edit</button>`:`<button class="btn s p ${fl?"on":""}" data-act="follow" data-uid="${esc(P.uid)}">${fl?"following":"follow"}</button><button class="btn s ${hd?"on":""}" data-act="heart" data-uid="${esc(P.uid)}">${hd?"♥ hearted":"♡ heart"}</button><button class="btn s" data-act="report" data-kind="account" data-ref="${esc(P.uid)}" aria-label="report account">${ic("flag",14)} report</button>`}</div>
+ ${S.admin&&!me?`<div class="row" style="justify-content:center;margin-top:10px"><span class="k">admin:</span><button class="btn s ${P.banned?"":"d"}" data-act="${P.banned?"unban":"ban"}" data-uid="${esc(P.uid)}" data-name="${esc(name)}">${P.banned?"unban":"ban"}</button><button class="btn s d" data-act="wipe" data-uid="${esc(P.uid)}">delete all their content</button></div>`:""}
  ${P.p&&P.p.bio?`<p class="sub" style="margin:14px auto 0">${esc(P.p.bio)}</p>`:""}
  ${tiles([[L.length,"posts"],[new Set(L.map(c=>c.country)).size,"countries"],[P.followers.size,"followers"],[P.followingN,"following"],[P.hearts.size,"♥ hearts"]])}`;
 }
@@ -404,11 +589,12 @@ function profile(uid){
  const L=S.items.filter(c=>c.authorUid===uid);
  S.after=async()=>{
   if(!S.pf||S.pf.uid!==uid){
-   const pf={uid,p:null,followers:new Set(),followingN:0,hearts:new Set()};
+   const pf={uid,p:null,followers:new Set(),followingN:0,hearts:new Set(),banned:false};
    try{
     const[u,a,b,h]=await Promise.all([getDoc(doc(db,"users",uid)),getDocs(query(collection(db,"follows"),where("following","==",uid),limit(1000))),
      getDocs(query(collection(db,"follows"),where("follower","==",uid),limit(1000))),getDocs(query(collection(db,"hearts"),where("to","==",uid),limit(1000)))]);
     pf.p=u.exists()?u.data():null;pf.followers=new Set(a.docs.map(d=>d.data().follower));pf.followingN=b.docs.length;pf.hearts=new Set(h.docs.map(d=>d.data().from));
+    if(S.admin)pf.banned=(await getDoc(doc(db,"bans",uid))).exists();
    }catch(e){console.error(e)}
    S.pf=pf;
   }
@@ -417,68 +603,109 @@ function profile(uid){
  return `<div class="phead"><div id="ph" data-uid="${esc(uid)}"><p class="k">loading…</p></div></div>${timeline(L)}`;
 }
 function settings(){
- if(!S.user)return loginPrompt("settings");
  const p=S.profile||{};
- return `<div class="intro"><h1>settings</h1></div><form id="pf" class="box fm"><h2 style="margin-bottom:14px">profile</h2>
- <div class="f"><label for="pn">display name</label><input id="pn" maxlength="40" required value="${esc(p.name||"")}"></div>
- <div class="f"><label for="pb">bio</label><textarea id="pb" maxlength="300">${esc(p.bio||"")}</textarea></div>
- <div class="f"><label for="ph2">home country</label><select id="ph2"><option value="">—</option>${COUNTRIES.map(c=>`<option ${p.home===c?"selected":""}>${esc(c)}</option>`).join("")}</select></div>
- <button class="btn p">save profile</button><p class="k">your new name appears on things you post from now on. change colours from the menu.</p></form>`;
+ const row=(h,i,t)=>`<a class="dl" href="${h}">${ic(i)} ${t}</a>`;
+ return `<div class="intro"><h1>settings</h1></div>
+ ${S.user?`<div class="box"><h2 style="margin-bottom:12px">profile</h2><div class="row">${av(myName(),p.photo,52)}<div class="grow"><b>${esc(myName())}</b><div class="k">${p.username?"@"+esc(p.username):"no username yet"}</div></div><a class="btn s" href="#/u/${esc(S.user.uid)}">view</a><button class="btn s p" data-act="editprof">${ic("pencil",15)} edit</button></div></div>
+ <div class="box"><h2 style="margin-bottom:6px">your stuff</h2>${row("#/saved","bookmark","saved posts")}${row("#/mine","file","my posts and their review status")}</div>`:loginPrompt("your profile")}
+ <div class="box"><h2 style="margin-bottom:6px">appearance</h2><p class="k" style="margin:0 0 8px">auto is dark from 8pm to 7am and light the rest of the day.</p>${appear()}</div>
+ ${S.user?`<div class="box"><button class="btn" data-act="logout">${ic("logout",16)} log out</button></div>`:""}`;
+}
+function about(){
+ const cs=new Set(S.items.map(c=>c.country));
+ return `<div class="intro"><h1>about <em>the archive</em></h1></div><div class="box"><div class="body" style="margin:0">${esc(S.cfg.about||DEF_ABOUT)}</div></div>${tiles([[S.items.length,"posts"],[cs.size,"countries"],[new Set(S.items.map(c=>c.authorUid)).size,"contributors"]])}`;
 }
 
-/* ---------- admin ---------- */
-function admin(){
- if(!S.admin)return `<p class="empty">this page is for admins only.</p>`;
- const tabs=[["queue","review"],["spot","contribution of the week"],["facts","fun facts"],["users","people"]];
- S.after=loadAdmin;
- return `<div class="intro"><h1>admin</h1></div><div class="chips">${tabs.map(([k,v])=>`<button class="btn s ${S.atab===k?"on":""}" data-act="atab" data-t="${k}">${v}</button>`).join("")}</div><div id="adm"><p class="k">loading…</p></div>`;
+/* ---------- owner pages ---------- */
+const denied=()=>`<p class="empty">this page is for the owner only.</p>`;
+function reports(){
+ if(!S.admin)return denied();
+ S.after=loadQueue;
+ return `<div class="intro"><h1>reports</h1></div><div id="adm"><p class="k" style="margin-top:12px">loading…</p></div>`;
 }
-function loadAdmin(){return({queue:loadQueue,spot:loadSpot,facts:loadFacts,users:loadUsers}[S.atab]||loadQueue)()}
 async function loadQueue(){
  try{
   const[p,r]=await Promise.all([getDocs(query(collection(db,"contributions"),where("status","==","pending"),limit(100))),getDocs(query(collection(db,"reports"),limit(100)))]);
-  const el=$("#adm");if(!el)return;
   const P=p.docs.map(d=>({id:d.id,...d.data()})).sort((a,b)=>(a.createdAt?.seconds||0)-(b.createdAt?.seconds||0));
-  const R=r.docs.map(d=>({id:d.id,...d.data()}));
-  el.innerHTML=`<h2 style="margin-top:12px">waiting for approval (${P.length})</h2>`+(P.length?P.map(c=>{const l=c.link&&safeUrl(c.link);return `<div class="box"><div class="row"><span class="tag">${GLY[c.type]||""} ${esc(TYPES[c.type]||c.type)}</span><span class="k sp">${esc(c.country)} · ${esc(c.authorName)}</span></div>
-  <div class="body">${esc(c.caption)}</div>${l?`<p class="k">${esc(l)}</p>`:""}
-  <div class="row"><button class="btn s p" data-act="approve" data-id="${esc(c.id)}">approve</button><button class="btn s d" data-act="reject" data-id="${esc(c.id)}">reject &amp; delete</button></div></div>`}).join(""):`<p class="empty">nothing waiting.</p>`)
-  +`<h2 style="margin-top:26px">reports (${R.length})</h2>`+(R.length?R.map(x=>`<div class="box"><div class="row"><span class="pill">${esc(x.kind)}</span><a class="k" href="#/c/${esc(x.cid)}">view post →</a></div>
-  <div class="row" style="margin-top:12px"><button class="btn s" data-act="dismiss" data-id="${esc(x.id)}">dismiss</button><button class="btn s d" data-act="rm" data-id="${esc(x.id)}" data-kind="${esc(x.kind)}" data-ref="${esc(x.ref)}">remove content</button></div></div>`).join(""):`<p class="empty">no reports.</p>`);
- }catch(e){console.error(e);const el=$("#adm");if(el)el.innerHTML=`<p class="err">couldn't load the queue.</p>`}
-}
-async function loadSpot(){
- try{
-  const s=await getDocs(query(collection(db,"spotlight"),limit(200)));
-  const m={};s.docs.forEach(d=>{m[d.id]=d.data().cid});
+  P.forEach(c=>{S.pend[c.id]=c});
+  const R=await Promise.all(r.docs.map(async d=>{const x={id:d.id,...d.data()};
+   try{if(x.kind==="comment"){const c=await getDoc(doc(db,"comments",x.ref));x.t=c.exists()?c.data():null}
+    else if(x.kind==="account"){const u=await getDoc(doc(db,"users",x.ref));x.t=u.exists()?u.data():null}
+    else{x.t=S.items.find(i=>i.id===x.ref)||null}}catch{}return x}));
   const el=$("#adm");if(!el)return;
-  const opts=S.items.slice(0,400);
-  const w0=mondayOf(new Date());
-  el.innerHTML=`<p class="sub">choose the post spotlighted on the home page each week. weeks start on monday, and you can plan ahead.</p>`+
-  [...Array(10).keys()].map(i=>{const d=addDays(w0,i*7),k=dkey(d),cur=m[k];
-   return `<div class="box"><div class="row"><b>week of ${esc(fmtD(d))}</b>${i===0?`<span class="pill ok">this week</span>`:""}${cur?"":`<span class="k sp">not set</span>`}</div>
-   <div class="row" style="margin-top:10px;flex-wrap:nowrap"><select data-wk="${k}" aria-label="post for the week of ${k}"><option value="">— choose a post —</option>${opts.map(c=>`<option value="${esc(c.id)}" ${c.id===cur?"selected":""}>${esc(c.country)} · ${esc(clip(c.caption,50))} (${esc(c.authorName)})</option>`).join("")}</select>
-   <button class="btn s p" data-act="savespot" data-k="${k}">save</button>${cur?`<button class="btn s d" data-act="clearspot" data-k="${k}">clear</button>`:""}</div></div>`}).join("");
- }catch(e){console.error(e);const el=$("#adm");if(el)el.innerHTML=`<p class="err">couldn't load the planner.</p>`}
+  el.innerHTML=`<h2 style="margin-top:12px">waiting for approval (${P.length})</h2>`+(P.length?P.map(c=>`<div class="box"><div class="row"><span class="tag">${GLY[c.type]||""} ${esc(TYPES[c.type]||c.type)}</span><span class="k sp row" style="gap:6px">${flag(c.country,18)}${esc(c.country)} · ${esc(uname(c))}</span></div>
+  ${c.title?`<h3 style="margin-top:10px">${esc(c.title)}</h3>`:""}<p>${tagify(c.caption)}</p>${c.text?`<div class="body" style="max-height:160px;overflow:auto">${esc(clip(c.text,600))}</div>`:""}
+  <div class="k">${c.imgs?c.imgs+" photo(s) · ":""}${c.audio?"audio · ":""}${c.link?esc(c.link):""}</div>
+  <div class="row" style="margin-top:10px"><a class="btn s" href="#/c/${esc(c.id)}">open</a><button class="btn s p" data-act="approve" data-id="${esc(c.id)}">approve</button><button class="btn s d" data-act="reject" data-id="${esc(c.id)}">reject &amp; delete</button></div></div>`).join(""):`<p class="empty">nothing waiting.</p>`)
+  +`<h2 style="margin-top:26px">reports (${R.length})</h2>`+(R.length?R.map(x=>{
+   const what=x.kind==="comment"?(x.t?`“${esc(clip(x.t.text,160))}” by ${esc(x.t.name)}`:"(comment already gone)"):x.kind==="account"?(x.t?`${esc(x.t.name)}${x.t.username?" @"+esc(x.t.username):""}`:"(account)"):(x.t?esc(clip(x.t.caption,140)):"(post)");
+   const link=x.kind==="account"?`#/u/${esc(x.ref)}`:`#/c/${esc(x.cid||x.ref)}`;
+   return `<div class="box"><div class="row"><span class="pill bad">${esc(x.kind)}</span><a class="k" href="${link}">view →</a></div><p style="margin:8px 0 0">${what}</p>
+   <div class="row" style="margin-top:12px"><button class="btn s" data-act="dismiss" data-id="${esc(x.id)}">dismiss</button>
+   ${x.kind==="account"?`<button class="btn s d" data-act="ban" data-uid="${esc(x.ref)}" data-name="${esc(x.t&&x.t.name||"")}" data-rep="${esc(x.id)}">ban account</button>`:`<button class="btn s d" data-act="rm" data-id="${esc(x.id)}" data-kind="${esc(x.kind)}" data-ref="${esc(x.ref)}">remove content</button>`}</div></div>`}).join(""):`<p class="empty">no reports.</p>`);
+ }catch(e){console.error(e);const el=$("#adm");if(el)el.innerHTML=`<p class="err">couldn't load reports.</p>`}
 }
-async function loadFacts(){
- try{
-  const s=await getDocs(query(collection(db,"facts"),limit(400)));
-  const m={};s.docs.forEach(d=>{m[d.id]=d.data()});
-  const el=$("#adm");if(!el)return;
-  const t0=new Date();
-  el.innerHTML=`<p class="sub">write a fun fact for each day. today's fact shows on the home page. you can plan the next two weeks.</p>`+
-  [...Array(14).keys()].map(i=>{const d=addDays(t0,i),k=dkey(d),cur=m[k];
-   return `<div class="box"><div class="row"><b>${esc(fmtD(d))}</b>${i===0?`<span class="pill ok">today</span>`:""}${cur?"":`<span class="k sp">not set</span>`}</div>
-   <div class="f" style="margin-top:10px"><textarea data-fk="${k}" maxlength="300" style="min-height:70px" placeholder="a fun fact…" aria-label="fun fact for ${k}">${esc(cur?cur.text:"")}</textarea></div>
-   <div class="row"><select data-fc="${k}" style="max-width:240px" aria-label="country for ${k}"><option value="">no country</option>${COUNTRIES.map(c=>`<option ${cur&&cur.country===c?"selected":""}>${esc(c)}</option>`).join("")}</select>
-   <button class="btn s p" data-act="savefact" data-k="${k}">save</button>${cur?`<button class="btn s d" data-act="clearfact" data-k="${k}">clear</button>`:""}</div></div>`}).join("");
- }catch(e){console.error(e);const el=$("#adm");if(el)el.innerHTML=`<p class="err">couldn't load the planner.</p>`}
+function calendar(){
+ if(!S.admin)return denied();
+ S.after=loadCal;
+ return `<div class="intro"><h1>calendar</h1><p class="sub">pick a day to write its fun fact. pick a ☆ at the end of a week to choose that week's contribution. plan as far ahead as you like.</p></div><div id="cal"><p class="k" style="margin-top:12px">loading…</p></div>`;
+}
+async function loadCal(){
+ const C=S.cal;
+ if(!C.facts){try{const[a,b]=await Promise.all([getDocs(query(collection(db,"facts"),limit(800))),getDocs(query(collection(db,"spotlight"),limit(300)))]);
+  C.facts={};a.docs.forEach(d=>{C.facts[d.id]=d.data()});C.spots={};b.docs.forEach(d=>{C.spots[d.id]=d.data().cid})}
+  catch(e){console.error(e);const el=$("#cal");if(el)el.innerHTML=`<p class="err">couldn't load the calendar.</p>`;return}}
+ drawCal();
+}
+function pickList(){
+ const C=S.cal,q=C.pq.toLowerCase();
+ const L=S.items.filter(c=>!q||hay(c).includes(q)).slice(0,60);
+ return L.length?L.map(c=>`<button type="button" class="pk ${C.pick===c.id?"on":""}" data-act="pickpost" data-id="${esc(c.id)}">${flag(c.country,20)}<span class="grow">${esc(clip(c.title||c.caption,60))}</span><span class="k">${esc(uname(c))}</span></button>`).join(""):`<p class="k">no matching posts.</p>`;
+}
+function calEditor(){
+ const C=S.cal,s=C.sel;
+ if(!s)return `<p class="k" style="margin-top:14px">pick a day or a ☆ above.</p>`;
+ if(s.t==="day"){const cur=C.facts[s.k];
+  return `<div class="box"><h2>${esc(fmtD(parseK(s.k)))}</h2><p class="k" style="margin:4px 0 10px">fun fact of the day</p>
+  <div class="f"><textarea id="cft" maxlength="300" style="min-height:80px" placeholder="a fun fact…" aria-label="fun fact">${esc(cur?cur.text:"")}</textarea></div>
+  <div class="row"><select id="cfc" style="max-width:240px" aria-label="country"><option value="">no country</option>${COUNTRIES.map(c=>`<option ${cur&&cur.country===c?"selected":""}>${esc(c)}</option>`).join("")}</select>
+  <button class="btn p" data-act="savefact" data-k="${s.k}">save</button>${cur?`<button class="btn d" data-act="clearfact" data-k="${s.k}">clear</button>`:""}</div></div>`}
+ const cur=C.spots[s.k];
+ return `<div class="box"><h2>week of ${esc(fmtD(parseK(s.k)))}</h2><p class="k" style="margin:4px 0 10px">contribution of the week${cur?" · currently set":""}</p>
+ <input id="cwq" placeholder="search posts…" aria-label="search posts" value="${esc(C.pq)}"><div class="pickl" id="cwl">${pickList()}</div>
+ <div class="row" style="margin-top:12px"><button class="btn p" data-act="savespot" data-k="${s.k}">save</button>${cur?`<button class="btn d" data-act="clearspot" data-k="${s.k}">clear</button>`:""}</div></div>`;
+}
+function drawCal(){
+ const el=$("#cal");if(!el)return;
+ const C=S.cal,now=new Date(),first=new Date(now.getFullYear(),now.getMonth()+C.off,1),last=new Date(first.getFullYear(),first.getMonth()+1,0),tk=dkey(now);
+ let d=mondayOf(first),cells="";
+ while(d<=last){
+  const wk=dkey(d);
+  for(let i=0;i<7;i++){const x=addDays(d,i),k=dkey(x);
+   cells+=`<button class="cd ${x.getMonth()===first.getMonth()?"":"dim"} ${k===tk?"today":""} ${C.sel&&C.sel.t==="day"&&C.sel.k===k?"sel":""}" data-act="calday" data-k="${k}" aria-label="${esc(fmtD(x))}"><b>${x.getDate()}</b>${C.facts[k]?`<i class="dot" title="fun fact set"></i>`:""}</button>`}
+  cells+=`<button class="cw ${C.spots[wk]?"has":""} ${C.sel&&C.sel.t==="week"&&C.sel.k===wk?"sel":""}" data-act="calweek" data-k="${wk}" title="contribution of the week" aria-label="week of ${esc(fmtD(d))}">${C.spots[wk]?"★":"☆"}</button>`;
+  d=addDays(d,7);
+ }
+ el.innerHTML=`<div class="row" style="margin-top:12px"><button class="btn s" data-act="calnav" data-d="-1" aria-label="previous month">←</button><h2 style="min-width:9ch;text-align:center">${esc(first.toLocaleDateString(undefined,{month:"long",year:"numeric"}).toLowerCase())}</h2><button class="btn s" data-act="calnav" data-d="1" aria-label="next month">→</button><button class="btn s" data-act="calnav" data-d="0">today</button></div>
+ <div class="cal">${["mon","tue","wed","thu","fri","sat","sun","week"].map(n=>`<div class="hd">${n}</div>`).join("")}${cells}</div>${calEditor()}`;
+}
+function site(){
+ if(!S.admin)return denied();
+ S.after=loadSite;
+ return `<div class="intro"><h1>site settings</h1></div><div class="chips">${[["gen","general"],["people","people"]].map(([k,v])=>`<button class="btn s ${S.atab===k?"on":""}" data-act="atab" data-t="${k}">${v}</button>`).join("")}</div><div id="adm"></div>`;
+}
+function loadSite(){
+ if(S.atab==="people")return loadUsers();
+ const el=$("#adm");if(!el)return;const c=S.cfg||{};
+ el.innerHTML=`<form id="sf" class="box fm"><div class="f"><label for="sa">announcement banner (shown on the home page, leave empty for none)</label><input id="sa" maxlength="300" value="${esc(c.announcement||"")}"></div>
+ <div class="f"><label for="sab">about page text</label><textarea id="sab" maxlength="3000" style="min-height:180px">${esc(c.about||DEF_ABOUT)}</textarea></div>
+ <div class="f"><label class="row" style="gap:8px;font-weight:500"><input type="checkbox" id="sr" ${c.requireReview===false?"":"checked"}> review new posts before they appear (your own posts always go live)</label></div>
+ <button class="btn p">save</button></form>`;
 }
 function usersHTML(){
- const f=S.uq.toLowerCase(),L=S.userList.filter(u=>!f||String(u.name||"").toLowerCase().includes(f));
- return L.length?L.map(u=>{const b=S.banSet.has(u.id);return `<div class="urow"><span class="av gr" style="${hs(u.name)}">${esc(ini(u.name))}</span><a href="#/u/${esc(u.id)}"><b>${esc(u.name||"anonymous")}</b></a>${b?`<span class="pill bad">banned</span>`:""}
-  ${u.id===ADMIN_UID?`<span class="k sp">you (admin)</span>`:`<span class="sp row"><button class="btn s ${b?"":"d"}" data-act="${b?"unban":"ban"}" data-uid="${esc(u.id)}" data-name="${esc(u.name||"")}">${b?"unban":"ban"}</button><button class="btn s d" data-act="wipe" data-uid="${esc(u.id)}">delete all their content</button></span>`}</div>`}).join(""):`<p class="empty">no one found.</p>`;
+ const f=S.uq.toLowerCase(),L=S.userList.filter(u=>!f||(String(u.name||"")+" "+String(u.username||"")).toLowerCase().includes(f));
+ return L.length?L.map(u=>{const b=S.banSet.has(u.id);return `<div class="urow">${av(u.name,u.photo,30)}<a href="#/u/${esc(u.id)}"><b>${esc(u.name||"anonymous")}</b></a><span class="k">${u.username?"@"+esc(u.username):""}</span>${b?`<span class="pill bad">banned</span>`:""}
+  ${u.id===ADMIN_UID?`<span class="k sp">you (owner)</span>`:`<span class="sp row"><button class="btn s ${b?"":"d"}" data-act="${b?"unban":"ban"}" data-uid="${esc(u.id)}" data-name="${esc(u.name||"")}">${b?"unban":"ban"}</button><button class="btn s d" data-act="wipe" data-uid="${esc(u.id)}">delete all their content</button></span>`}</div>`}).join(""):`<p class="empty">no one found.</p>`;
 }
 async function loadUsers(){
  try{
@@ -487,36 +714,53 @@ async function loadUsers(){
   S.banSet=new Set(b.docs.map(d=>d.id));
   const el=$("#adm");if(!el)return;
   el.innerHTML=`<p class="sub">ban someone to stop them posting, liking, commenting and following. you can also wipe everything they've posted.</p>
-  <div class="srch" style="margin:14px 0 0;max-width:360px"><svg class="ico" viewBox="0 0 24 24"><circle cx="11" cy="11" r="7"/><path d="M20 20l-3.5-3.5"/></svg><input id="uq" placeholder="search people…" value="${esc(S.uq)}" aria-label="search people"></div>
+  <div class="srch" style="margin:14px 0 0;max-width:360px">${ic("search")}<input id="uq" placeholder="search people…" value="${esc(S.uq)}" aria-label="search people"></div>
   <div class="box" id="ul">${usersHTML()}</div>`;
  }catch(e){console.error(e);const el=$("#adm");if(el)el.innerHTML=`<p class="err">couldn't load people.</p>`}
 }
 
 /* ---------- chrome ---------- */
 function drawer(){
- const a=(h,t)=>`<a class="dl" href="${h}" data-close>${t}</a>`;
- return `<div class="scrim" data-act="close"></div><aside class="drawer"><div class="dhead"><span class="logo">${globe(32)}<span>the global archive</span></span></div>
- <div class="dsec">browse</div>${a("#/","home")}${a("#/countries","countries")}<button class="dl" style="border:0;background:none;text-align:left;width:100%;font:inherit" data-act="random" data-close>surprise me</button>
- <div class="dsec">you</div>${a("#/contribute","new post")}${S.user?a("#/saved","saved")+a("#/mine","my posts")+a("#/u/"+esc(S.user.uid),"my profile")+a("#/settings","settings"):""}${S.admin?a("#/admin","admin"):""}
- <div class="dsec">colours</div><div class="sws">${Object.keys(THEMES).map(n=>`<button class="swb ${themePick===n?"on":""}" data-act="theme" data-t="${n}" title="${n}" aria-label="${n} theme" style="background:${THEMES[n][2]}"></button>`).join("")}</div>
- ${S.user?`<button class="btn dout" data-act="logout">log out</button>`:`<button class="btn p dout" data-act="login">log in / sign up</button>`}</aside>`;
+ const a=(h,i,t)=>`<a class="dl" href="${h}" data-close>${ic(i)} ${t}</a>`;
+ const p=S.profile||{};
+ return `<div class="scrim" data-act="close"></div><aside class="drawer" aria-label="menu">
+ ${S.user?`<a class="dprof" href="#/u/${esc(S.user.uid)}" data-close>${av(myName(),p.photo,46)}<span class="grow"><b>${esc(myName())}</b><span class="k">${p.username?"@"+esc(p.username):"tap to view your profile"}</span></span>${ic("chev")}</a>`
+ :`<div class="dprof"><span class="grow"><b>welcome</b><span class="k">log in to post and follow</span></span><button class="btn p s" data-act="login">log in</button></div>`}
+ <div style="height:8px"></div>${a("#/settings","settings","settings")}
+ <hr class="hr"><div class="dsec">browse</div>
+ ${a("#/","home","home page")}${a("#/countries","globe","countries")}<button class="dl" data-act="random" data-close>${ic("shuffle")} surprise me</button>${a("#/about","info","about")}
+ ${S.admin?`<hr class="hr"><div class="dsec">owner</div>${a("#/reports","flag","reports")}${a("#/calendar","calendar","calendar")}${a("#/site","sliders","site settings")}`:""}
+ <hr class="hr"><div class="dsec">appearance</div>${appear()}
+ ${S.user?`<button class="btn dout" data-act="logout">${ic("logout",16)} log out</button>`:""}</aside>`;
 }
 function authModal(){
  const su=S.authMode==="signup";
  return `<div class="modal"><div class="sheet"><div class="row"><h2>${su?"create an account":"welcome back"}</h2><button class="btn s sp" data-act="closemodal" aria-label="close">✕</button></div>
- <button class="btn" style="width:100%;margin-top:18px;padding:12px" data-act="google">continue with google</button><div class="div k">or use email</div>
+ <button class="btn" style="width:100%;margin-top:18px;padding:12px;justify-content:center" data-act="google">continue with google</button><div class="div k">or use email</div>
  <form id="af">${su?`<div class="f"><label for="an">display name</label><input id="an" maxlength="40" required autocomplete="nickname"></div>`:""}
  <div class="f"><label for="ae">email</label><input id="ae" type="email" required autocomplete="email"></div>
  <div class="f"><label for="ap">password</label><input id="ap" type="password" minlength="6" required autocomplete="${su?"new-password":"current-password"}"></div>
- <div class="err" id="aerr"></div><button class="btn p" style="width:100%;padding:12px">${su?"sign up":"log in"}</button></form>
+ <div class="err" id="aerr"></div><button class="btn p" style="width:100%;padding:12px;justify-content:center">${su?"sign up":"log in"}</button></form>
  <div class="row" style="margin-top:14px;justify-content:space-between"><button class="btn s" data-act="amode">${su?"have an account? log in":"new here? sign up"}</button><button class="btn s" data-act="reset">forgot password?</button></div></div></div>`;
 }
+function editModal(){
+ const p=S.profile||{},ph=S.files.rmav?"":(S.files.avatar||p.photo);
+ return `<div class="modal"><div class="sheet"><div class="row"><h2>edit profile</h2><button class="btn s sp" data-act="closemodal" aria-label="close">✕</button></div>
+ <form id="pf" style="margin-top:16px"><div class="row" style="margin-bottom:16px"><span id="avp">${av(p.name||myName(),ph,64)}</span><label class="btn s" for="favf">change photo</label><input id="favf" type="file" accept="image/*" hidden>${ph?`<button type="button" class="btn s d" data-act="rmav">remove</button>`:""}</div>
+ <div class="f"><label for="pn">display name</label><input id="pn" maxlength="40" required value="${esc(p.name||"")}"></div>
+ <div class="f"><label for="pu">username</label><div class="atw"><span>@</span><input id="pu" maxlength="20" value="${esc(p.username||"")}" autocapitalize="off" autocomplete="off" spellcheck="false"></div><span class="k">3 to 20 letters, numbers, . or _</span></div>
+ <div class="f"><label for="pb">bio</label><textarea id="pb" maxlength="300" style="min-height:80px">${esc(p.bio||"")}</textarea></div>
+ <div class="f"><label for="ph2">home country</label><select id="ph2"><option value="">—</option>${COUNTRIES.map(c=>`<option ${p.home===c?"selected":""}>${esc(c)}</option>`).join("")}</select></div>
+ <div class="err" id="perr"></div><button class="btn p">save</button></form></div></div>`;
+}
+const layerHTML=()=>(S.menu?drawer():"")+(S.nopen?npanel():"")+(S.modal==="auth"?authModal():"")+(S.modal==="edit"?editModal():"");
 function parseHash(){const h=location.hash.slice(1)||"/";const i=h.indexOf("?");const p=i<0?h:h.slice(0,i);return{parts:p.split("/").filter(Boolean),params:new URLSearchParams(i<0?"":h.slice(i+1))}}
 function route(){
  const{parts,params}=parseHash(),r=parts[0],arg=parts[1]?decodeURIComponent(parts[1]):"";
- switch(r){case"explore":return feed(true);case"countries":return countries();case"country":return country(arg);case"c":return detail(arg);
+ switch(r){case"explore":S.q=params.get("q")||"";return feed(true);case"countries":return countries();case"country":return country(arg);case"c":return detail(arg);
  case"u":return profile(arg);case"contribute":return contribute(params);case"saved":return saved();case"mine":return mine();
- case"admin":return admin();case"settings":return settings();default:S.q="";return feed(false)}
+ case"admin":case"reports":return reports();case"calendar":return calendar();case"site":return site();case"settings":return settings();case"about":return about();
+ default:S.q="";return feed(false)}
 }
 function render(keep){
  const y=window.scrollY;applyTheme();S.after=null;
@@ -524,23 +768,31 @@ function render(keep){
  if(!S.loaded)body=S.loadErr?`<div class="box"><p class="err">couldn't load the archive. check that the firebase config and firestore rules are set up.</p></div>`:`<p class="k" style="margin-top:20px">loading…</p>`;
  else body=route();
  $("#app").innerHTML=top()+`<main>${body}</main>`;
- $("#layer").innerHTML=(S.menu?drawer():"")+(S.modal==="auth"?authModal():"");
+ $("#layer").innerHTML=layerHTML();
  window.scrollTo(0,keep?y:0);
  if(S.after)S.after();
 }
 
 /* ---------- events ---------- */
-async function refreshHome(){await loadHome();render(true)}
+async function propagateNames(uid,name,handle){
+ try{
+  const[a,b]=await Promise.all([getDocs(query(collection(db,"contributions"),where("authorUid","==",uid),limit(300))),getDocs(query(collection(db,"comments"),where("uid","==",uid),limit(300)))]);
+  await Promise.all([...a.docs.filter(d=>d.data().authorName!==name||d.data().authorHandle!==handle).map(d=>updateDoc(doc(db,"contributions",d.id),{authorName:name,authorHandle:handle})),
+   ...b.docs.filter(d=>d.data().name!==name||d.data().handle!==handle).map(d=>updateDoc(doc(db,"comments",d.id),{name,handle}))]);
+ }catch(e){console.error(e)}
+}
+function afterBan(uid,b){if(b)S.banSet.add(uid);else S.banSet.delete(uid);const ul=$("#ul");if(ul)ul.innerHTML=usersHTML();if(S.pf&&S.pf.uid===uid){S.pf.banned=b;drawHead()}}
 document.addEventListener("click",async e=>{
  const t=e.target;
  if(t.classList&&t.classList.contains("modal")){S.modal=null;render(true);return}
  if(t.closest("[data-close]")){S.menu=false;render(true)}
- const tabLink=t.closest("[data-tab]");if(tabLink)S.atab=tabLink.dataset.tab;
  const b=t.closest("[data-act]");if(!b)return;
  const a=b.dataset.act,d=b.dataset;
  try{switch(a){
-  case"menu":S.menu=!S.menu;render(true);break;
+  case"menu":closeBell();S.menu=!S.menu;render(true);break;
   case"close":S.menu=false;render(true);break;
+  case"bell":if(!S.user){S.modal="auth";S.authMode="login";render(true);break}S.menu=false;if(S.nopen){closeBell()}else S.nopen=true;render(true);break;
+  case"closebell":closeBell();render(true);break;
   case"closemodal":S.modal=null;render(true);break;
   case"login":S.menu=false;S.modal="auth";S.authMode="login";render(true);break;
   case"amode":S.authMode=S.authMode==="login"?"signup":"login";render(true);break;
@@ -548,49 +800,69 @@ document.addEventListener("click",async e=>{
   case"reset":{const em=$("#ae")?$("#ae").value.trim():"";if(!em){$("#aerr").textContent="enter your email first.";break}
    try{await sendPasswordResetEmail(auth,em);$("#aerr").textContent="password reset email sent."}catch(err){authErr(err)}break}
   case"logout":await signOut(auth);S.menu=false;toast("logged out");break;
-  case"theme":themePick=d.t;try{localStorage.setItem("ga_theme",themePick)}catch{}render(true);break;
-  case"ctype":S.ctype=d.t;render(true);break;
-  case"sort":S.sort=d.t;render(true);break;
-  case"clearq":S.q="";render(true);break;
+  case"theme":themePick=d.t;try{localStorage.setItem("ga_theme",themePick)}catch{}applyTheme();render(true);
+   if(S.user&&S.profile&&S.profile.username)setDoc(doc(db,"users",S.user.uid),{theme:themePick},{merge:true}).then(()=>{S.profile.theme=themePick}).catch(()=>{});break;
+  case"sort":S.sort=d.t;S.show=40;render(true);break;
+  case"more":S.show+=40;render(true);break;
+  case"clearq":location.hash="#/";break;
   case"random":S.menu=false;if(S.items.length){location.hash="#/c/"+S.items[Math.floor(Math.random()*S.items.length)].id}else toast("nothing to show yet");break;
   case"like":{if(!need())break;const id=d.id,ref=doc(db,"likes",id+"_"+S.user.uid);
    if(S.myLikes.has(id)){await deleteDoc(ref);S.likes=S.likes.filter(l=>!(l.cid===id&&l.uid===S.user.uid))}
-   else{await setDoc(ref,{cid:id,uid:S.user.uid});S.likes.push({cid:id,uid:S.user.uid})}
+   else{await setDoc(ref,{cid:id,uid:S.user.uid});S.likes.push({cid:id,uid:S.user.uid});const c=S.items.find(x=>x.id===id);if(c)notify(c.authorUid,"like",{cid:id,id:"like_"+id+"_"+S.user.uid})}
    rebuildLikes();render(true);break}
   case"save":{if(!need())break;const id=d.id,ref=doc(db,"saves",id+"_"+S.user.uid);
    if(S.saves.has(id)){await deleteDoc(ref);S.saves.delete(id)}else{await setDoc(ref,{cid:id,uid:S.user.uid});S.saves.add(id)}
    render(true);break}
   case"follow":{if(!need())break;const u=d.uid;if(u===S.user.uid)break;const ref=doc(db,"follows",S.user.uid+"_"+u);
    if(S.following.has(u)){await deleteDoc(ref);S.following.delete(u);if(S.pf&&S.pf.uid===u)S.pf.followers.delete(S.user.uid)}
-   else{await setDoc(ref,{follower:S.user.uid,following:u});S.following.add(u);if(S.pf&&S.pf.uid===u)S.pf.followers.add(S.user.uid)}
+   else{await setDoc(ref,{follower:S.user.uid,following:u});S.following.add(u);if(S.pf&&S.pf.uid===u)S.pf.followers.add(S.user.uid);notify(u,"follow",{id:"follow_"+S.user.uid+"_"+u})}
    render(true);break}
   case"heart":{if(!need())break;const u=d.uid;if(u===S.user.uid||!S.pf)break;const ref=doc(db,"hearts",S.user.uid+"_"+u);
    if(S.pf.hearts.has(S.user.uid)){await deleteDoc(ref);S.pf.hearts.delete(S.user.uid)}
-   else{await setDoc(ref,{from:S.user.uid,to:u});S.pf.hearts.add(S.user.uid)}
+   else{await setDoc(ref,{from:S.user.uid,to:u});S.pf.hearts.add(S.user.uid);notify(u,"heart",{id:"heart_"+S.user.uid+"_"+u})}
    drawHead();break}
   case"share":{const url=location.href.split("#")[0]+"#/c/"+d.id;
    try{await navigator.clipboard.writeText(url);toast("link copied")}catch{window.prompt("copy this link",url)}break}
-  case"report":if(!need())break;
-   await addDoc(collection(db,"reports"),{kind:d.kind,ref:d.ref,cid:d.cid,uid:S.user.uid,createdAt:serverTimestamp()});toast("thanks, we'll take a look");break;
+  case"report":{if(!need())break;const r={kind:d.kind,ref:d.ref,uid:S.user.uid,createdAt:serverTimestamp()};if(d.cid)r.cid=d.cid;
+   await addDoc(collection(db,"reports"),r);notify(ADMIN_UID,"report",{text:d.kind,cid:d.cid});toast("thanks, we'll take a look");break}
   case"delcm":if(confirm("delete this comment?")){await deleteDoc(doc(db,"comments",d.id));loadComments(d.cid)}break;
-  case"delpost":if(confirm("delete this post permanently?")){await deleteDoc(doc(db,"contributions",d.id));await loadPublic();location.hash="#/";render(false)}break;
-  case"delmine":if(confirm("delete this post permanently?")){await deleteDoc(doc(db,"contributions",d.id));await loadPublic();loadMine()}break;
+  case"delpost":if(confirm("delete this post permanently?")){const c=S.items.find(x=>x.id===d.id)||S.pend[d.id]||{id:d.id};await delPost(c);delete S.pend[d.id];await loadPublic();location.hash="#/";render(false)}break;
+  case"delmine":if(confirm("delete this post permanently?")){const c=S.pend[d.id]||S.items.find(x=>x.id===d.id)||{id:d.id};await delPost(c);delete S.pend[d.id];await loadPublic();loadMine()}break;
+  case"featwk":{await setDoc(doc(db,"spotlight",dkey(mondayOf(new Date()))),{cid:d.id});await loadHome();toast("featured this week");break}
   case"atab":S.atab=d.t;render(true);break;
-  case"approve":await updateDoc(doc(db,"contributions",d.id),{status:"approved"});await loadPublic();loadQueue();break;
-  case"reject":if(confirm("reject and delete this submission?")){await deleteDoc(doc(db,"contributions",d.id));loadQueue()}break;
+  case"approve":{await updateDoc(doc(db,"contributions",d.id),{status:"approved"});const p=S.pend[d.id];if(p)notify(p.authorUid,"approved",{cid:d.id});delete S.pend[d.id];await loadPublic();render(true);toast("approved");break}
+  case"reject":if(confirm("reject and delete this submission?")){await delPost(S.pend[d.id]||{id:d.id});delete S.pend[d.id];loadQueue()}break;
   case"dismiss":await deleteDoc(doc(db,"reports",d.id));loadQueue();break;
-  case"rm":if(confirm("remove this content?")){await deleteDoc(doc(db,d.kind==="comment"?"comments":"contributions",d.ref));await deleteDoc(doc(db,"reports",d.id));await loadPublic();loadQueue()}break;
-  case"savespot":{const v=$('[data-wk="'+d.k+'"]').value;if(!v){toast("choose a post first");break}await setDoc(doc(db,"spotlight",d.k),{cid:v});toast("saved");await loadHome();loadSpot();break}
-  case"clearspot":await deleteDoc(doc(db,"spotlight",d.k));toast("cleared");await loadHome();loadSpot();break;
-  case"savefact":{const tx=$('[data-fk="'+d.k+'"]').value.trim();if(!tx){toast("write a fact first");break}
-   const o={text:tx.slice(0,300)},c=$('[data-fc="'+d.k+'"]').value;if(c)o.country=c;await setDoc(doc(db,"facts",d.k),o);toast("saved");await loadHome();loadFacts();break}
-  case"clearfact":await deleteDoc(doc(db,"facts",d.k));toast("cleared");await loadHome();loadFacts();break;
-  case"ban":if(confirm("ban "+(d.name||"this person")+"?")){await setDoc(doc(db,"bans",d.uid),{name:d.name||"",at:serverTimestamp()});S.banSet.add(d.uid);$("#ul").innerHTML=usersHTML();toast("banned")}break;
-  case"unban":await deleteDoc(doc(db,"bans",d.uid));S.banSet.delete(d.uid);$("#ul").innerHTML=usersHTML();toast("unbanned");break;
+  case"rm":if(confirm("remove this content?")){
+   if(d.kind==="comment")await deleteDoc(doc(db,"comments",d.ref));else await delPost(S.items.find(x=>x.id===d.ref)||{id:d.ref});
+   await deleteDoc(doc(db,"reports",d.id));await loadPublic();loadQueue()}break;
+  case"ban":if(confirm("ban "+(d.name||"this person")+"?")){await setDoc(doc(db,"bans",d.uid),{name:d.name||"",at:serverTimestamp()});if(d.rep)await deleteDoc(doc(db,"reports",d.rep));afterBan(d.uid,true);toast("banned");if(d.rep)loadQueue()}break;
+  case"unban":await deleteDoc(doc(db,"bans",d.uid));afterBan(d.uid,false);toast("unbanned");break;
   case"wipe":if(confirm("delete ALL posts and comments by this person? this can't be undone.")){
    const[p,c]=await Promise.all([getDocs(query(collection(db,"contributions"),where("authorUid","==",d.uid),limit(500))),getDocs(query(collection(db,"comments"),where("uid","==",d.uid),limit(500)))]);
-   await Promise.all([...p.docs.map(x=>deleteDoc(doc(db,"contributions",x.id))),...c.docs.map(x=>deleteDoc(doc(db,"comments",x.id)))]);
-   await loadPublic();toast("deleted "+p.docs.length+" posts and "+c.docs.length+" comments")}break;
+   await Promise.all([...p.docs.map(x=>delPost({id:x.id,...x.data()})),...c.docs.map(x=>deleteDoc(doc(db,"comments",x.id)))]);
+   await loadPublic();render(true);toast("deleted "+p.docs.length+" posts and "+c.docs.length+" comments")}break;
+  /* calendar */
+  case"calnav":S.cal.off=d.d==="0"?0:S.cal.off+Number(d.d);drawCal();break;
+  case"calday":S.cal.sel={t:"day",k:d.k};drawCal();break;
+  case"calweek":S.cal.sel={t:"week",k:d.k};S.cal.pick=S.cal.spots[d.k]||"";S.cal.pq="";drawCal();break;
+  case"pickpost":S.cal.pick=d.id;$("#cwl").innerHTML=pickList();break;
+  case"savespot":{if(!S.cal.pick){toast("choose a post first");break}await setDoc(doc(db,"spotlight",d.k),{cid:S.cal.pick});S.cal.spots[d.k]=S.cal.pick;toast("saved");await loadHome();drawCal();break}
+  case"clearspot":await deleteDoc(doc(db,"spotlight",d.k));delete S.cal.spots[d.k];toast("cleared");await loadHome();drawCal();break;
+  case"savefact":{const tx=$("#cft").value.trim();if(!tx){toast("write a fact first");break}
+   const o={text:tx.slice(0,300)},c=$("#cfc").value;if(c)o.country=c;await setDoc(doc(db,"facts",d.k),o);S.cal.facts[d.k]=o;toast("saved");await loadHome();drawCal();break}
+  case"clearfact":await deleteDoc(doc(db,"facts",d.k));delete S.cal.facts[d.k];toast("cleared");await loadHome();drawCal();break;
+  /* post form */
+  case"ptype":S.pt=d.t;syncType();break;
+  case"again":S.pt="";render(false);break;
+  case"rmimg":S.files.imgs.splice(Number(d.i),1);drawUps();break;
+  case"prevcss":{const f=$("#pvf");f.hidden=false;f.srcdoc=workDoc($("#fx").value||"your writing will look like this.",$("#fcss").value,true);break}
+  case"togstyle":{S.styled=!S.styled;const c=S.items.find(x=>x.id===parseHash().parts[1])||S.pend[parseHash().parts[1]];const f=$("#wf");if(c&&f)f.srcdoc=workDoc(c.text,c.css,S.styled);b.classList.toggle("on",S.styled);b.lastChild.textContent=S.styled?"view plain":"view with author's style";break}
+  case"playaud":{b.disabled=true;b.textContent="loading…";
+   try{const u=await playAudio(d.id,Number(d.parts)||1);$("#aud").innerHTML=`<audio controls autoplay src="${u}"></audio>`}catch(err){console.error(err);b.disabled=false;b.textContent="▶ play";toast("couldn't load the audio")}break}
+  /* profile */
+  case"editprof":S.files.avatar=null;S.files.rmav=false;S.menu=false;S.modal="edit";render(true);break;
+  case"rmav":S.files.avatar=null;S.files.rmav=true;render(true);break;
  }}catch(err){console.error(err);toast("that didn't work, please try again")}
 });
 function authErr(err){
@@ -602,12 +874,25 @@ document.addEventListener("input",e=>{
  if(id==="tq"){S.q=e.target.value;if(parseHash().parts[0]==="explore"&&$("#results"))$("#results").innerHTML=resultsHTML(true)}
  if(id==="cq"){S.cq=e.target.value;$("#cl").innerHTML=clistHTML()}
  if(id==="uq"){S.uq=e.target.value;$("#ul").innerHTML=usersHTML()}
+ if(id==="cwq"){S.cal.pq=e.target.value;$("#cwl").innerHTML=pickList()}
 });
-document.addEventListener("change",e=>{if(e.target.id==="ftype")syncType()});
+document.addEventListener("change",async e=>{
+ const id=e.target.id,f=e.target.files;
+ try{
+  if(id==="fimgs"&&f){const room=4-S.files.imgs.length;const err=$("#ferr");if(err)err.textContent="processing images…";
+   for(const file of[...f].slice(0,room))S.files.imgs.push(await prepImg(file));
+   if(err)err.textContent="";drawUps();e.target.value=""}
+  if(id==="faud"&&f&&f[0]){const file=f[0];const err=$("#ferr");
+   if(file.size>4*1024*1024){err.textContent="that file is over 4 mb. try a shorter or lower-quality mp3.";e.target.value="";return}
+   err.textContent="";S.files.audio={name:file.name.slice(0,80),size:file.size,b64:b64(await file.arrayBuffer())};drawUps()}
+  if(id==="favf"&&f&&f[0]){const x=await readImg(f[0],160,.82);S.files.avatar=x.url;S.files.rmav=false;$("#avp").innerHTML=av("",x.url,64)}
+ }catch(err){console.error(err);const el=$("#ferr")||$("#perr");if(el)el.textContent="couldn't read that file. try a different one."}
+});
+document.addEventListener("load",e=>{const f=e.target;if(f&&f.tagName==="IFRAME"&&f.classList.contains("wfr")){try{f.style.height=(f.contentDocument.documentElement.scrollHeight+6)+"px"}catch{}}},true);
 document.addEventListener("submit",async e=>{
  e.preventDefault();const f=e.target;
  try{switch(f.id){
-  case"topSearch":S.q=$("#tq").value.trim();if(location.hash==="#/explore")render(true);else location.hash="#/explore";break;
+  case"topSearch":S.q=$("#tq").value.trim();{const h="#/explore?q="+enc(S.q);if(location.hash===h)render(true);else location.hash=h}break;
   case"af":{const em=$("#ae").value.trim(),pw=$("#ap").value;
    try{
     if(S.authMode==="signup"){S.pendingName=$("#an").value.trim().slice(0,40);await createUserWithEmailAndPassword(auth,em,pw)}
@@ -615,21 +900,62 @@ document.addEventListener("submit",async e=>{
     S.modal=null;render(true);
    }catch(err){authErr(err)}break}
   case"cmf":{if(!need())break;const text=$("#ct").value.trim();if(!text)break;
-   await addDoc(collection(db,"comments"),{cid:f.dataset.cid,uid:S.user.uid,name:myName().slice(0,60),text,createdAt:serverTimestamp()});
+   const o={cid:f.dataset.cid,uid:S.user.uid,name:myName().slice(0,60),text,createdAt:serverTimestamp()};if(myHandle())o.handle=myHandle();
+   await addDoc(collection(db,"comments"),o);notify(f.dataset.to,"comment",{cid:f.dataset.cid,text});
    $("#ct").value="";loadComments(f.dataset.cid);break}
-  case"pf":{if(!need())break;const p={name:$("#pn").value.trim().slice(0,40),bio:$("#pb").value.trim().slice(0,300),home:$("#ph2").value};
-   if(!p.name)break;await setDoc(doc(db,"users",S.user.uid),p);S.profile=p;toast("profile saved");render(true);break}
-  case"cf":{if(!need())break;const type=$("#ftype").value,link=$("#fl").value.trim(),err=$("#ferr");err.textContent="";
-   if(link&&!safeUrl(link)){err.textContent="that link needs to start with http:// or https://";break}
-   const data={country:$("#fc").value,type,caption:$("#fb").value.trim(),authorUid:S.user.uid,authorName:myName().slice(0,60),status:"pending",createdAt:serverTimestamp()};
-   if(link)data.link=link;
-   try{await addDoc(collection(db,"contributions"),data)}catch(x){console.error(x);err.textContent="couldn't submit. check everything is filled in and try again.";break}
-   $("main").innerHTML=`<div class="notice">thank you! your post was submitted and will appear once it's been reviewed.</div><div class="row"><a class="btn" href="#/contribute">post another</a><a class="btn" href="#/mine">my posts</a></div>`;break}
+  case"sf":{await setDoc(doc(db,"site","config"),{announcement:$("#sa").value.trim().slice(0,300),about:$("#sab").value.trim().slice(0,3000),requireReview:$("#sr").checked});await loadHome();toast("saved");break}
+  case"pf":{if(!S.user)break;const err=$("#perr");err.textContent="";
+   const name=$("#pn").value.trim().slice(0,40),un=$("#pu").value.trim().toLowerCase().replace(/^@/,"");
+   if(!name){err.textContent="add a display name.";break}
+   if(!/^[a-z0-9_.]{3,20}$/.test(un)){err.textContent="username: 3 to 20 letters, numbers, . or _";break}
+   const old=S.profile&&S.profile.username,p={...S.profile,name,username:un,bio:$("#pb").value.trim().slice(0,300),home:$("#ph2").value};
+   if(S.files.avatar)p.photo=S.files.avatar;else if(S.files.rmav)delete p.photo;
+   try{const b=writeBatch(db);if(un!==old){b.set(doc(db,"usernames",un),{uid:S.user.uid});if(old)b.delete(doc(db,"usernames",old))}
+    b.set(doc(db,"users",S.user.uid),p);await b.commit()}
+   catch(x){console.error(x);err.textContent="couldn't save. that username may already be taken.";break}
+   S.profile=p;S.modal=null;S.pf=null;toast("profile saved");render(true);
+   await propagateNames(S.user.uid,name,un);await loadPublic();if(!S.modal)render(true);break}
+  case"cf":{if(!need())break;await submitPost();break}
  }}catch(err){console.error(err);toast("that didn't work, please try again")}
 });
-window.addEventListener("hashchange",()=>{S.menu=false;S.modal=null;S.pf=null;render(false)});
+async function submitPost(){
+ const T=S.pt,F=FM[T],err=$("#ferr"),btn=$("#fsub");err.textContent="";
+ if(!F){err.textContent="choose what you're sharing.";return}
+ const country=$("#fc").value,title=$("#ft").value.trim(),text=$("#fx").value.trim(),caption=$("#fcap").value.trim(),link=F.link?$("#fl").value.trim():"",ing=F.ing?$("#fing").value.trim():"",css=F.css?$("#fcss").value.trim():"";
+ const imgs=F.img?S.files.imgs:[],aud=F.aud?S.files.audio:null;
+ if(!country){err.textContent="choose a country.";return}
+ if(F.tr&&!title){err.textContent="add a "+F.t+".";return}
+ if(F.ing&&!ing){err.textContent="add the ingredients.";return}
+ if(F.xr&&!text){err.textContent="add your "+F.x+".";return}
+ if(F.imgr&&!imgs.length){err.textContent="add at least one photo.";return}
+ if(F.lr&&!link){err.textContent="add a link.";return}
+ if(link&&!safeUrl(link)){err.textContent="that link needs to start with http:// or https://";return}
+ if(T==="song"&&!aud&&!link){err.textContent="upload an mp3 or paste a link to the song.";return}
+ if(!caption){err.textContent="write a caption. add #tags so people can find it.";return}
+ const auto=S.admin||S.cfg.requireReview===false,cid=doc(collection(db,"contributions")).id;
+ const data={country,type:T,caption:caption.slice(0,300),authorUid:S.user.uid,authorName:myName().slice(0,60),status:auto?"approved":"pending",createdAt:serverTimestamp()};
+ if(myHandle())data.authorHandle=myHandle().slice(0,30);
+ if(F.t&&title)data.title=title.slice(0,120);
+ if(ing)data.ing=ing;if(text)data.text=text.slice(0,12000);if(link)data.link=link;if(css)data.css=css;
+ if(imgs.length){data.imgs=imgs.length;data.thumb=imgs[0].thumb;data.ar=+(imgs[0].w/imgs[0].h).toFixed(3)}
+ const jobs=[];
+ imgs.forEach((x,i)=>jobs.push(setDoc(doc(db,"media",cid+"_i"+i),{cid,kind:"img",i,data:x.full,owner:S.user.uid})));
+ if(aud){const parts=[];for(let p=0;p<aud.b64.length;p+=900000)parts.push(aud.b64.slice(p,p+900000));
+  data.audio={name:aud.name,size:aud.size,parts:parts.length};
+  parts.forEach((x,i)=>jobs.push(setDoc(doc(db,"media",cid+"_a"+i),{cid,kind:"aud",i,data:x,owner:S.user.uid})))}
+ btn.disabled=true;btn.textContent=jobs.length?"uploading…":"posting…";
+ try{await Promise.all(jobs);await setDoc(doc(db,"contributions",cid),data)}
+ catch(x){console.error(x);err.textContent="couldn't submit. check everything is filled in and try again.";btn.disabled=false;btn.textContent=S.admin?"post":"submit for review";
+  imgs.forEach((_,i)=>deleteDoc(doc(db,"media",cid+"_i"+i)).catch(()=>{}));return}
+ S.files.imgs=[];S.files.audio=null;
+ if(!auto)notify(ADMIN_UID,"pending",{cid});
+ if(auto)await loadPublic();
+ $("main").innerHTML=`<div class="notice">${auto?"your post is live!":"thank you! your post was submitted and will appear once it's been reviewed."}</div><div class="row">${auto?`<a class="btn p" href="#/c/${esc(cid)}">view post</a>`:""}<button class="btn" data-act="again">post another</button><a class="btn" href="#/mine">my posts</a></div>`;
+}
+window.addEventListener("hashchange",()=>{if(S.nopen)closeBell();S.menu=false;S.modal=null;S.pf=null;S.show=40;S.styled=false;render(false)});
 onAuthStateChanged(auth,async u=>{
- S.user=u;S.profile=null;S.admin=!!u&&u.uid===ADMIN_UID;S.banned=false;S.saves=new Set();S.following=new Set();S.pf=null;
+ S.user=u;S.profile=null;S.admin=!!u&&u.uid===ADMIN_UID;S.banned=false;S.saves=new Set();S.following=new Set();S.pf=null;S.pend={};S.cal.facts=null;S.nopen=false;
+ listenNotifs(u);
  if(u){const[,bn]=await Promise.all([Promise.all([ensureProfile(u),loadMyStuff(u)]),loadBan(u)]);S.banned=bn}
  rebuildLikes();S.authReady=true;render(true);
 });
