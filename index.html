@@ -52,11 +52,9 @@ button,input,textarea,select{font:inherit;color:inherit}button{cursor:pointer}
 .fact p{font:400 1.5rem/1.28 'Roboto',system-ui,sans-serif;margin:0}
 .nudge{border:2px dashed var(--line);border-radius:28px;padding:22px;display:flex;flex-direction:column;gap:8px;align-items:flex-start}.nudge p{margin:0}
 .ann{background:var(--soft);border-radius:18px;padding:12px 18px;margin-top:14px;font-weight:500}
-.mas{display:grid;grid-template-columns:repeat(auto-fill,minmax(165px,1fr));grid-auto-rows:52px;grid-auto-flow:dense;gap:12px;margin-top:16px;padding:12px 6px 20px}
-@media(max-width:640px){.mas{grid-template-columns:repeat(2,minmax(0,1fr));gap:10px;padding:10px 2px 16px}}
-.c2{grid-column:span 2}.c3{grid-column:span 3}.r6{grid-row:span 6}.r7{grid-row:span 7}.r8{grid-row:span 8}
-@media(max-width:640px){.c3{grid-column:span 2}}.r2{grid-row:span 2}.r3{grid-row:span 3}.r4{grid-row:span 4}.r5{grid-row:span 5}
-.sb{position:relative;display:block;text-decoration:none;min-width:0;min-height:0;transform:translate(var(--x,0),var(--y,0)) rotate(var(--r,0deg));filter:drop-shadow(0 6px 9px rgba(0,0,0,.2));transition:transform .22s,filter .22s;z-index:1}
+.mas{position:relative;margin:16px 0 22px;visibility:hidden}.mas.rdy{visibility:visible}
+.c2{grid-column:span 2}.c3{grid-column:span 3}.r6{grid-row:span 6}.r7{grid-row:span 7}.r8{grid-row:span 8}.r2{grid-row:span 2}.r3{grid-row:span 3}.r4{grid-row:span 4}.r5{grid-row:span 5}
+.sb{position:absolute;display:block;box-sizing:border-box;text-decoration:none;min-width:0;min-height:0;transform:translate(var(--x,0),var(--y,0)) rotate(var(--r,0deg));filter:drop-shadow(0 6px 9px rgba(0,0,0,.2));transition:transform .22s,filter .22s;z-index:1}
 .sb:hover,.sb:focus-visible{transform:scale(1.03);z-index:5;filter:drop-shadow(0 14px 20px rgba(0,0,0,.28))}
 .ti{height:100%;display:flex;flex-direction:column;justify-content:space-between;gap:6px;padding:14px 15px 11px;border-radius:10px;overflow:hidden;color:var(--cink)}
 .cq{font:400 1.2rem/1.3 'Roboto',system-ui,sans-serif;font-style:normal;color:var(--cink);overflow:hidden;word-wrap:break-word;overflow-wrap:anywhere}
@@ -65,7 +63,7 @@ button,input,textarea,select{font:inherit;color:inherit}button{cursor:pointer}
 .sb .pm span{display:flex;align-items:center;gap:5px;min-width:0;overflow:hidden;white-space:nowrap;text-overflow:ellipsis}
 .sb.pol .ti{background:#fff;color:#222;padding:8px 8px 9px;gap:7px;border-radius:4px;--cink:#222}
 .timg{display:block;width:100%;flex:1;min-height:0;object-fit:cover;background:#ddd;border-radius:2px}
-.pcap.sg{display:flex;flex-direction:column;gap:1px;-webkit-line-clamp:unset}.pcap.sg b{font-weight:600;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}.pcap.sg span{color:#666;font-size:.72rem;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.pcap.sg{display:flex;flex-direction:column;gap:1px;-webkit-line-clamp:unset}.pcap.sg b{font-weight:600;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}.pcap.sg span.wr{white-space:normal;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}.pcap.sg span{color:#666;font-size:.72rem;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
 .pcap{padding:0 2px;font-size:.78rem;line-height:1.3;color:#222;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden;flex:none}
 .sb.pol .pm{color:#555}
 .sb.bd .ti{aspect-ratio:1;height:auto;width:min(100%,100%);align-self:center;margin:auto;border-radius:50%;justify-content:center;align-items:center;text-align:center;padding:12px}
@@ -394,10 +392,12 @@ function closeBell(){if(S.nopen){S.nopen=false;markRead()}}
 const lk=c=>Math.max(0,c.likeCount||0);
 const hay=c=>[c.caption,c.title,c.artist,c.album,c.country,c.authorName,c.authorHandle,TYPES[c.type]].join(" ").toLowerCase();
 const TILT=[-2.6,1.4,-1,2.2,-1.8,.8,2.8,-.4],DECO=["pn","","","pn","","","",""];
+const rich=c=>(c.type==="writing"||c.type==="recipe")&&c.title&&c.text;
+const exc=c=>clip(c.text,150);
 function lay(c){
  const h=hh(c.id||"x"),H=(r)=>r*52+(r-1)*12;let cls="",fs=1.2,fw=400,r=3,w=1;
  if(c.thumb){const ar=c.type==="song"?1:(c.ar||1);if(ar>=1.4){w=h%3===0?3:2;r=w===3?5:4}else if(ar>=.85){if(h%4===0){w=2;r=5}else r=4}else{r=h%3===0?6:5}return{cls:(w===3?"c3 ":w===2?"c2 ":"")+"r"+r,fs,fw,lc:2,r,w,pol:1,h}}
- const n=(ttl(c)||c.text||c.caption||"").replace(/\s+/g," ").trim().length,odd=h%2;
+ const n=(ttl(c)||c.text||c.caption||"").replace(/\s+/g," ").trim().length+(rich(c)?exc(c).length:0),odd=h%2;
  fs=1.12;fw=400;
  const WO=n<=26?[1,1,1,2]:n<=60?[1,2,2,3]:n<=110?[1,2,2,3]:n<=190?[1,1,2,2]:[1,2,2,1];
  w=WO[(h>>2)%WO.length];
@@ -413,8 +413,8 @@ function card(c){
  const pin=["#e5484d","#3e63dd","#30a46c","#f5a623"][(h>>5)%4];
  const st=`--r:${rot}deg;--x:${dx}px;--y:${dy}px;--pin:${pin}`;
  const meta=`<div class="pm"><span>${flag(c.country,16)}<span class="tc">${esc(c.country)}</span></span><span class="sp">♥ ${lk(c)}</span></div>`;
- if(c.thumb)return `<a class="sb pol ${L.cls} ${deco==="tk"?"pn":deco}" style="${st}" href="#/c/${esc(c.id)}"><div class="ti"><img class="timg" loading="lazy" alt="" src="${esc(c.thumb)}">${c.type==="song"?`<div class="pcap sg"><b>${esc(clip(ttl(c),60))}</b>${c.album?`<span>${esc(clip(c.album,40))}</span>`:""}</div>`:`<div class="pcap">${esc(clip(c.caption||c.title,70)||c.country)}</div>`}${meta}</div></a>`;
- return `<a class="sb ${L.cls} ${deco}" style="${st}" href="#/c/${esc(c.id)}"><div class="ti" style="${noteBg(c)};--fs:${L.fs}rem;--fw:${L.fw};--lc:${L.lc}"><span class="cq">${esc(clip(ttl(c)||c.text||c.caption,170))}${c.type==="song"&&c.album?`<br><small style="font-weight:400;font-size:.7em;opacity:.85">${esc(clip(c.album,40))}</small>`:""}</span>${meta}</div></a>`;
+ if(c.thumb)return `<a class="sb pol ${L.cls} ${deco==="tk"?"pn":deco}" data-ar="${c.type==="song"?1:(c.ar||1)}" style="${st}" href="#/c/${esc(c.id)}"><div class="ti"><img class="timg" loading="lazy" alt="" src="${esc(c.thumb)}">${c.type==="song"?`<div class="pcap sg"><b>${esc(clip(ttl(c),60))}</b>${c.album?`<span>${esc(clip(c.album,40))}</span>`:""}</div>`:(rich(c)?`<div class="pcap sg"><b>${esc(clip(c.title,60))}</b><span class="wr">${esc(clip(c.text,90))}</span></div>`:`<div class="pcap">${esc(clip(c.caption||c.title,70)||c.country)}</div>`)}${meta}</div></a>`;
+ return `<a class="sb ${L.cls} ${deco}" style="${st}" href="#/c/${esc(c.id)}"><div class="ti" style="${noteBg(c)};--fs:${L.fs}rem;--fw:${L.fw};--lc:99"><span class="cq">${rich(c)?`<b style="font-weight:600">${esc(clip(c.title,80))}</b><br>${esc(exc(c))}`:esc(clip(ttl(c)||c.text||c.caption,170))}${c.type==="song"&&c.album?`<br><small style="font-weight:400;font-size:.7em;opacity:.85">${esc(clip(c.album,40))}</small>`:""}</span>${meta}</div></a>`;
 }
 function grid(L,msg,paged,board){
  if(!L.length)return `<p class="empty">${msg||"nothing here yet."}</p>`;
@@ -531,7 +531,7 @@ function detail(id){
   ${mineP?"":`<button class="btn s ${fl?"on":""}" data-act="follow" data-uid="${esc(c.authorUid)}">${fl?"following":"follow"}</button>`}
   ${mineP||pend?"":`<button class="btn s sp" data-act="report" data-kind="contribution" data-ref="${esc(id)}" data-cid="${esc(id)}">${ic("flag",14)} report</button>`}</div>
   ${c.title?`<h2 class="ptitle">${esc(ttl(c))}</h2>${c.album?`<div class="k">album: ${esc(c.album)}</div>`:""}`:`<div style="height:14px"></div>`}
-  <p class="cap">${tagify(c.caption)}</p>
+  ${c.caption?`<p class="cap">${tagify(c.caption)}</p>`:""}
   ${bodyHTML(c)}
   ${link?`<p><a class="btn s" href="${esc(link)}" target="_blank" rel="noopener noreferrer">open link ↗</a></p>`:""}
   <div class="row k" style="margin-top:12px"><span class="tag">${GLY[c.type]||""} ${esc(TYPES[c.type]||c.type)}</span><a href="#/country/${enc(c.country)}">${esc(c.country)}</a><span>·</span><span>${esc(dt(c.createdAt))}</span></div>
@@ -587,7 +587,7 @@ function contribute(params){
  <div class="f" id="g_img"><span class="lb" id="l_img">photos</span><label class="btn s" for="fimgs" style="align-self:flex-start">choose images</label><input id="fimgs" type="file" accept="image/*" multiple hidden><div class="ups" id="ups"></div><span class="k">photos are shrunk before upload. up to 4.</span></div>
  <div class="f" id="g_aud"><span class="lb">upload an mp3 (optional)</span><label class="btn s" for="faud" style="align-self:flex-start">choose audio</label><input id="faud" type="file" accept="audio/*,.mp3" hidden><span class="k" id="audprev">up to 4 mb, about 4 minutes.</span></div>
  <div class="f" id="g_link"><label for="fl" id="l_link">link</label><input id="fl" type="url" maxlength="500" placeholder="https://"></div>
- <div class="f"><label for="fcap">caption <span class="k">· what viewers see, with #tags</span></label><input id="fcap" maxlength="300" placeholder="e.g. grandma's sunday soup #recipe #comfortfood"></div>
+ <div class="f"><label for="fcap">caption <span class="k">· optional, add #tags so people can find it</span></label><input id="fcap" maxlength="300" placeholder="e.g. grandma's sunday soup #recipe #comfortfood"></div>
  <div class="err" id="ferr"></div><button class="btn p" id="fsub">${S.admin?"post":"submit for review"}</button></div></form>`;
 }
 function syncType(){
@@ -695,7 +695,7 @@ async function loadQueue(){
     else{x.t=S.items.find(i=>i.id===x.ref)||null}}catch{}return x}));
   const el=$("#adm");if(!el)return;
   el.innerHTML=`<h2 style="margin-top:12px">waiting for approval (${P.length})</h2>`+(P.length?P.map(c=>`<div class="box"><div class="row"><span class="tag">${GLY[c.type]||""} ${esc(TYPES[c.type]||c.type)}</span><span class="k sp row" style="gap:6px">${flag(c.country,18)}${esc(c.country)} · ${esc(uname(c))}</span></div>
-  ${c.title?`<h3 style="margin-top:10px">${esc(ttl(c))}</h3>`:""}<p>${tagify(c.caption)}</p>${c.text?`<div class="body" style="max-height:160px;overflow:auto">${esc(clip(c.text,600))}</div>`:""}
+  ${c.title?`<h3 style="margin-top:10px">${esc(ttl(c))}</h3>`:""}${c.caption?`<p>${tagify(c.caption)}</p>`:""}${c.text?`<div class="body" style="max-height:160px;overflow:auto">${esc(clip(c.text,600))}</div>`:""}
   <div class="k">${c.imgs?c.imgs+" photo(s) · ":""}${c.audio?"audio · ":""}${c.link?esc(c.link):""}</div>
   <div class="row" style="margin-top:10px"><a class="btn s" href="#/c/${esc(c.id)}">open</a><button class="btn s p" data-act="approve" data-id="${esc(c.id)}">approve</button><button class="btn s d" data-act="reject" data-id="${esc(c.id)}">reject &amp; delete</button></div></div>`).join(""):`<p class="empty">nothing waiting.</p>`)
   +`<h2 style="margin-top:26px">reports (${R.length})</h2>`+(R.length?R.map(x=>{
@@ -823,24 +823,40 @@ function route(){
  case"admin":case"reports":return reports();case"calendar":return calendar();case"site":return site();case"settings":return settings();case"about":return about();
  default:S.q="";return feed(false)}
 }
-function fitTiles(all){
- $$(".sb").forEach(t=>{
-  if(!all&&t.dataset.fit)return;t.dataset.fit=1;
-  const q=t.querySelector(".cq");if(!q||t.classList.contains("pol"))return;
-  const ti=t.querySelector(".ti"),fs=parseFloat(getComputedStyle(q).fontSize)*1.3;
-  t.style.gridRow="span 30";q.style.cssText+=";flex:none;-webkit-line-clamp:unset";
-  const need=q.offsetHeight+(ti.offsetHeight-q.offsetHeight>0?0:0);
-  const meta=t.querySelector(".pm"),cs=getComputedStyle(ti),extra=parseFloat(cs.paddingTop)+parseFloat(cs.paddingBottom)+(meta?meta.offsetHeight:0)+6;
-  q.style.flex="";q.style.webkitLineClamp="";
-  let r=Math.max(2,Math.ceil((need+extra+12)/64));const cap=r>9;r=Math.min(r,9);
-  t.style.gridRow="span "+r;
-  t.style.setProperty("--lc",cap?Math.floor((r*64-12-extra)/fs):99);
- });
-}
-let fitT=0;const fitSoon=()=>{cancelAnimationFrame(fitT);fitT=requestAnimationFrame(()=>fitTiles(false))};
+function layoutMas(){$$(".mas").forEach(m=>{
+ const G=12,W=m.clientWidth;if(!W)return;
+ const cols=W<=560?2:Math.max(2,Math.floor((W+G)/177)),cw=(W-(cols-1)*G)/cols;
+ const H=new Array(cols).fill(0),last=new Array(cols).fill(null),wid=sp=>cw*sp+G*(sp-1);
+ const meas=(t,sp)=>{
+  const w=wid(sp);t.style.width=w+"px";t.style.height="auto";
+  const q=t.querySelector(".cq"),im=t.querySelector(".timg"),ti=t.querySelector(".ti");
+  if(im){const ar=Math.min(1.8,Math.max(.6,+t.dataset.ar||1));im.style.flex="none";im.style.height=Math.min(sp===1?w*1.4:w*.9,(w-16)/ar)+"px"}
+  if(q){q.style.flex="none";q.style.webkitLineClamp="unset"}
+  const h=Math.ceil(ti.offsetHeight);return Math.min(h,520);
+ };
+ const put=(t,c,sp,top,h)=>{t.style.left=Math.round(c*(cw+G))+"px";t.style.top=Math.round(top)+"px";t.style.width=wid(sp)+"px";t.style.height=h+"px";t._h=h;t._sp=sp;
+  const q=t.querySelector(".cq");if(q){q.style.flex="";q.style.webkitLineClamp="";const ex=h-(q.offsetHeight||0);t.style.setProperty("--lc",99)}};
+ const queue=[...m.children].filter(t=>t.classList.contains("sb")),pend=[];
+ const wantOf=t=>Math.min(t.classList.contains("c3")||t.classList.contains("c2")?2:1,cols);
+ const pair=()=>{let best=-1,bd=1e9,bt=1e9;for(let c=0;c<cols-1;c++){const d=Math.abs(H[c]-H[c+1]),lo=H[c]<H[c+1]?c:c+1,top=Math.max(H[c],H[c+1]);
+  if(d<=34&&(d===0||(last[lo]&&last[lo]._sp===1))&&top<bt-1){bd=d;best=c;bt=top}}return{best,bd}};
+ const placeWide=(t,best,bd)=>{const h=meas(t,2),top=Math.max(H[best],H[best+1]),lo=H[best]<H[best+1]?best:best+1;
+  if(bd>0&&last[lo]){last[lo]._h+=bd;last[lo].style.height=last[lo]._h+"px"}
+  put(t,best,2,top,h);H[best]=H[best+1]=top+h+G;last[best]=last[best+1]=t};
+ const placeOne=t=>{let c=0;for(let i=1;i<cols;i++)if(H[i]<H[c]-.5)c=i;const h=meas(t,1);put(t,c,1,H[c],h);H[c]+=h+G;last[c]=t};
+ let guard=0;
+ while((queue.length||pend.length)&&guard++<5000){
+  const minH=Math.min(...H),{best,bd}=pair();
+  if(pend.length&&best>=0&&bd<=34&&Math.max(H[best],H[best+1])<=minH+70){placeWide(pend.shift(),best,bd);continue}
+  if(queue.length){const t=queue.shift();if(wantOf(t)>=2&&cols>=3&&pend.length<2)pend.push(t);else placeOne(t);continue}
+  const t=pend.shift();if(best>=0&&bd<=34)placeWide(t,best,bd);else placeOne(t);
+ }
+ m.style.height=Math.max(0,Math.max(...H)-G)+"px";m.classList.add("rdy");
+})}
+let fitT=0;const fitSoon=()=>{cancelAnimationFrame(fitT);fitT=requestAnimationFrame(layoutMas)};
 new MutationObserver(fitSoon).observe(document.body,{childList:true,subtree:true});
-let rsT=0;addEventListener("resize",()=>{clearTimeout(rsT);rsT=setTimeout(()=>fitTiles(true),150)});
-if(document.fonts&&document.fonts.ready)document.fonts.ready.then(()=>fitTiles(true));
+let rsT=0;addEventListener("resize",()=>{clearTimeout(rsT);rsT=setTimeout(layoutMas,120)});
+if(document.fonts&&document.fonts.ready)document.fonts.ready.then(layoutMas);
 function render(keep){
  const y=window.scrollY;applyTheme();S.after=null;
  let body;
@@ -848,7 +864,7 @@ function render(keep){
  else body=route();
  $("#app").innerHTML=top()+`<main>${body}</main>`;
  $("#layer").innerHTML=layerHTML();
- window.scrollTo(0,keep?y:0);fitTiles(false);
+ window.scrollTo(0,keep?y:0);layoutMas();
  if(S.after)S.after();
 }
 
@@ -1013,7 +1029,6 @@ async function submitPost(){
  if(F.lr&&!link){err.textContent="add a link.";return}
  if(link&&!safeUrl(link)){err.textContent="that link needs to start with http:// or https://";return}
  if(T==="song"&&!aud&&!link){err.textContent="upload an mp3 or paste a link to the song.";return}
- if(!caption){err.textContent="write a caption. add #tags so people can find it.";return}
  const auto=S.admin||S.cfg.requireReview===false,cid=doc(collection(db,"contributions")).id;
  const data={country,type:T,caption:caption.slice(0,300),authorUid:S.user.uid,authorName:myName().slice(0,60),status:auto?"approved":"pending",createdAt:serverTimestamp()};
  if(myHandle())data.authorHandle=myHandle().slice(0,30);
