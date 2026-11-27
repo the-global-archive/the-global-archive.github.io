@@ -64,6 +64,7 @@ button,input,textarea,select{font:inherit;color:inherit}button{cursor:pointer}
 .sb .pm span{display:flex;align-items:center;gap:5px;min-width:0;overflow:hidden;white-space:nowrap;text-overflow:ellipsis}
 .sb.pol .ti{background:#fff;color:#222;padding:8px 8px 9px;gap:7px;border-radius:4px;--cink:#222}
 .timg{display:block;width:100%;flex:1;min-height:0;object-fit:cover;background:#ddd;border-radius:2px}
+.pcap.sg{display:flex;flex-direction:column;gap:1px;-webkit-line-clamp:unset}.pcap.sg b{font-weight:600;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}.pcap.sg span{color:#666;font-size:.72rem;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
 .pcap{padding:0 2px;font-size:.78rem;line-height:1.3;color:#222;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden;flex:none}
 .sb.pol .pm{color:#555}
 .sb.bd .ti{aspect-ratio:1;height:auto;width:min(100%,100%);align-self:center;margin:auto;border-radius:50%;justify-content:center;align-items:center;text-align:center;padding:12px}
@@ -184,7 +185,7 @@ const TYPES={recipe:"recipe",song:"song",writing:"writing",image:"photos",note:"
 const PT=["recipe","song","writing","image","note","link"];
 const GLY={recipe:"🍲",song:"🎵",writing:"✍️",image:"🖼️",note:"📝",link:"🔗",other:"✨"};
 const FM={recipe:{t:"dish name",tr:1,x:"method",xr:1,xp:"how do you make it? steps, tips, the story behind it…",img:"photos (optional)",ing:1},
- song:{t:"song title and artist",tr:1,x:"why this song? (optional)",xp:"what does it mean to you or to the place?",img:"cover image (optional)",aud:1,link:"or paste a link (youtube, spotify)"},
+ song:{t:"song name",tr:1,art:1,x:"why this song? (optional)",xp:"what does it mean to you or to the place?",img:"album cover (optional, shown at the top)",aud:1,link:"or paste a link (youtube, spotify)"},
  writing:{t:"title",tr:1,x:"your writing",xr:1,xp:"write here. you can use simple html like <b>, <i> and <center>.",big:1,img:"illustration (optional)",css:1},
  image:{t:"title (optional)",x:"description (optional)",xp:"tell us about the photos…",img:"photos (up to 4)",imgr:1},
  note:{x:"your note",xr:1,xp:"a tip, a memory, a saying, a place to see…"},
@@ -254,6 +255,7 @@ const SHADES=[["w",.62],["w",.38],["w",0],["b",.18],["b",.38],["w",.22]];
 const shadeOf=c=>{const sh=SHADES[hh(c.id||c.country)%SHADES.length],b=mixc(baseCol(c),sh[0],sh[1]);return b};
 const noteBg=c=>{const b=shadeOf(c);return `background:${b};--cink:${lum(b)>.42?"#111":"#fff"}`};
 const tileStyle=c=>{const h=hh(c.id),n=hh(c.id+"x");const t=(c.title||c.text||c.caption||"").length;return""};
+const ttl=c=>c.type==="song"&&c.artist&&c.title?c.title+" - "+c.artist:(c.title||"");
 const uname=x=>x.authorHandle?"@"+x.authorHandle:(x.authorName||"anonymous");
 
 /* ---------- writing skins: sandboxed + sanitised ---------- */
@@ -372,12 +374,12 @@ function markRead(){S.notifs.filter(n=>!n.read).forEach(n=>updateDoc(doc(db,"not
 function closeBell(){if(S.nopen){S.nopen=false;markRead()}}
 
 /* ---------- pieces ---------- */
-const hay=c=>[c.caption,c.title,c.country,c.authorName,c.authorHandle,TYPES[c.type]].join(" ").toLowerCase();
-const TILT=[-2.6,1.4,-1,2.2,-1.8,.8,2.8,-.4],DECO=["pn","dt","","pn","","dt","",""];
+const hay=c=>[c.caption,c.title,c.artist,c.album,c.country,c.authorName,c.authorHandle,TYPES[c.type]].join(" ").toLowerCase();
+const TILT=[-2.6,1.4,-1,2.2,-1.8,.8,2.8,-.4],DECO=["pn","","","pn","","","",""];
 function lay(c){
  const h=hh(c.id||"x"),H=(r)=>r*52+(r-1)*12;let cls="",fs=1.2,fw=400,r=3,w=1;
- if(c.thumb){const ar=c.ar||1;if(ar>=1.4){w=2;r=4}else if(ar>=.85){r=4}else r=5;return{cls:(w===2?"c2 ":"")+"r"+r,fs,fw,lc:2,r,w,pol:1,h}}
- const n=(c.title||c.text||c.caption||"").replace(/\s+/g," ").trim().length,odd=h%2;
+ if(c.thumb){const ar=c.type==="song"?1:(c.ar||1);if(ar>=1.4){w=2;r=4}else if(ar>=.85){r=4}else r=5;return{cls:(w===2?"c2 ":"")+"r"+r,fs,fw,lc:2,r,w,pol:1,h}}
+ const n=(ttl(c)||c.text||c.caption||"").replace(/\s+/g," ").trim().length,odd=h%2;
  if(n<=12){w=1;r=2;fs=1.6;fw=700}
  else if(n<=36){if(h%3===0){w=2;r=2;fs=1.75;fw=500}else{w=1;r=3;fs=1.4;fw=500}}
  else if(n<=80){if(odd){w=2;r=3;fs=1.4;fw=400}else{w=1;r=4;fs=1.2;fw=400}}
@@ -388,12 +390,12 @@ function lay(c){
 }
 function card(c){
  const L=lay(c),h=L.h,rot=0,dx=0,dy=0;
- let deco=DECO[(h>>3)%DECO.length];if(L.cls.includes("bd"))deco=deco==="tk"?"pn":deco;if(L.w===2&&deco==="tk"&&L.r<3)deco="dt";
+ let deco=DECO[(h>>3)%DECO.length];if(L.cls.includes("bd"))deco=deco==="tk"?"pn":deco;if(L.w===2&&deco==="tk"&&L.r<3)deco="";
  const pin=["#e5484d","#3e63dd","#30a46c","#f5a623"][(h>>5)%4];
  const st=`--r:${rot}deg;--x:${dx}px;--y:${dy}px;--pin:${pin}`;
  const meta=`<div class="pm"><span>${flag(c.country,16)}<span class="tc">${esc(c.country)}</span></span><span class="sp">♥ ${S.likeMap[c.id]||0}</span></div>`;
- if(c.thumb)return `<a class="sb pol ${L.cls} ${deco==="tk"?"pn":deco}" style="${st}" href="#/c/${esc(c.id)}"><div class="ti"><img class="timg" loading="lazy" alt="" src="${esc(c.thumb)}"><div class="pcap">${esc(clip(c.caption||c.title,70)||c.country)}</div>${meta}</div></a>`;
- return `<a class="sb ${L.cls} ${deco}" style="${st}" href="#/c/${esc(c.id)}"><div class="ti" style="${noteBg(c)};--fs:${L.fs}rem;--fw:${L.fw};--lc:${L.lc}"><span class="cq">${esc(clip(c.title||c.text||c.caption,170))}</span>${meta}</div></a>`;
+ if(c.thumb)return `<a class="sb pol ${L.cls} ${deco==="tk"?"pn":deco}" style="${st}" href="#/c/${esc(c.id)}"><div class="ti"><img class="timg" loading="lazy" alt="" src="${esc(c.thumb)}">${c.type==="song"?`<div class="pcap sg"><b>${esc(clip(ttl(c),60))}</b>${c.album?`<span>${esc(clip(c.album,40))}</span>`:""}</div>`:`<div class="pcap">${esc(clip(c.caption||c.title,70)||c.country)}</div>`}${meta}</div></a>`;
+ return `<a class="sb ${L.cls} ${deco}" style="${st}" href="#/c/${esc(c.id)}"><div class="ti" style="${noteBg(c)};--fs:${L.fs}rem;--fw:${L.fw};--lc:${L.lc}"><span class="cq">${esc(clip(ttl(c)||c.text||c.caption,170))}${c.type==="song"&&c.album?`<br><small style="font-weight:400;font-size:.7em;opacity:.85">${esc(clip(c.album,40))}</small>`:""}</span>${meta}</div></a>`;
 }
 function grid(L,msg,paged,board){
  if(!L.length)return `<p class="empty">${msg||"nothing here yet."}</p>`;
@@ -432,7 +434,7 @@ function drawBell(){const b=$("#bellw");if(b)b.innerHTML=bellHTML();const p=$("#
 
 function highlights(){
  const c=S.spot&&S.items.find(x=>x.id===S.spot.cid);
- const spot=c?`<a class="spot" style="${noteBg(c)}" href="#/c/${esc(c.id)}"><span class="lbl">✦ contribution of the week</span><span class="cq">${esc(clip(c.title||c.caption,200))}</span>
+ const spot=c?`<a class="spot" style="${noteBg(c)}" href="#/c/${esc(c.id)}"><span class="lbl">✦ contribution of the week</span><span class="cq">${esc(clip(ttl(c)||c.caption,200))}</span>
   <span class="row k" style="color:inherit"><span class="row" style="gap:6px">${flag(c.country,20)}${esc(c.country)}</span><span class="sp">by ${esc(uname(c))}</span></span></a>`
   :S.admin?`<div class="nudge"><span class="lbl">✦ contribution of the week</span><p>nothing is spotlighted this week yet.</p><a class="btn s p" href="#/calendar">open calendar</a></div>`:"";
  const f=S.fact;
@@ -508,7 +510,7 @@ function detail(id){
   <div class="row"><a class="row" style="gap:10px;text-decoration:none" href="#/u/${esc(c.authorUid)}">${av(c.authorName,mineP&&S.profile&&S.profile.photo,40)}<span><b>${esc(c.authorName||"anonymous")}</b>${c.authorHandle?`<br><span class="k">@${esc(c.authorHandle)}</span>`:""}</span></a>
   ${mineP?"":`<button class="btn s ${fl?"on":""}" data-act="follow" data-uid="${esc(c.authorUid)}">${fl?"following":"follow"}</button>`}
   ${mineP||pend?"":`<button class="btn s sp" data-act="report" data-kind="contribution" data-ref="${esc(id)}" data-cid="${esc(id)}">${ic("flag",14)} report</button>`}</div>
-  ${c.title?`<h2 class="ptitle">${esc(c.title)}</h2>`:`<div style="height:14px"></div>`}
+  ${c.title?`<h2 class="ptitle">${esc(ttl(c))}</h2>${c.album?`<div class="k">album: ${esc(c.album)}</div>`:""}`:`<div style="height:14px"></div>`}
   <p class="cap">${tagify(c.caption)}</p>
   ${bodyHTML(c)}
   ${link?`<p><a class="btn s" href="${esc(link)}" target="_blank" rel="noopener noreferrer">open link ↗</a></p>`:""}
@@ -553,6 +555,8 @@ function contribute(params){
  <div id="fcommon" hidden>
  <div class="f"><label for="fc">country</label><select id="fc"><option value="">choose a country…</option>${COUNTRIES.map(c=>`<option ${c===pre?"selected":""}>${esc(c)}</option>`).join("")}</select></div>
  <div class="f" id="g_t"><label for="ft" id="l_t">title</label><input id="ft" maxlength="120"></div>
+ <div class="f" id="g_art"><label for="fart">artist name</label><input id="fart" maxlength="100"></div>
+ <div class="f" id="g_alb"><label for="falb">album name <span class="k">· optional</span></label><input id="falb" maxlength="100"></div>
  <div class="f" id="g_ing"><label for="fing">ingredients</label><textarea id="fing" maxlength="5000" placeholder="one per line"></textarea></div>
  <div class="f"><label for="fx" id="l_x">text</label><textarea id="fx" maxlength="12000"></textarea></div>
  <div class="f" id="g_css"><details><summary class="lb" style="cursor:pointer">style your writing (optional, like ao3 work skins)</summary>
@@ -571,7 +575,7 @@ function syncType(){
  $$(".tpb").forEach(b=>b.classList.toggle("on",b.dataset.t===t));
  const c=$("#fcommon");if(!c)return;c.hidden=!t;const p=$("#pick");if(p)p.hidden=!!t;if(!F)return;
  const sh=(id,v)=>{const e=$("#"+id);if(e)e.hidden=!v};
- sh("g_t",F.t);sh("g_ing",F.ing);sh("g_css",F.css);sh("g_img",F.img);sh("g_aud",F.aud);sh("g_link",F.link);
+ sh("g_t",F.t);sh("g_ing",F.ing);sh("g_art",F.art);sh("g_alb",F.art);sh("g_css",F.css);sh("g_img",F.img);sh("g_aud",F.aud);sh("g_link",F.link);
  if(F.t)$("#l_t").textContent=F.t;$("#l_x").textContent=F.x;$("#fx").placeholder=F.xp||"";$("#fx").className=F.big?"big":"";
  if(F.img)$("#l_img").textContent=F.img;if(F.link)$("#l_link").textContent=F.link;
 }
@@ -596,7 +600,7 @@ async function loadMine(){
   L.forEach(c=>{if(c.status!=="approved")S.pend[c.id]=c});
   const el=$("#ml");if(!el)return;
   el.innerHTML=L.length?L.map(c=>`<div class="box"><div class="row"><span class="tag">${GLY[c.type]||""} ${esc(TYPES[c.type]||c.type)}</span><span class="pill ${c.status==="approved"?"ok":"pend"}">${esc(c.status)}</span><span class="k sp row" style="gap:6px">${flag(c.country,18)}${esc(c.country)}</span></div>
-  <p style="margin:10px 0 0"><a href="#/c/${esc(c.id)}">${esc(clip(c.title||c.caption,160))}</a></p>
+  <p style="margin:10px 0 0"><a href="#/c/${esc(c.id)}">${esc(clip(ttl(c)||c.caption,160))}</a></p>
   <div class="row" style="margin-top:12px"><button class="btn s d" data-act="delmine" data-id="${esc(c.id)}">delete</button></div></div>`).join(""):`<p class="empty">you haven't posted anything yet.</p>`;
  }catch(e){console.error(e);const el=$("#ml");if(el)el.innerHTML=`<p class="err">couldn't load your posts.</p>`}
 }
@@ -606,7 +610,7 @@ function timeline(L){
  for(const c of L){
   const d=tdate(c.createdAt),m=d?d.toLocaleDateString(undefined,{month:"long",year:"numeric"}).toLowerCase():"earlier";
   if(m!==last){out+=`<div class="tlm">${esc(m)}</div>`;last=m}
-  out+=`<a class="tli" href="#/c/${esc(c.id)}"><span class="tld">${d?d.getDate():""}</span><span class="tlb" style="${noteBg(c)}"><span class="grow"><span class="k">${GLY[c.type]||""} ${esc(c.country)} · ♥ ${S.likeMap[c.id]||0}</span><span class="cq">${esc(clip(c.title||c.caption,150))}</span></span>${c.thumb?`<img class="tlimg" src="${esc(c.thumb)}" alt="">`:""}</span></a>`;
+  out+=`<a class="tli" href="#/c/${esc(c.id)}"><span class="tld">${d?d.getDate():""}</span><span class="tlb" style="${noteBg(c)}"><span class="grow"><span class="k">${GLY[c.type]||""} ${esc(c.country)} · ♥ ${S.likeMap[c.id]||0}</span><span class="cq">${esc(clip(ttl(c)||c.caption,150))}</span></span>${c.thumb?`<img class="tlimg" src="${esc(c.thumb)}" alt="">`:""}</span></a>`;
  }
  return `<div class="tl">${out}</div>`;
 }
@@ -670,7 +674,7 @@ async function loadQueue(){
     else{x.t=S.items.find(i=>i.id===x.ref)||null}}catch{}return x}));
   const el=$("#adm");if(!el)return;
   el.innerHTML=`<h2 style="margin-top:12px">waiting for approval (${P.length})</h2>`+(P.length?P.map(c=>`<div class="box"><div class="row"><span class="tag">${GLY[c.type]||""} ${esc(TYPES[c.type]||c.type)}</span><span class="k sp row" style="gap:6px">${flag(c.country,18)}${esc(c.country)} · ${esc(uname(c))}</span></div>
-  ${c.title?`<h3 style="margin-top:10px">${esc(c.title)}</h3>`:""}<p>${tagify(c.caption)}</p>${c.text?`<div class="body" style="max-height:160px;overflow:auto">${esc(clip(c.text,600))}</div>`:""}
+  ${c.title?`<h3 style="margin-top:10px">${esc(ttl(c))}</h3>`:""}<p>${tagify(c.caption)}</p>${c.text?`<div class="body" style="max-height:160px;overflow:auto">${esc(clip(c.text,600))}</div>`:""}
   <div class="k">${c.imgs?c.imgs+" photo(s) · ":""}${c.audio?"audio · ":""}${c.link?esc(c.link):""}</div>
   <div class="row" style="margin-top:10px"><a class="btn s" href="#/c/${esc(c.id)}">open</a><button class="btn s p" data-act="approve" data-id="${esc(c.id)}">approve</button><button class="btn s d" data-act="reject" data-id="${esc(c.id)}">reject &amp; delete</button></div></div>`).join(""):`<p class="empty">nothing waiting.</p>`)
   +`<h2 style="margin-top:26px">reports (${R.length})</h2>`+(R.length?R.map(x=>{
@@ -696,7 +700,7 @@ async function loadCal(){
 function pickList(){
  const C=S.cal,q=C.pq.toLowerCase();
  const L=S.items.filter(c=>!q||hay(c).includes(q)).slice(0,60);
- return L.length?L.map(c=>`<button type="button" class="pk ${C.pick===c.id?"on":""}" data-act="pickpost" data-id="${esc(c.id)}">${flag(c.country,20)}<span class="grow">${esc(clip(c.title||c.caption,60))}</span><span class="k">${esc(uname(c))}</span></button>`).join(""):`<p class="k">no matching posts.</p>`;
+ return L.length?L.map(c=>`<button type="button" class="pk ${C.pick===c.id?"on":""}" data-act="pickpost" data-id="${esc(c.id)}">${flag(c.country,20)}<span class="grow">${esc(clip(ttl(c)||c.caption,60))}</span><span class="k">${esc(uname(c))}</span></button>`).join(""):`<p class="k">no matching posts.</p>`;
 }
 function calEditor(){
  const C=S.cal,s=C.sel;
@@ -957,10 +961,11 @@ document.addEventListener("submit",async e=>{
 async function submitPost(){
  const T=S.pt,F=FM[T],err=$("#ferr"),btn=$("#fsub");err.textContent="";
  if(!F){err.textContent="choose what you're sharing.";return}
- const country=$("#fc").value,title=$("#ft").value.trim(),text=$("#fx").value.trim(),caption=$("#fcap").value.trim(),link=F.link?$("#fl").value.trim():"",ing=F.ing?$("#fing").value.trim():"",css=F.css?$("#fcss").value.trim():"";
+ const art=F.art?$("#fart").value.trim():"",alb=F.art?$("#falb").value.trim():"",country=$("#fc").value,title=$("#ft").value.trim(),text=$("#fx").value.trim(),caption=$("#fcap").value.trim(),link=F.link?$("#fl").value.trim():"",ing=F.ing?$("#fing").value.trim():"",css=F.css?$("#fcss").value.trim():"";
  const imgs=F.img?S.files.imgs:[],aud=F.aud?S.files.audio:null;
  if(!country){err.textContent="choose a country.";return}
  if(F.tr&&!title){err.textContent="add a "+F.t+".";return}
+ if(F.art&&!art){err.textContent="add the artist name.";return}
  if(F.ing&&!ing){err.textContent="add the ingredients.";return}
  if(F.xr&&!text){err.textContent="add your "+F.x+".";return}
  if(F.imgr&&!imgs.length){err.textContent="add at least one photo.";return}
@@ -971,7 +976,7 @@ async function submitPost(){
  const auto=S.admin||S.cfg.requireReview===false,cid=doc(collection(db,"contributions")).id;
  const data={country,type:T,caption:caption.slice(0,300),authorUid:S.user.uid,authorName:myName().slice(0,60),status:auto?"approved":"pending",createdAt:serverTimestamp()};
  if(myHandle())data.authorHandle=myHandle().slice(0,30);
- if(F.t&&title)data.title=title.slice(0,120);
+ if(F.t&&title)data.title=title.slice(0,120);if(art)data.artist=art.slice(0,100);if(alb)data.album=alb.slice(0,100);
  if(ing)data.ing=ing;if(text)data.text=text.slice(0,12000);if(link)data.link=link;if(css)data.css=css;
  if(imgs.length){data.imgs=imgs.length;data.thumb=imgs[0].thumb;data.ar=+(imgs[0].w/imgs[0].h).toFixed(3)}
  const jobs=[];
