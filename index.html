@@ -403,7 +403,6 @@ function lay(c){
  w=WO[(h>>2)%WO.length];
  const cpl=w===1?13:32,lines=Math.ceil(n*1.12/cpl)+(n>60?1:0);
  r=Math.max(2,Math.ceil((lines*fs*16*1.3+68)/64));
- if(n<=60&&h%3===0)r+=1;
  r=Math.min(r,8);
  const lc=Math.max(2,Math.floor((H(r)-62)/(fs*16*1.3)));
  return{cls:(w===3?"c3 ":w===2?"c2 ":"")+"r"+r+(cls?" "+cls:""),fs,fw,lc,r,w,h};
@@ -824,6 +823,24 @@ function route(){
  case"admin":case"reports":return reports();case"calendar":return calendar();case"site":return site();case"settings":return settings();case"about":return about();
  default:S.q="";return feed(false)}
 }
+function fitTiles(all){
+ $$(".sb").forEach(t=>{
+  if(!all&&t.dataset.fit)return;t.dataset.fit=1;
+  const q=t.querySelector(".cq");if(!q||t.classList.contains("pol"))return;
+  const ti=t.querySelector(".ti"),fs=parseFloat(getComputedStyle(q).fontSize)*1.3;
+  t.style.gridRow="span 30";q.style.cssText+=";flex:none;-webkit-line-clamp:unset";
+  const need=q.offsetHeight+(ti.offsetHeight-q.offsetHeight>0?0:0);
+  const meta=t.querySelector(".pm"),cs=getComputedStyle(ti),extra=parseFloat(cs.paddingTop)+parseFloat(cs.paddingBottom)+(meta?meta.offsetHeight:0)+6;
+  q.style.flex="";q.style.webkitLineClamp="";
+  let r=Math.max(2,Math.ceil((need+extra+12)/64));const cap=r>9;r=Math.min(r,9);
+  t.style.gridRow="span "+r;
+  t.style.setProperty("--lc",cap?Math.floor((r*64-12-extra)/fs):99);
+ });
+}
+let fitT=0;const fitSoon=()=>{cancelAnimationFrame(fitT);fitT=requestAnimationFrame(()=>fitTiles(false))};
+new MutationObserver(fitSoon).observe(document.body,{childList:true,subtree:true});
+let rsT=0;addEventListener("resize",()=>{clearTimeout(rsT);rsT=setTimeout(()=>fitTiles(true),150)});
+if(document.fonts&&document.fonts.ready)document.fonts.ready.then(()=>fitTiles(true));
 function render(keep){
  const y=window.scrollY;applyTheme();S.after=null;
  let body;
@@ -831,7 +848,7 @@ function render(keep){
  else body=route();
  $("#app").innerHTML=top()+`<main>${body}</main>`;
  $("#layer").innerHTML=layerHTML();
- window.scrollTo(0,keep?y:0);
+ window.scrollTo(0,keep?y:0);fitTiles(false);
  if(S.after)S.after();
 }
 
