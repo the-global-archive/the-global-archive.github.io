@@ -54,7 +54,8 @@ button,input,textarea,select{font:inherit;color:inherit}button{cursor:pointer}
 .ann{background:var(--soft);border-radius:18px;padding:12px 18px;margin-top:14px;font-weight:500}
 .mas{display:grid;grid-template-columns:repeat(auto-fill,minmax(165px,1fr));grid-auto-rows:52px;grid-auto-flow:dense;gap:12px;margin-top:16px;padding:12px 6px 20px}
 @media(max-width:640px){.mas{grid-template-columns:repeat(2,minmax(0,1fr));gap:10px;padding:10px 2px 16px}}
-.c2{grid-column:span 2}.r2{grid-row:span 2}.r3{grid-row:span 3}.r4{grid-row:span 4}.r5{grid-row:span 5}
+.c2{grid-column:span 2}.c3{grid-column:span 3}.r6{grid-row:span 6}
+@media(max-width:640px){.c3{grid-column:span 2}}.r2{grid-row:span 2}.r3{grid-row:span 3}.r4{grid-row:span 4}.r5{grid-row:span 5}
 .sb{position:relative;display:block;text-decoration:none;min-width:0;min-height:0;transform:translate(var(--x,0),var(--y,0)) rotate(var(--r,0deg));filter:drop-shadow(0 6px 9px rgba(0,0,0,.2));transition:transform .22s,filter .22s;z-index:1}
 .sb:hover,.sb:focus-visible{transform:scale(1.03);z-index:5;filter:drop-shadow(0 14px 20px rgba(0,0,0,.28))}
 .ti{height:100%;display:flex;flex-direction:column;justify-content:space-between;gap:6px;padding:14px 15px 11px;border-radius:10px;overflow:hidden;color:var(--cink)}
@@ -164,7 +165,7 @@ textarea{min-height:110px;resize:vertical}textarea.big{min-height:220px}textarea
 <script type="module">
 import{initializeApp}from"https://www.gstatic.com/firebasejs/10.14.1/firebase-app.js";
 import{getAuth,onAuthStateChanged,GoogleAuthProvider,signInWithPopup,createUserWithEmailAndPassword,signInWithEmailAndPassword,signOut,sendPasswordResetEmail}from"https://www.gstatic.com/firebasejs/10.14.1/firebase-auth.js";
-import{getFirestore,collection,addDoc,setDoc,getDoc,getDocs,deleteDoc,updateDoc,doc,query,where,limit,serverTimestamp,writeBatch,onSnapshot}from"https://www.gstatic.com/firebasejs/10.14.1/firebase-firestore.js";
+import{getFirestore,collection,addDoc,setDoc,getDoc,getDocs,deleteDoc,updateDoc,doc,query,where,limit,serverTimestamp,writeBatch,onSnapshot,orderBy,startAfter,increment,getCountFromServer}from"https://www.gstatic.com/firebasejs/10.14.1/firebase-firestore.js";
 
 const firebaseConfig = {
   apiKey: "AIzaSyDd5DmV6E8J1jhd0DKhbqMKcb8mD5ANEmg",
@@ -304,22 +305,38 @@ async function delPost(c){
 }
 
 /* ---------- data ---------- */
-function rebuildLikes(){S.likeMap={};S.myLikes=new Set();
- for(const l of S.likes){S.likeMap[l.cid]=(S.likeMap[l.cid]||0)+1;if(S.user&&l.uid===S.user.uid)S.myLikes.add(l.cid)}}
+function rebuildLikes(){}
 async function loadHome(){
  try{const[a,b,c]=await Promise.all([getDoc(doc(db,"spotlight",dkey(mondayOf(new Date())))),getDoc(doc(db,"facts",dkey(new Date()))),getDoc(doc(db,"site","config"))]);
   S.spot=a.exists()?a.data():null;S.fact=b.exists()?b.data():null;S.cfg=c.exists()?c.data():{}}catch(e){console.error(e)}
 }
+const PAGE=60;
+const byNew=(x,y)=>(y.createdAt?.seconds||0)-(x.createdAt?.seconds||0);
+function mergeItems(docs){const m=new Map(S.items.map(c=>[c.id,c]));docs.forEach(d=>m.set(d.id,{id:d.id,...d.data()}));S.items=[...m.values()].sort(byNew)}
 async function loadPublic(){
  try{
-  const[a,b]=await Promise.all([
-   getDocs(query(collection(db,"contributions"),where("status","==","approved"),limit(600))),
-   getDocs(query(collection(db,"likes"),limit(5000)))]);
-  S.items=a.docs.map(d=>({id:d.id,...d.data()})).sort((x,y)=>(y.createdAt?.seconds||0)-(x.createdAt?.seconds||0));
-  S.likes=b.docs.map(d=>d.data());rebuildLikes();S.loaded=true;S.loadErr=false;
+  let a;
+  try{a=await getDocs(query(collection(db,"contributions"),where("status","==","approved"),orderBy("createdAt","desc"),limit(PAGE)));S.ordered=true}
+  catch(e){console.warn("create the status+createdAt index in firestore",e);S.ordered=false;a=await getDocs(query(collection(db,"contributions"),where("status","==","approved"),limit(150)));if(S.admin)toast("admin: create the firestore index (see the console)")}
+  S.items=a.docs.map(d=>({id:d.id,...d.data()})).sort(byNew);
+  S.cursor=S.ordered&&a.docs.length===PAGE?a.docs[a.docs.length-1]:null;S.fx={c:{},u:{},s:{}};
+  S.loaded=true;S.loadErr=false;
+  try{S.total=(await getCountFromServer(query(collection(db,"contributions"),where("status","==","approved")))).data().count}catch{S.total=null}
   await loadHome();return true;
  }catch(e){console.error(e);S.loadErr=true;return false}
 }
+async function loadMoreHome(){
+ if(!S.cursor)return;
+ try{const a=await getDocs(query(collection(db,"contributions"),where("status","==","approved"),orderBy("createdAt","desc"),startAfter(S.cursor),limit(PAGE)));
+  mergeItems(a.docs);S.cursor=a.docs.length===PAGE?a.docs[a.docs.length-1]:null}catch(e){console.error(e);S.cursor=null}
+}
+S.fx={c:{},u:{},s:{}};
+async function loadCountry(n){if(S.fx.c[n])return;S.fx.c[n]=1;
+ try{mergeItems((await getDocs(query(collection(db,"contributions"),where("country","==",n),where("status","==","approved"),limit(150)))).docs);render(true)}catch(e){console.error(e)}}
+async function loadUserPosts(u){if(S.fx.u[u])return;S.fx.u[u]=1;
+ try{mergeItems((await getDocs(query(collection(db,"contributions"),where("authorUid","==",u),where("status","==","approved"),limit(150)))).docs);render(true)}catch(e){console.error(e)}}
+async function loadSaved(){const ids=[...S.saves].filter(id=>!S.items.some(c=>c.id===id)&&!S.fx.s[id]).slice(0,60);if(!ids.length)return;ids.forEach(i=>S.fx.s[i]=1);
+ try{const ds=await Promise.all(ids.map(i=>getDoc(doc(db,"contributions",i))));mergeItems(ds.filter(d=>d.exists()&&d.data().status==="approved"));render(true)}catch(e){console.error(e)}}
 const slug=s=>String(s||"").toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g,"").replace(/[^a-z0-9_.]/g,"");
 async function autoUsername(u,p){
  const base=(slug(p.name)||slug((u.email||"").split("@")[0])||"user").slice(0,14).padEnd(3,"x");
@@ -342,8 +359,8 @@ async function ensureProfile(u){
 async function loadBan(u){try{return(await getDoc(doc(db,"bans",u.uid))).exists()}catch{return false}}
 async function loadMyStuff(u){
  try{
-  const[s,f]=await Promise.all([getDocs(query(collection(db,"saves"),where("uid","==",u.uid))),getDocs(query(collection(db,"follows"),where("follower","==",u.uid),limit(1000)))]);
-  S.saves=new Set(s.docs.map(d=>d.data().cid));S.following=new Set(f.docs.map(d=>d.data().following));
+  const[s,f,lk2]=await Promise.all([getDocs(query(collection(db,"saves"),where("uid","==",u.uid))),getDocs(query(collection(db,"follows"),where("follower","==",u.uid),limit(1000))),getDocs(query(collection(db,"likes"),where("uid","==",u.uid),limit(2000)))]);
+  S.myLikes=new Set(lk2.docs.map(d=>d.data().cid));S.saves=new Set(s.docs.map(d=>d.data().cid));S.following=new Set(f.docs.map(d=>d.data().following));
  }catch(e){console.error(e)}
 }
 const myName=()=>(S.profile&&S.profile.name)||(S.user&&S.user.displayName)||"anonymous";
@@ -374,35 +391,33 @@ function markRead(){S.notifs.filter(n=>!n.read).forEach(n=>updateDoc(doc(db,"not
 function closeBell(){if(S.nopen){S.nopen=false;markRead()}}
 
 /* ---------- pieces ---------- */
+const lk=c=>Math.max(0,c.likeCount||0);
 const hay=c=>[c.caption,c.title,c.artist,c.album,c.country,c.authorName,c.authorHandle,TYPES[c.type]].join(" ").toLowerCase();
 const TILT=[-2.6,1.4,-1,2.2,-1.8,.8,2.8,-.4],DECO=["pn","","","pn","","","",""];
 function lay(c){
  const h=hh(c.id||"x"),H=(r)=>r*52+(r-1)*12;let cls="",fs=1.2,fw=400,r=3,w=1;
- if(c.thumb){const ar=c.type==="song"?1:(c.ar||1);if(ar>=1.4){w=2;r=4}else if(ar>=.85){r=4}else r=5;return{cls:(w===2?"c2 ":"")+"r"+r,fs,fw,lc:2,r,w,pol:1,h}}
+ if(c.thumb){const ar=c.type==="song"?1:(c.ar||1);if(ar>=1.4){w=h%3===0?3:2;r=w===3?5:4}else if(ar>=.85){if(h%4===0){w=2;r=5}else r=4}else{r=h%3===0?6:5}return{cls:(w===3?"c3 ":w===2?"c2 ":"")+"r"+r,fs,fw,lc:2,r,w,pol:1,h}}
  const n=(ttl(c)||c.text||c.caption||"").replace(/\s+/g," ").trim().length,odd=h%2;
  fs=1.12;fw=400;
- if(n<=12){w=1;r=2}
- else if(n<=26){w=1;r=3}
- else if(n<=60){w=2;r=2}
- else if(n<=110){w=2;r=3}
- else if(n<=190){w=2;r=4}
- else{w=2;r=5}
+ const T=n<=12?0:n<=26?1:n<=60?2:n<=110?3:n<=190?4:5,v=h%4;
+ const O=[[[1,2],[1,3],[2,2],[1,3]],[[1,3],[1,4],[2,2],[1,4]],[[2,2],[1,4],[2,3],[1,5]],[[2,3],[1,5],[3,3],[2,4]],[[2,4],[3,3],[2,5],[3,4]],[[2,5],[3,4],[2,6],[3,5]]];
+ [w,r]=O[T][v];
  const lc=Math.max(2,Math.floor((H(r)-62)/(fs*16*1.3)));
- return{cls:(w===2?"c2 ":"")+"r"+r+(cls?" "+cls:""),fs,fw,lc,r,w,h};
+ return{cls:(w===3?"c3 ":w===2?"c2 ":"")+"r"+r+(cls?" "+cls:""),fs,fw,lc,r,w,h};
 }
 function card(c){
  const L=lay(c),h=L.h,rot=0,dx=0,dy=0;
  let deco=DECO[(h>>3)%DECO.length];if(L.cls.includes("bd"))deco=deco==="tk"?"pn":deco;if(L.w===2&&deco==="tk"&&L.r<3)deco="";
  const pin=["#e5484d","#3e63dd","#30a46c","#f5a623"][(h>>5)%4];
  const st=`--r:${rot}deg;--x:${dx}px;--y:${dy}px;--pin:${pin}`;
- const meta=`<div class="pm"><span>${flag(c.country,16)}<span class="tc">${esc(c.country)}</span></span><span class="sp">♥ ${S.likeMap[c.id]||0}</span></div>`;
+ const meta=`<div class="pm"><span>${flag(c.country,16)}<span class="tc">${esc(c.country)}</span></span><span class="sp">♥ ${lk(c)}</span></div>`;
  if(c.thumb)return `<a class="sb pol ${L.cls} ${deco==="tk"?"pn":deco}" style="${st}" href="#/c/${esc(c.id)}"><div class="ti"><img class="timg" loading="lazy" alt="" src="${esc(c.thumb)}">${c.type==="song"?`<div class="pcap sg"><b>${esc(clip(ttl(c),60))}</b>${c.album?`<span>${esc(clip(c.album,40))}</span>`:""}</div>`:`<div class="pcap">${esc(clip(c.caption||c.title,70)||c.country)}</div>`}${meta}</div></a>`;
  return `<a class="sb ${L.cls} ${deco}" style="${st}" href="#/c/${esc(c.id)}"><div class="ti" style="${noteBg(c)};--fs:${L.fs}rem;--fw:${L.fw};--lc:${L.lc}"><span class="cq">${esc(clip(ttl(c)||c.text||c.caption,170))}${c.type==="song"&&c.album?`<br><small style="font-weight:400;font-size:.7em;opacity:.85">${esc(clip(c.album,40))}</small>`:""}</span>${meta}</div></a>`;
 }
 function grid(L,msg,paged,board){
  if(!L.length)return `<p class="empty">${msg||"nothing here yet."}</p>`;
  const sh=paged?L.slice(0,S.show):L;
- return `<div class="mas">${sh.map(card).join("")}</div>${paged&&L.length>S.show?`<div class="row" style="justify-content:center;margin-top:10px"><button class="btn" data-act="more">show more</button></div>`:""}`;
+ return `<div class="mas">${sh.map(card).join("")}</div>${paged&&(L.length>S.show||S.cursor)?`<div class="row" style="justify-content:center;margin-top:10px"><button class="btn" data-act="more">show more</button></div>`:""}`;
 }
 function embed(url){
  let m=url.match(/(?:youtube\.com\/watch\?(?:[^#]*&)?v=|youtu\.be\/|youtube\.com\/shorts\/)([\w-]{6,15})/);
@@ -445,11 +460,12 @@ function highlights(){
  if(!spot&&!fact)return "";
  return `<div class="hl ${spot&&fact?"":"one"}">${spot}${fact}</div>`;
 }
+const full=()=>!S.cursor&&(S.total==null||S.total<=S.items.length);
 function resultsHTML(useQ){
  let L=S.items.filter(c=>!useQ||!S.q||hay(c).includes(S.q.toLowerCase()));
  const fol=S.sort==="following"&&S.user;
  if(fol)L=L.filter(c=>S.following.has(c.authorUid));
- if(S.sort==="liked")L=[...L].sort((a,b)=>(S.likeMap[b.id]||0)-(S.likeMap[a.id]||0));
+ if(S.sort==="liked")L=[...L].sort((a,b)=>lk(b)-lk(a));
  return grid(L,fol?"follow people and their posts will show up here.":S.items.length?"nothing matches.":"no posts yet. be the first to share a piece of home.",true);
 }
 function feed(useQ){
@@ -458,7 +474,7 @@ function feed(useQ){
   :`${S.cfg.announcement?`<div class="ann">📣 ${esc(S.cfg.announcement)}</div>`:""}<section class="intro"><h1>the world, <em>one contribution at a time</em></h1>
   <p class="sub">recipes, songs, writing, photos and notes about the places we come from, shared by the people who know them.</p>
   <div class="row" style="margin-top:16px"><a class="btn p" href="#/contribute">share a piece of home</a><button class="btn" data-act="random">${ic("shuffle",16)} surprise me</button><a class="btn" href="#/countries">${ic("globe",16)} browse countries</a></div>
-  <p class="k" style="margin-top:14px">${S.items.length} posts · ${cs.size} of ${COUNTRIES.length} countries · ${au.size} contributors</p></section>${highlights()}`;
+  <p class="k" style="margin-top:14px">${full()?`${S.items.length} posts · ${cs.size} of ${COUNTRIES.length} countries · ${au.size} contributors`:`${S.total} posts`}</p></section>${highlights()}`;
  const sorts=[["new","latest"],["liked","most loved"]];if(S.user)sorts.push(["following","following"]);
  return `${banBanner()}${head}<div class="chips">${sorts.map(([k,v])=>`<button class="btn s ${S.sort===k?"on":""}" data-act="sort" data-t="${k}">${v}</button>`).join("")}</div>
  <div id="results">${resultsHTML(useQ)}</div>`;
@@ -466,7 +482,7 @@ function feed(useQ){
 function clistHTML(){
  const m={};for(const c of S.items)m[c.country]=(m[c.country]||0)+1;const f=S.cq.toLowerCase();
  const rows=COUNTRIES.filter(c=>c.toLowerCase().includes(f)).map(c=>({c,n:m[c]||0})).sort((a,b)=>b.n-a.n||a.c.localeCompare(b.c));
- return rows.length?rows.map(r=>`<a class="crow ${r.n?"":"zero"}" href="#/country/${enc(r.c)}">${flag(r.c,32)}<span class="grow">${esc(r.c)}</span><span class="k">${r.n?r.n+" post"+(r.n>1?"s":""):""}</span></a>`).join(""):`<p class="empty">no matching countries.</p>`;
+ return rows.length?rows.map(r=>`<a class="crow ${r.n||!full()?"":"zero"}" href="#/country/${enc(r.c)}">${flag(r.c,32)}<span class="grow">${esc(r.c)}</span><span class="k">${r.n?r.n+" post"+(r.n>1?"s":""):""}</span></a>`).join(""):`<p class="empty">no matching countries.</p>`;
 }
 function countries(){
  return `<div class="intro"><h1>every <em>country</em></h1><p class="sub">the ones with posts come first. pick one to see its board.</p></div>
@@ -475,7 +491,7 @@ function countries(){
 }
 function country(name){
  if(!COUNTRIES.includes(name))return `<p class="empty">country not found.</p>`;
- const L=S.items.filter(c=>c.country===name),likes=L.reduce((n,c)=>n+(S.likeMap[c.id]||0),0);
+ loadCountry(name);const L=S.items.filter(c=>c.country===name),likes=L.reduce((n,c)=>n+(lk(c)),0);
  return `<section class="cban" style="--flag:url(https://flagcdn.com/w320/${CC[name]}.png)"><div class="cbi"><a class="k" href="#/countries">← all countries</a>
  <div class="row" style="gap:16px;margin:10px 0 14px">${flag(name,64)}<h1>${esc(name)}</h1></div>
  <div class="row"><span class="tag">${L.length} posts</span><span class="tag">${new Set(L.map(c=>c.authorUid)).size} contributors</span><span class="tag">♥ ${likes}</span>
@@ -501,7 +517,7 @@ function bodyHTML(c){
 function detail(id){
  let c=S.items.find(x=>x.id===id)||S.pend[id];
  if(!c){
-  if(S.user&&S.pend[id]===undefined){S.after=async()=>{let v=false;try{const d=await getDoc(doc(db,"contributions",id));if(d.exists())v={id,...d.data()}}catch{}S.pend[id]=v;render(true)};return `<p class="k" style="margin-top:20px">loading…</p>`}
+  if(S.pend[id]===undefined){S.after=async()=>{let v=false;try{const d=await getDoc(doc(db,"contributions",id));if(d.exists())v={id,...d.data()}}catch{}S.pend[id]=v;render(true)};return `<p class="k" style="margin-top:20px">loading…</p>`}
   return `<p class="empty">that post doesn't exist, or hasn't been approved yet.</p>`;
  }
  const liked=S.myLikes.has(id),saved=S.saves.has(id),link=c.link&&safeUrl(c.link),mineP=S.user&&S.user.uid===c.authorUid,fl=S.following.has(c.authorUid),pend=c.status==="pending";
@@ -517,7 +533,7 @@ function detail(id){
   ${bodyHTML(c)}
   ${link?`<p><a class="btn s" href="${esc(link)}" target="_blank" rel="noopener noreferrer">open link ↗</a></p>`:""}
   <div class="row k" style="margin-top:12px"><span class="tag">${GLY[c.type]||""} ${esc(TYPES[c.type]||c.type)}</span><a href="#/country/${enc(c.country)}">${esc(c.country)}</a><span>·</span><span>${esc(dt(c.createdAt))}</span></div>
-  <div class="row acts">${pend?"":`<button class="btn s ${liked?"on":""}" data-act="like" data-id="${esc(id)}">♥ ${S.likeMap[id]||0}</button>
+  <div class="row acts">${pend?"":`<button class="btn s ${liked?"on":""}" data-act="like" data-id="${esc(id)}">♥ ${lk(c)}</button>
   <button class="btn s ${saved?"on":""}" data-act="save" data-id="${esc(id)}">${saved?"saved":"save"}</button>
   <button class="btn s" data-act="share" data-id="${esc(id)}">share</button>`}
   ${S.admin&&pend?`<button class="btn s p" data-act="approve" data-id="${esc(id)}">approve</button>`:""}
@@ -588,6 +604,7 @@ function drawUps(){
 }
 function saved(){
  if(!S.user)return loginPrompt("your saved posts");
+ loadSaved();
  return `<div class="intro"><h1>saved</h1></div>${grid(S.items.filter(c=>S.saves.has(c.id)),"nothing saved yet.")}`;
 }
 function mine(){
@@ -612,7 +629,7 @@ function timeline(L){
  for(const c of L){
   const d=tdate(c.createdAt),m=d?d.toLocaleDateString(undefined,{month:"long",year:"numeric"}).toLowerCase():"earlier";
   if(m!==last){out+=`<div class="tlm">${esc(m)}</div>`;last=m}
-  out+=`<a class="tli" href="#/c/${esc(c.id)}"><span class="tld">${d?d.getDate():""}</span><span class="tlb" style="${noteBg(c)}"><span class="grow"><span class="k">${GLY[c.type]||""} ${esc(c.country)} · ♥ ${S.likeMap[c.id]||0}</span><span class="cq">${esc(clip(ttl(c)||c.caption,150))}</span></span>${c.thumb?`<img class="tlimg" src="${esc(c.thumb)}" alt="">`:""}</span></a>`;
+  out+=`<a class="tli" href="#/c/${esc(c.id)}"><span class="tld">${d?d.getDate():""}</span><span class="tlb" style="${noteBg(c)}"><span class="grow"><span class="k">${GLY[c.type]||""} ${esc(c.country)} · ♥ ${lk(c)}</span><span class="cq">${esc(clip(ttl(c)||c.caption,150))}</span></span>${c.thumb?`<img class="tlimg" src="${esc(c.thumb)}" alt="">`:""}</span></a>`;
  }
  return `<div class="tl">${out}</div>`;
 }
@@ -628,7 +645,7 @@ function drawHead(){
  ${tiles([[L.length,"posts"],[new Set(L.map(c=>c.country)).size,"countries"],[P.followers.size,"followers"],[P.followingN,"following"],[P.hearts.size,"♥ hearts"]])}`;
 }
 function profile(uid){
- const L=S.items.filter(c=>c.authorUid===uid);
+ loadUserPosts(uid);const L=S.items.filter(c=>c.authorUid===uid);
  S.after=async()=>{
   if(!S.pf||S.pf.uid!==uid){
    const pf={uid,p:null,followers:new Set(),followingN:0,hearts:new Set(),banned:false};
@@ -655,7 +672,7 @@ function settings(){
 }
 function about(){
  const cs=new Set(S.items.map(c=>c.country));
- return `<div class="intro"><h1>about <em>the archive</em></h1></div><div class="box"><div class="body" style="margin:0">${esc(S.cfg.about||DEF_ABOUT)}</div></div>${tiles([[S.items.length,"posts"],[cs.size,"countries"],[new Set(S.items.map(c=>c.authorUid)).size,"contributors"]])}`;
+ return `<div class="intro"><h1>about <em>the archive</em></h1></div><div class="box"><div class="body" style="margin:0">${esc(S.cfg.about||DEF_ABOUT)}</div></div>${tiles(full()?[[S.items.length,"posts"],[cs.size,"countries"],[new Set(S.items.map(c=>c.authorUid)).size,"contributors"]]:[[S.total,"posts"]])}`;
 }
 
 /* ---------- owner pages ---------- */
@@ -845,13 +862,15 @@ document.addEventListener("click",async e=>{
   case"theme":themePick=d.t;try{localStorage.setItem("ga_theme",themePick)}catch{}applyTheme();render(true);
    if(S.user&&S.profile&&S.profile.username)setDoc(doc(db,"users",S.user.uid),{theme:themePick},{merge:true}).then(()=>{S.profile.theme=themePick}).catch(()=>{});break;
   case"sort":S.sort=d.t;S.show=40;render(true);break;
-  case"more":S.show+=40;render(true);break;
+  case"more":S.show+=40;if(S.show>=S.items.length&&S.cursor)await loadMoreHome();render(true);break;
   case"clearq":location.hash="#/";break;
   case"random":S.menu=false;if(S.items.length){location.hash="#/c/"+S.items[Math.floor(Math.random()*S.items.length)].id}else toast("nothing to show yet");break;
-  case"like":{if(!need())break;const id=d.id,ref=doc(db,"likes",id+"_"+S.user.uid);
-   if(S.myLikes.has(id)){await deleteDoc(ref);S.likes=S.likes.filter(l=>!(l.cid===id&&l.uid===S.user.uid))}
-   else{await setDoc(ref,{cid:id,uid:S.user.uid});S.likes.push({cid:id,uid:S.user.uid});const c=S.items.find(x=>x.id===id);if(c)notify(c.authorUid,"like",{cid:id,id:"like_"+id+"_"+S.user.uid})}
-   rebuildLikes();render(true);break}
+  case"like":{if(!need())break;const id=d.id,uid=S.user.uid,ref=doc(db,"likes",id+"_"+uid),pref=doc(db,"contributions",id),c=S.items.find(x=>x.id===id)||S.pend[id];
+   try{const bt=writeBatch(db);
+    if(S.myLikes.has(id)){bt.delete(ref);if(c&&(c.likeCount||0)>0)bt.update(pref,{likeCount:increment(-1)});await bt.commit();S.myLikes.delete(id);if(c)c.likeCount=Math.max(0,(c.likeCount||0)-1)}
+    else{bt.set(ref,{cid:id,uid});bt.update(pref,{likeCount:increment(1)});await bt.commit();S.myLikes.add(id);if(c){c.likeCount=(c.likeCount||0)+1;notify(c.authorUid,"like",{cid:id,id:"like_"+id+"_"+uid})}}
+   }catch(e){console.error(e);toast("that didn't work, please try again")}
+   render(true);break}
   case"save":{if(!need())break;const id=d.id,ref=doc(db,"saves",id+"_"+S.user.uid);
    if(S.saves.has(id)){await deleteDoc(ref);S.saves.delete(id)}else{await setDoc(ref,{cid:id,uid:S.user.uid});S.saves.add(id)}
    render(true);break}
