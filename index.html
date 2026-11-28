@@ -71,7 +71,6 @@ button,input,textarea,select{font:inherit;color:inherit}button{cursor:pointer}
 .sb.bd .pm{justify-content:center}.sb.bd .pm .tc{display:none}
 .sb.tk .ti{border-radius:6px;-webkit-mask:radial-gradient(circle 9px at 0 50%,#0000 97%,#000) left/52% 100% no-repeat,radial-gradient(circle 9px at 100% 50%,#0000 97%,#000) right/52% 100% no-repeat;mask:radial-gradient(circle 9px at 0 50%,#0000 97%,#000) left/52% 100% no-repeat,radial-gradient(circle 9px at 100% 50%,#0000 97%,#000) right/52% 100% no-repeat}
 .sb.dt::before{content:"";position:absolute;top:-8px;left:50%;width:56px;height:18px;margin-left:-28px;background:rgba(255,255,255,.6);transform:rotate(-4deg);box-shadow:0 1px 2px rgba(0,0,0,.14);z-index:2}
-.sb.pn::before{content:"";position:absolute;top:-7px;left:50%;width:15px;height:15px;margin-left:-7px;border-radius:50%;background:radial-gradient(circle at 35% 30%,#fff9 0,#fff0 35%),radial-gradient(circle,var(--pin,#e5484d) 40%,#00000055 100%);box-shadow:0 2px 3px rgba(0,0,0,.35);z-index:2}
 .cover{border-radius:22px;padding:22px;min-height:200px;display:flex;flex-direction:column;justify-content:space-between;gap:14px;overflow:hidden}
 .cg{font-size:2.2rem;line-height:1}.cq.big{font-size:2.3rem;font-weight:700}
 .ptag{display:flex;gap:6px;align-items:center}
@@ -410,7 +409,7 @@ const mins=n=>n>=60?Math.ceil(n/60)+" min":n+"s";
 async function loadLimits(u){try{const d=await getDoc(doc(db,"limits",u.uid));const x=d.exists()?d.data():{};S.lim={c:tms(x.c),f:tms(x.f),lw:tms(x.lw),ln:x.ln||0}}catch{S.lim={c:0,f:0,lw:0,ln:0}}}
 const lk=c=>Math.max(0,c.likeCount||0);
 const hay=c=>[c.caption,c.title,c.artist,c.album,c.country,c.authorName,c.authorHandle,TYPES[c.type]].join(" ").toLowerCase();
-const TILT=[-2.6,1.4,-1,2.2,-1.8,.8,2.8,-.4],DECO=["pn","","","pn","","","",""];
+const TILT=[-2.6,1.4,-1,2.2,-1.8,.8,2.8,-.4],DECO=["","","","","","","",""];
 const rich=c=>(c.type==="writing"||c.type==="recipe")&&c.title&&c.text;
 const exc=c=>clip(c.text,150);
 function lay(c){
