@@ -223,7 +223,7 @@ const ICONS={
 const ic=(n,s=18)=>`<svg class="ico" width="${s}" height="${s}" viewBox="0 0 24 24" aria-hidden="true">${ICONS[n]||""}</svg>`;
 
 const fbApp=initializeApp(firebaseConfig),auth=getAuth(fbApp),db=getFirestore(fbApp);
-const S={user:null,profile:null,admin:false,banned:false,authReady:false,items:[],likes:[],likeMap:{},myLikes:new Set(),saves:new Set(),following:new Set(),
+const S={lim:{c:0,f:0,lw:0,ln:0},user:null,profile:null,admin:false,banned:false,authReady:false,items:[],likes:[],likeMap:{},myLikes:new Set(),saves:new Set(),following:new Set(),
  loaded:false,loadErr:false,spot:null,fact:null,cfg:{},q:"",sort:"new",cq:"",menu:false,nopen:false,modal:null,authMode:"login",pendingName:null,after:null,
  atab:"gen",pf:null,userList:[],banSet:new Set(),uq:"",notifs:[],show:40,pend:{},pt:"",styled:false,files:{imgs:[],audio:null,avatar:null,rmav:false},
  cal:{off:0,facts:null,spots:null,sel:null,pick:"",pq:""}};
@@ -370,6 +370,7 @@ async function ensureProfile(u){
 }
 async function loadBan(u){try{return(await getDoc(doc(db,"bans",u.uid))).exists()}catch{return false}}
 async function loadMyStuff(u){
+ loadLimits(u);
  try{
   const[s,f,lk2]=await Promise.all([getDocs(query(collection(db,"saves"),where("uid","==",u.uid))),getDocs(query(collection(db,"follows"),where("follower","==",u.uid),limit(1000))),getDocs(query(collection(db,"likes"),where("uid","==",u.uid),limit(2000)))]);
   S.myLikes=new Set(lk2.docs.map(d=>d.data().cid));S.saves=new Set(s.docs.map(d=>d.data().cid));S.following=new Set(f.docs.map(d=>d.data().following));
@@ -403,6 +404,10 @@ function markRead(){S.notifs.filter(n=>!n.read).forEach(n=>updateDoc(doc(db,"not
 function closeBell(){if(S.nopen){S.nopen=false;markRead()}}
 
 /* ---------- pieces ---------- */
+const tms=t=>t&&t.toMillis?t.toMillis():0;
+const waitSec=(k,secs)=>{const w=secs*1000-(Date.now()-(S.lim[k]||0));return w>0?Math.ceil(w/1000):0};
+const mins=n=>n>=60?Math.ceil(n/60)+" min":n+"s";
+async function loadLimits(u){try{const d=await getDoc(doc(db,"limits",u.uid));const x=d.exists()?d.data():{};S.lim={c:tms(x.c),f:tms(x.f),lw:tms(x.lw),ln:x.ln||0}}catch{S.lim={c:0,f:0,lw:0,ln:0}}}
 const lk=c=>Math.max(0,c.likeCount||0);
 const hay=c=>[c.caption,c.title,c.artist,c.album,c.country,c.authorName,c.authorHandle,TYPES[c.type]].join(" ").toLowerCase();
 const TILT=[-2.6,1.4,-1,2.2,-1.8,.8,2.8,-.4],DECO=["pn","","","pn","","","",""];
@@ -863,8 +868,8 @@ function route(){
  default:S.q="";return feed(false)}
 }
 function layoutMas(){$$(".mas").forEach(m=>{
- const G=12,W=m.clientWidth;if(!W)return;
- const cols=W<=560?2:Math.max(2,Math.floor((W+G)/177)),cw=(W-(cols-1)*G)/cols;
+ const W=m.clientWidth;if(!W)return;const G=W<=560?10:14;
+ const cols=W<=560?2:Math.max(2,Math.floor((W+G)/215)),cw=(W-(cols-1)*G)/cols;
  const H=new Array(cols).fill(0),last=new Array(cols).fill(null),wid=sp=>cw*sp+G*(sp-1);
  const meas=(t,sp)=>{
   const w=wid(sp);t.style.width=w+"px";t.style.height="auto";
@@ -876,7 +881,7 @@ function layoutMas(){$$(".mas").forEach(m=>{
  const put=(t,c,sp,top,h)=>{t.style.left=Math.round(c*(cw+G))+"px";t.style.top=Math.round(top)+"px";t.style.width=wid(sp)+"px";t.style.height=h+"px";t._h=h;t._sp=sp;
   const q=t.querySelector(".cq");if(q){q.style.flex="";q.style.webkitLineClamp="";const ex=h-(q.offsetHeight||0);t.style.setProperty("--lc",99)}};
  const queue=[...m.children].filter(t=>t.classList.contains("sb")),pend=[];
- const wantOf=t=>Math.min(t.classList.contains("c3")||t.classList.contains("c2")?2:1,cols);
+ const wantOf=t=>1;
  const pair=()=>{let best=-1,bd=1e9,bt=1e9;for(let c=0;c<cols-1;c++){const d=Math.abs(H[c]-H[c+1]),lo=H[c]<H[c+1]?c:c+1,top=Math.max(H[c],H[c+1]);
   if(d<=34&&(d===0||(last[lo]&&last[lo]._sp===1))&&top<bt-1){bd=d;best=c;bt=top}}return{best,bd}};
  const placeWide=(t,best,bd)=>{const h=meas(t,2),top=Math.max(H[best],H[best+1]),lo=H[best]<H[best+1]?best:best+1;
@@ -941,10 +946,15 @@ document.addEventListener("click",async e=>{
   case"clearq":location.hash="#/";break;
   case"random":S.menu=false;if(S.items.length){location.hash="#/c/"+S.items[Math.floor(Math.random()*S.items.length)].id}else toast("nothing to show yet");break;
   case"like":{if(!need())break;const id=d.id,uid=S.user.uid,ref=doc(db,"likes",id+"_"+uid),pref=doc(db,"contributions",id),c=S.items.find(x=>x.id===id)||S.pend[id];
+   const un=S.myLikes.has(id),expired=Date.now()-S.lim.lw>=61000;
+   if(!un&&!S.admin&&!expired&&S.lim.ln>=25){toast("slow down, 25 likes a minute is the limit");break}
    try{const bt=writeBatch(db);
-    if(S.myLikes.has(id)){bt.delete(ref);if(c&&(c.likeCount||0)>0)bt.update(pref,{likeCount:increment(-1)});await bt.commit();S.myLikes.delete(id);if(c)c.likeCount=Math.max(0,(c.likeCount||0)-1)}
-    else{bt.set(ref,{cid:id,uid});bt.update(pref,{likeCount:increment(1)});await bt.commit();S.myLikes.add(id);if(c){c.likeCount=(c.likeCount||0)+1;notify(c.authorUid,"like",{cid:id,id:"like_"+id+"_"+uid})}}
-   }catch(e){console.error(e);toast("that didn't work, please try again")}
+    if(un){bt.delete(ref);if(c&&(c.likeCount||0)>0)bt.update(pref,{likeCount:increment(-1)});await bt.commit();S.myLikes.delete(id);if(c)c.likeCount=Math.max(0,(c.likeCount||0)-1)}
+    else{bt.set(ref,{cid:id,uid});bt.update(pref,{likeCount:increment(1)});
+     if(!S.admin)bt.set(doc(db,"limits",uid),expired?{lw:serverTimestamp(),ln:1}:{ln:increment(1)},{merge:true});
+     await bt.commit();S.myLikes.add(id);if(!S.admin){if(expired){S.lim.lw=Date.now();S.lim.ln=1}else S.lim.ln++}
+     if(c){c.likeCount=(c.likeCount||0)+1;notify(c.authorUid,"like",{cid:id,id:"like_"+id+"_"+uid})}}
+   }catch(e){console.error(e);await loadLimits(S.user);toast("that didn't work, please try again")}
    render(true);break}
   case"save":{if(!need())break;const id=d.id,ref=doc(db,"saves",id+"_"+S.user.uid);
    if(S.saves.has(id)){await deleteDoc(ref);S.saves.delete(id)}else{await setDoc(ref,{cid:id,uid:S.user.uid});S.saves.add(id)}
@@ -968,6 +978,7 @@ document.addEventListener("click",async e=>{
   case"atab":S.atab=d.t;render(true);break;
   case"approve":{await updateDoc(doc(db,"contributions",d.id),{status:"approved"});const p=S.pend[d.id];if(p)notify(p.authorUid,"approved",{cid:d.id});delete S.pend[d.id];await loadPublic();render(true);toast("approved");break}
   case"reject":if(confirm("reject and delete this submission?")){await delPost(S.pend[d.id]||{id:d.id});delete S.pend[d.id];loadQueue()}break;
+  case"fbagain":render(false);break;
   case"delfb":if(confirm("delete this feedback?")){await deleteDoc(doc(db,"feedback",d.id));loadInbox()}break;
   case"dismiss":await deleteDoc(doc(db,"reports",d.id));loadQueue();break;
   case"rm":if(confirm("remove this content?")){
@@ -1031,13 +1042,14 @@ document.addEventListener("submit",async e=>{
  try{switch(f.id){
   case"ff":{if(!need())break;const tx=$("#ftx").value.trim(),er=$("#fferr"),bt=$("#ffsub");er.textContent="";
    if(tx.length<3){er.textContent="write a few words first.";break}
+   if(!S.admin){const w=waitSec("f",300);if(w){er.textContent="you can send more feedback in "+mins(w)+".";break}}
    bt.disabled=true;bt.textContent="sending…";
    try{const data={uid:S.user.uid,name:myName().slice(0,60),kind:$("#fk").value,text:tx.slice(0,2000),createdAt:serverTimestamp()};
     if(myHandle())data.handle=myHandle().slice(0,30);
-    await addDoc(collection(db,"feedback"),data);
+    const wb=writeBatch(db);wb.set(doc(collection(db,"feedback")),data);if(!S.admin)wb.set(doc(db,"limits",S.user.uid),{f:serverTimestamp()},{merge:true});await wb.commit();if(!S.admin)S.lim.f=Date.now();
     notify(ADMIN_UID,"feedback",{text:tx});
-    $("main").innerHTML=`<div class="notice">thank you! your feedback was sent.</div><div class="row"><a class="btn p" href="#/">back to the archive</a><a class="btn" href="#/feedback">send more</a></div>`;
-   }catch(x){console.error(x);er.textContent="couldn't send that. please try again.";bt.disabled=false;bt.textContent="send feedback"}
+    $("main").innerHTML=`<div class="notice">thank you! your feedback was sent.</div><div class="row"><a class="btn p" href="#/">back to the archive</a><button class="btn" data-act="fbagain">send more</button></div>`;
+   }catch(x){console.error(x);await loadLimits(S.user);er.textContent="couldn't send that. you can send one message every 5 minutes.";bt.disabled=false;bt.textContent="send feedback"}
    break}
   case"topSearch":S.q=$("#tq").value.trim();{const h="#/explore?q="+enc(S.q);if(location.hash===h)render(true);else location.hash=h}break;
   case"af":{const em=$("#ae").value.trim(),pw=$("#ap").value;
@@ -1047,8 +1059,11 @@ document.addEventListener("submit",async e=>{
     S.modal=null;render(true);
    }catch(err){authErr(err)}break}
   case"cmf":{if(!need())break;const text=$("#ct").value.trim();if(!text)break;
+   if(!S.admin){const w=waitSec("c",60);if(w){toast("you can comment again in "+mins(w));break}}
    const o={cid:f.dataset.cid,uid:S.user.uid,name:myName().slice(0,60),text,createdAt:serverTimestamp()};if(myHandle())o.handle=myHandle();
-   await addDoc(collection(db,"comments"),o);notify(f.dataset.to,"comment",{cid:f.dataset.cid,text});
+   try{const bt=writeBatch(db);bt.set(doc(collection(db,"comments")),o);if(!S.admin)bt.set(doc(db,"limits",S.user.uid),{c:serverTimestamp()},{merge:true});await bt.commit();if(!S.admin)S.lim.c=Date.now()}
+   catch(x){console.error(x);await loadLimits(S.user);toast("slow down a little, one comment a minute");break}
+   notify(f.dataset.to,"comment",{cid:f.dataset.cid,text});
    $("#ct").value="";loadComments(f.dataset.cid);break}
   case"sf":{await setDoc(doc(db,"site","config"),{announcement:$("#sa").value.trim().slice(0,300),about:$("#sab").value.trim().slice(0,3000),requireReview:$("#sr").checked});await loadHome();toast("saved");break}
   case"pf":{if(!S.user)break;const err=$("#perr");err.textContent="";
