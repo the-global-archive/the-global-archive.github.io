@@ -218,7 +218,7 @@ const ICONS={
  bell:'<path d="M6 8a6 6 0 0112 0c0 7 3 9 3 9H3s3-2 3-9"/><path d="M10 21a2 2 0 004 0"/>',menu:'<path d="M4 7h16M4 12h16M4 17h16"/>',
  pencil:'<path d="M4 20h4L19 9l-4-4L4 16z"/><path d="M13.5 6.5l4 4"/>',sun:'<circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M2 12h2M20 12h2M5 5l1.5 1.5M17.5 17.5L19 19M5 19l1.5-1.5M17.5 6.5L19 5"/>',
  moon:'<path d="M20 14A8 8 0 1110 4a7 7 0 0010 10z"/>',clock:'<circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/>',logout:'<path d="M9 21H5V3h4M16 17l5-5-5-5M21 12H9"/>',
- chev:'<path d="M9 6l6 6-6 6"/>',search:'<circle cx="11" cy="11" r="7"/><path d="M20 20l-3.5-3.5"/>',bookmark:'<path d="M6 3h12v18l-6-4-6 4z"/>',file:'<path d="M6 3h8l4 4v14H6z"/><path d="M14 3v4h4"/>',user:'<circle cx="12" cy="8" r="4"/><path d="M4 21c1-4 4-6 8-6s7 2 8 6"/>',
+ chev:'<path d="M9 6l6 6-6 6"/>',chat:'<path d="M4 5h16v11H9l-5 4z"/>',search:'<circle cx="11" cy="11" r="7"/><path d="M20 20l-3.5-3.5"/>',bookmark:'<path d="M6 3h12v18l-6-4-6 4z"/>',file:'<path d="M6 3h8l4 4v14H6z"/><path d="M14 3v4h4"/>',user:'<circle cx="12" cy="8" r="4"/><path d="M4 21c1-4 4-6 8-6s7 2 8 6"/>',
  palette:'<path d="M12 3a9 9 0 100 18c1.5 0 2-1 1.5-2s0-2 1.5-2h2a3 3 0 003-3c0-6-4-11-8-11z"/><circle cx="8" cy="11" r="1"/><circle cx="12" cy="7.5" r="1"/><circle cx="16" cy="11" r="1"/>'};
 const ic=(n,s=18)=>`<svg class="ico" width="${s}" height="${s}" viewBox="0 0 24 24" aria-hidden="true">${ICONS[n]||""}</svg>`;
 
@@ -456,8 +456,8 @@ function top(){
  <span id="bellw">${bellHTML()}</span><button class="ib" data-act="menu" aria-label="menu">${ic("menu",20)}</button></header>`;
 }
 const bellHTML=()=>{const n=unread();return `<button class="ib" data-act="bell" aria-label="notifications${n?", "+n+" new":""}">${ic("bell",20)}${n?`<span class="bdg">${n>9?"9+":n}</span>`:""}</button>`};
-const nHref=n=>n.type==="follow"||n.type==="heart"?"#/u/"+n.from:n.type==="pending"||n.type==="report"?"#/reports":n.cid?"#/c/"+n.cid:"#/";
-const nText=n=>({like:"liked your post",comment:"commented: “"+clip(n.text,70)+"”",follow:"started following you",heart:"hearted your profile",approved:"your post was approved ✓",pending:"submitted a post for review",report:"sent a report"+(n.text?" ("+n.text+")":"")}[n.type]||"");
+const nHref=n=>n.type==="follow"||n.type==="heart"?"#/u/"+n.from:n.type==="feedback"?"#/inbox":n.type==="pending"||n.type==="report"?"#/reports":n.cid?"#/c/"+n.cid:"#/";
+const nText=n=>({like:"liked your post",comment:"commented: “"+clip(n.text,70)+"”",follow:"started following you",heart:"hearted your profile",approved:"your post was approved ✓",pending:"submitted a post for review",feedback:"sent feedback: “"+clip(n.text,70)+"”",report:"sent a report"+(n.text?" ("+n.text+")":"")}[n.type]||"");
 function npanelInner(){
  if(!S.user)return `<p class="empty">log in to see notifications.</p>`;
  return S.notifs.length?S.notifs.map(n=>`<a class="nrow ${n.read?"":"new"}" href="${esc(nHref(n))}">${n.read?`<span style="width:8px"></span>`:`<span class="dotn"></span>`}<span class="grow">${n.type==="approved"?"":`<b>${esc(n.fromName||"someone")}</b> `}${esc(nText(n))}</span></a>`).join(""):`<p class="empty">nothing yet. likes, comments and follows will show up here.</p>`;
@@ -693,6 +693,31 @@ function about(){
 
 /* ---------- owner pages ---------- */
 const denied=()=>`<p class="empty">this page is for the owner only.</p>`;
+const FBK={idea:"an idea",bug:"something's broken",love:"something i love",other:"something else"};
+function feedback(){
+ const h=`<div class="intro"><h1>send <em>feedback</em></h1><p class="sub">tell the owner what's working, what isn't, or what you'd love to see. your name goes with it so you can be answered.</p></div>`;
+ if(!S.user)return h+`<div class="box"><p>log in to send feedback.</p><button class="btn p" data-act="login">log in or sign up</button></div>`;
+ if(S.banned)return h+banBanner();
+ return `${h}<form id="ff" class="box fm" novalidate>
+ <div class="f"><label for="fk">what kind of feedback?</label><select id="fk">${Object.entries(FBK).map(([k,v])=>`<option value="${k}">${v}</option>`).join("")}</select></div>
+ <div class="f"><label for="ftx">your message</label><textarea id="ftx" maxlength="2000" class="big" placeholder="write anything…"></textarea></div>
+ <p class="k" style="margin:0 0 12px">sending as <b>${esc(myName())}</b>${myHandle()?" (@"+esc(myHandle())+")":""}</p>
+ <div class="err" id="fferr"></div><button class="btn p" id="ffsub">send feedback</button></form>`;
+}
+function inbox(){
+ if(!S.admin)return denied();
+ S.after=loadInbox;
+ return `<div class="intro"><h1>feedback <em>inbox</em></h1></div><div id="fbl"><p class="k" style="margin-top:12px">loading…</p></div>`;
+}
+async function loadInbox(){
+ try{
+  const q=await getDocs(query(collection(db,"feedback"),limit(200)));
+  const L=q.docs.map(d=>({id:d.id,...d.data()})).sort((a,b)=>(b.createdAt?.seconds||0)-(a.createdAt?.seconds||0));
+  const el=$("#fbl");if(!el)return;
+  el.innerHTML=L.length?L.map(x=>`<div class="box"><div class="row"><span class="pill">${esc(FBK[x.kind]||x.kind)}</span><a class="k" href="#/u/${esc(x.uid)}"><b>${esc(x.name||"anonymous")}</b>${x.handle?" @"+esc(x.handle):""}</a><span class="k sp">${esc(dt(x.createdAt))}</span></div>
+   <div class="body">${esc(x.text)}</div><div class="row"><button class="btn s d" data-act="delfb" data-id="${esc(x.id)}">delete</button></div></div>`).join(""):`<p class="empty">no feedback yet.</p>`;
+ }catch(e){console.error(e);const el=$("#fbl");if(el)el.innerHTML=`<p class="err">couldn't load feedback. check the firestore rules are published.</p>`}
+}
 function reports(){
  if(!S.admin)return denied();
  S.after=loadQueue;
@@ -803,8 +828,8 @@ function drawer(){
  :`<div class="dprof"><span class="grow"><b>welcome</b><span class="k">log in to post and follow</span></span><button class="btn p s" data-act="login">log in</button></div>`}
  <div style="height:8px"></div>${a("#/settings","settings","settings")}
  <hr class="hr"><div class="dsec">browse</div>
- ${a("#/","home","home page")}${a("#/countries","globe","countries")}<button class="dl" data-act="random" data-close>${ic("shuffle")} surprise me</button>${a("#/about","info","about")}
- ${S.admin?`<hr class="hr"><div class="dsec">owner</div>${a("#/reports","flag","reports")}${a("#/calendar","calendar","calendar")}${a("#/site","sliders","site settings")}`:""}
+ ${a("#/","home","home page")}${a("#/countries","globe","countries")}<button class="dl" data-act="random" data-close>${ic("shuffle")} surprise me</button>${a("#/about","info","about")}${a("#/feedback","chat","send feedback")}
+ ${S.admin?`<hr class="hr"><div class="dsec">owner</div>${a("#/reports","flag","reports")}${a("#/inbox","chat","feedback inbox")}${a("#/calendar","calendar","calendar")}${a("#/site","sliders","site settings")}`:""}
  <hr class="hr"><div class="dsec">appearance</div>${appear()}
  ${S.user?`<button class="btn dout" data-act="logout">${ic("logout",16)} log out</button>`:""}</aside>`;
 }
@@ -834,7 +859,7 @@ function route(){
  const{parts,params}=parseHash(),r=parts[0],arg=parts[1]?decodeURIComponent(parts[1]):"";
  switch(r){case"explore":S.q=params.get("q")||"";return feed(true);case"countries":return countries();case"country":return country(arg);case"c":return detail(arg);
  case"u":return profile(arg);case"contribute":return contribute(params);case"saved":return saved();case"mine":return mine();
- case"admin":case"reports":return reports();case"calendar":return calendar();case"site":return site();case"settings":return settings();case"about":return about();
+ case"feedback":return feedback();case"inbox":return inbox();case"admin":case"reports":return reports();case"calendar":return calendar();case"site":return site();case"settings":return settings();case"about":return about();
  default:S.q="";return feed(false)}
 }
 function layoutMas(){$$(".mas").forEach(m=>{
@@ -876,7 +901,7 @@ function render(keep){
  let body;
  if(!S.loaded)body=S.loadErr?`<div class="box"><p class="err">couldn't load the archive. check that the firebase config and firestore rules are set up.</p></div>`:`<p class="k" style="margin-top:20px">loading…</p>`;
  else body=route();
- $("#app").innerHTML=top()+`<main>${body}</main><footer class="foot"><span>the global archive</span><a href="#/about">about</a><a href="#/countries">countries</a><a href="#/contribute">share a post</a></footer>`;
+ $("#app").innerHTML=top()+`<main>${body}</main><footer class="foot"><span>the global archive</span><a href="#/about">about</a><a href="#/countries">countries</a><a href="#/contribute">share a post</a><a href="#/feedback">feedback</a></footer>`;
  $("#layer").innerHTML=layerHTML();
  window.scrollTo(0,keep?y:0);layoutMas();
  if(S.after)S.after();
@@ -943,6 +968,7 @@ document.addEventListener("click",async e=>{
   case"atab":S.atab=d.t;render(true);break;
   case"approve":{await updateDoc(doc(db,"contributions",d.id),{status:"approved"});const p=S.pend[d.id];if(p)notify(p.authorUid,"approved",{cid:d.id});delete S.pend[d.id];await loadPublic();render(true);toast("approved");break}
   case"reject":if(confirm("reject and delete this submission?")){await delPost(S.pend[d.id]||{id:d.id});delete S.pend[d.id];loadQueue()}break;
+  case"delfb":if(confirm("delete this feedback?")){await deleteDoc(doc(db,"feedback",d.id));loadInbox()}break;
   case"dismiss":await deleteDoc(doc(db,"reports",d.id));loadQueue();break;
   case"rm":if(confirm("remove this content?")){
    if(d.kind==="comment")await deleteDoc(doc(db,"comments",d.ref));else await delPost(S.items.find(x=>x.id===d.ref)||{id:d.ref});
@@ -1003,6 +1029,16 @@ document.addEventListener("load",e=>{const f=e.target;if(f&&f.tagName==="IFRAME"
 document.addEventListener("submit",async e=>{
  e.preventDefault();const f=e.target;
  try{switch(f.id){
+  case"ff":{if(!need())break;const tx=$("#ftx").value.trim(),er=$("#fferr"),bt=$("#ffsub");er.textContent="";
+   if(tx.length<3){er.textContent="write a few words first.";break}
+   bt.disabled=true;bt.textContent="sending…";
+   try{const data={uid:S.user.uid,name:myName().slice(0,60),kind:$("#fk").value,text:tx.slice(0,2000),createdAt:serverTimestamp()};
+    if(myHandle())data.handle=myHandle().slice(0,30);
+    await addDoc(collection(db,"feedback"),data);
+    notify(ADMIN_UID,"feedback",{text:tx});
+    $("main").innerHTML=`<div class="notice">thank you! your feedback was sent.</div><div class="row"><a class="btn p" href="#/">back to the archive</a><a class="btn" href="#/feedback">send more</a></div>`;
+   }catch(x){console.error(x);er.textContent="couldn't send that. please try again.";bt.disabled=false;bt.textContent="send feedback"}
+   break}
   case"topSearch":S.q=$("#tq").value.trim();{const h="#/explore?q="+enc(S.q);if(location.hash===h)render(true);else location.hash=h}break;
   case"af":{const em=$("#ae").value.trim(),pw=$("#ap").value;
    try{
