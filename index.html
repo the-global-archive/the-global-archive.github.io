@@ -10,7 +10,7 @@
 :root{--brand:#111;--bg:#f3f3f4;--card:#fff;--ink:#111;--on:#fff;--sea:#111;--gs:82%;--gl1:94%;--gl2:87%}
 *{box-sizing:border-box}
 html{background:var(--bg)}
-body{margin:0;font:15px/1.55 'Roboto',system-ui,sans-serif;text-transform:lowercase;background:var(--bg);color:var(--ink);
+body{margin:0;font:15px/1.55 'Roboto',system-ui,sans-serif;text-transform:lowercase;color:var(--ink);
  --muted:color-mix(in srgb,var(--ink) 58%,var(--bg));--line:color-mix(in srgb,var(--ink) 13%,var(--bg));--soft:color-mix(in srgb,var(--brand) 11%,var(--bg));
  --accs:color-mix(in srgb,var(--brand) 26%,var(--card));--cink:color-mix(in srgb,var(--ink) 88%,transparent)}
 a{color:inherit}
@@ -25,7 +25,7 @@ button,input,textarea,select{font:inherit;color:inherit}button{cursor:pointer}
 .row{display:flex;gap:10px;align-items:center;flex-wrap:wrap}.sp{margin-left:auto}.grow{flex:1;min-width:0}
 .gr{background:linear-gradient(150deg,hsl(var(--h) var(--gs) var(--gl1)),hsl(var(--h2) var(--gs) var(--gl2)))}
 .ico{width:18px;height:18px;stroke:currentColor;fill:none;stroke-width:1.9;stroke-linecap:round;stroke-linejoin:round;flex:none}
-.top{position:sticky;top:0;z-index:4;background:color-mix(in srgb,var(--bg) 88%,transparent);backdrop-filter:blur(12px);display:flex;align-items:center;gap:10px;padding:calc(12px + env(safe-area-inset-top,0px)) 0 12px}
+.top{position:sticky;top:0;z-index:4;background:color-mix(in srgb,var(--bg) 45%,transparent);backdrop-filter:blur(14px);display:flex;align-items:center;gap:10px;padding:calc(12px + env(safe-area-inset-top,0px)) 0 12px}
 .logo{display:flex;align-items:center;gap:10px;text-decoration:none;font:400 1.4rem/1 'Roboto',system-ui,sans-serif;font-style:normal;letter-spacing:-.01em;white-space:nowrap;color:var(--brand)}
 .globe{flex:none;display:block}
 .srch{flex:1;display:flex;align-items:center;gap:8px;background:var(--soft);border-radius:999px;padding:0 16px;max-width:640px;margin:0 auto}.srch .ico{color:var(--muted)}
@@ -154,6 +154,20 @@ textarea{min-height:110px;resize:vertical}textarea.big{min-height:220px}textarea
 @media(max-width:640px){.logo span{display:none}.hide-m{display:none}.cd{min-height:46px;padding:4px 6px}}
 [hidden]{display:none!important}
 @media(prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}}
+body::before{content:"";position:fixed;inset:0;z-index:-1;pointer-events:none;background:radial-gradient(900px 460px at 8% -8%,color-mix(in srgb,var(--brand) 14%,transparent),transparent 70%),radial-gradient(700px 420px at 100% 0,color-mix(in srgb,var(--brand) 8%,transparent),transparent 70%)}
+html{scroll-behavior:smooth;scrollbar-color:color-mix(in srgb,var(--ink) 25%,transparent) transparent}
+::selection{background:color-mix(in srgb,var(--brand) 35%,transparent)}
+main{animation:fadein .3s ease both}
+@keyframes fadein{from{opacity:0;transform:translateY(6px)}to{opacity:1;transform:none}}
+.mas.rdy .sb{animation:tilein .35s ease both}
+@keyframes tilein{from{opacity:0}to{opacity:1}}
+.btn,.ib,.pk,.tpb{transition:background .15s,transform .12s,filter .15s,box-shadow .15s}
+.btn:active,.ib:active{transform:scale(.96)}
+.sb{filter:drop-shadow(0 3px 6px rgba(0,0,0,.14))}
+.sb:hover,.sb:focus-visible{filter:drop-shadow(0 12px 18px rgba(0,0,0,.24))}
+.cban+.mas,.cban~.mas{margin-top:24px}
+.foot{margin:36px 0 0;padding:22px 0 8px;border-top:1px solid var(--line);color:var(--muted);font-size:.8rem;display:flex;gap:14px;flex-wrap:wrap;justify-content:center}.foot a{text-decoration:none}.foot a:hover{text-decoration:underline}
+@media(max-width:640px){.cbi .row .btn.p.sp{margin-left:0;width:100%;justify-content:center}}
 </style>
 </head>
 <body>
@@ -174,7 +188,7 @@ const firebaseConfig = {
   appId: "1:496015789383:web:d2039d67fb9df55be0d062",
   measurementId: "G-W9QJWR0MB3"
 };
-const CCRAW="Afghanistan|af;Albania|al;Algeria|dz;Andorra|ad;Angola|ao;Antigua and Barbuda|ag;Argentina|ar;Armenia|am;Australia|au;Austria|at;Azerbaijan|az;Bahamas|bs;Bahrain|bh;Bangladesh|bd;Barbados|bb;Belarus|by;Belgium|be;Belize|bz;Benin|bj;Bhutan|bt;Bolivia|bo;Bosnia and Herzegovina|ba;Botswana|bw;Brazil|br;Brunei|bn;Bulgaria|bg;Burkina Faso|bf;Burundi|bi;Cabo Verde|cv;Cambodia|kh;Cameroon|cm;Canada|ca;Central African Republic|cf;Chad|td;Chile|cl;China|cn;Colombia|co;Comoros|km;Congo (Republic)|cg;Congo (Democratic Republic)|cd;Costa Rica|cr;Côte d'Ivoire|ci;Croatia|hr;Cuba|cu;Cyprus|cy;Czechia|cz;Denmark|dk;Djibouti|dj;Dominica|dm;Dominican Republic|do;Ecuador|ec;Egypt|eg;El Salvador|sv;Equatorial Guinea|gq;Eritrea|er;Estonia|ee;Eswatini|sz;Ethiopia|et;Fiji|fj;Finland|fi;France|fr;Gabon|ga;Gambia|gm;Georgia|ge;Germany|de;Ghana|gh;Greece|gr;Grenada|gd;Guatemala|gt;Guinea|gn;Guinea-Bissau|gw;Guyana|gy;Haiti|ht;Honduras|hn;Hungary|hu;Iceland|is;India|in;Indonesia|id;Iran|ir;Iraq|iq;Ireland|ie;Israel|il;Italy|it;Jamaica|jm;Japan|jp;Jordan|jo;Kazakhstan|kz;Kenya|ke;Kiribati|ki;Kosovo|xk;Kuwait|kw;Kyrgyzstan|kg;Laos|la;Latvia|lv;Lebanon|lb;Lesotho|ls;Liberia|lr;Libya|ly;Liechtenstein|li;Lithuania|lt;Luxembourg|lu;Madagascar|mg;Malawi|mw;Malaysia|my;Maldives|mv;Mali|ml;Malta|mt;Marshall Islands|mh;Mauritania|mr;Mauritius|mu;Mexico|mx;Micronesia|fm;Moldova|md;Monaco|mc;Mongolia|mn;Montenegro|me;Morocco|ma;Mozambique|mz;Myanmar|mm;Namibia|na;Nauru|nr;Nepal|np;Netherlands|nl;New Zealand|nz;Nicaragua|ni;Niger|ne;Nigeria|ng;North Korea|kp;North Macedonia|mk;Norway|no;Oman|om;Pakistan|pk;Palau|pw;Palestine|ps;Panama|pa;Papua New Guinea|pg;Paraguay|py;Peru|pe;Philippines|ph;Poland|pl;Portugal|pt;Qatar|qa;Romania|ro;Russia|ru;Rwanda|rw;Saint Kitts and Nevis|kn;Saint Lucia|lc;Saint Vincent and the Grenadines|vc;Samoa|ws;San Marino|sm;São Tomé and Príncipe|st;Saudi Arabia|sa;Senegal|sn;Serbia|rs;Seychelles|sc;Sierra Leone|sl;Singapore|sg;Slovakia|sk;Slovenia|si;Solomon Islands|sb;Somalia|so;South Africa|za;South Korea|kr;South Sudan|ss;Spain|es;Sri Lanka|lk;Sudan|sd;Suriname|sr;Sweden|se;Switzerland|ch;Syria|sy;Taiwan|tw;Tajikistan|tj;Tanzania|tz;Thailand|th;Timor-Leste|tl;Togo|tg;Tonga|to;Trinidad and Tobago|tt;Tunisia|tn;Türkiye|tr;Turkmenistan|tm;Tuvalu|tv;Uganda|ug;Ukraine|ua;United Arab Emirates|ae;United Kingdom|gb;United States|us;Uruguay|uy;Uzbekistan|uz;Vanuatu|vu;Vatican City|va;Venezuela|ve;Vietnam|vn;Yemen|ye;Zambia|zm;Zimbabwe|zw";
+const CCRAW="Afghanistan|af;Albania|al;Algeria|dz;Andorra|ad;Angola|ao;Antigua and Barbuda|ag;Argentina|ar;Armenia|am;Australia|au;Austria|at;Azerbaijan|az;Bahamas|bs;Bahrain|bh;Bangladesh|bd;Barbados|bb;Belarus|by;Belgium|be;Belize|bz;Benin|bj;Bhutan|bt;Bolivia|bo;Bosnia and Herzegovina|ba;Botswana|bw;Brazil|br;Brunei|bn;Bulgaria|bg;Burkina Faso|bf;Burundi|bi;Cabo Verde|cv;Cambodia|kh;Cameroon|cm;Canada|ca;Central African Republic|cf;Chad|td;Chile|cl;China|cn;Colombia|co;Comoros|km;Congo (Republic)|cg;Congo (Democratic Republic)|cd;Costa Rica|cr;Côte d'Ivoire|ci;Croatia|hr;Cuba|cu;Cyprus|cy;Czechia|cz;Denmark|dk;Djibouti|dj;Dominica|dm;Dominican Republic|do;Ecuador|ec;Egypt|eg;El Salvador|sv;Equatorial Guinea|gq;Eritrea|er;Estonia|ee;Eswatini|sz;Ethiopia|et;Fiji|fj;Finland|fi;France|fr;Gabon|ga;Gambia|gm;Georgia|ge;Germany|de;Ghana|gh;Greece|gr;Grenada|gd;Guatemala|gt;Guinea|gn;Guinea-Bissau|gw;Guyana|gy;Haiti|ht;Honduras|hn;Hungary|hu;Iceland|is;India|in;Indonesia|id;Iran|ir;Iraq|iq;Ireland|ie;Italy|it;Jamaica|jm;Japan|jp;Jordan|jo;Kazakhstan|kz;Kenya|ke;Kiribati|ki;Kosovo|xk;Kuwait|kw;Kyrgyzstan|kg;Laos|la;Latvia|lv;Lebanon|lb;Lesotho|ls;Liberia|lr;Libya|ly;Liechtenstein|li;Lithuania|lt;Luxembourg|lu;Madagascar|mg;Malawi|mw;Malaysia|my;Maldives|mv;Mali|ml;Malta|mt;Marshall Islands|mh;Mauritania|mr;Mauritius|mu;Mexico|mx;Micronesia|fm;Moldova|md;Monaco|mc;Mongolia|mn;Montenegro|me;Morocco|ma;Mozambique|mz;Myanmar|mm;Namibia|na;Nauru|nr;Nepal|np;Netherlands|nl;New Zealand|nz;Nicaragua|ni;Niger|ne;Nigeria|ng;North Korea|kp;North Macedonia|mk;Norway|no;Oman|om;Pakistan|pk;Palau|pw;Palestine|ps;Panama|pa;Papua New Guinea|pg;Paraguay|py;Peru|pe;Philippines|ph;Poland|pl;Portugal|pt;Qatar|qa;Romania|ro;Russia|ru;Rwanda|rw;Saint Kitts and Nevis|kn;Saint Lucia|lc;Saint Vincent and the Grenadines|vc;Samoa|ws;San Marino|sm;São Tomé and Príncipe|st;Saudi Arabia|sa;Senegal|sn;Serbia|rs;Seychelles|sc;Sierra Leone|sl;Singapore|sg;Slovakia|sk;Slovenia|si;Solomon Islands|sb;Somalia|so;South Africa|za;South Korea|kr;South Sudan|ss;Spain|es;Sri Lanka|lk;Sudan|sd;Suriname|sr;Sweden|se;Switzerland|ch;Syria|sy;Taiwan|tw;Tajikistan|tj;Tanzania|tz;Thailand|th;Timor-Leste|tl;Togo|tg;Tonga|to;Trinidad and Tobago|tt;Tunisia|tn;Türkiye|tr;Turkmenistan|tm;Tuvalu|tv;Uganda|ug;Ukraine|ua;United Arab Emirates|ae;United Kingdom|gb;United States|us;Uruguay|uy;Uzbekistan|uz;Vanuatu|vu;Vatican City|va;Venezuela|ve;Vietnam|vn;Yemen|ye;Zambia|zm;Zimbabwe|zw";
 const CC={},COUNTRIES=CCRAW.split(";").map(s=>{const[n,c]=s.split("|");CC[n]=c;return n});
 
 const CCOLR="ad:#10069f;ae:#00732f;af:#007a36;ag:#ce1126;al:#e41e20;am:#0033a0;ao:#cc092f;ar:#74acdf;at:#ed2939;au:#00247d;az:#00b5e2;ba:#002f6c;bb:#00267f;bd:#006a4e;be:#fae042;bf:#ef2b2d;bg:#00966e;bh:#ce1126;bi:#ce1126;bj:#008751;bn:#f7e017;bo:#f9e300;br:#009c3b;bs:#00778b;bt:#ff8000;bw:#75aadb;by:#c8313e;bz:#003f87;ca:#d52b1e;cd:#007fff;cf:#003082;cg:#009543;ch:#da291c;ci:#f77f00;cl:#d52b1e;cm:#007a5e;cn:#de2910;co:#fcd116;cr:#002b7f;cu:#002a8f;cv:#003893;cy:#d57800;cz:#d7141a;de:#dd0000;dj:#6ab2e7;dk:#c8102e;dm:#006b3f;do:#002d62;dz:#006233;ec:#ffdd00;ee:#0072ce;eg:#ce1126;er:#ea0437;es:#aa151b;et:#078930;fi:#003580;fj:#68bfe5;fm:#75b2dd;fr:#0055a4;ga:#009e60;gb:#012169;gd:#ce1126;ge:#da1212;gh:#fcd116;gm:#3a7728;gn:#fcd116;gq:#3e9a00;gr:#0d5eaf;gt:#4997d0;gw:#009e49;gy:#009e49;hn:#0073cf;hr:#d52b1e;ht:#00209f;hu:#ce2939;id:#ce1126;ie:#169b62;il:#0038b8;in:#ff9933;iq:#ce1126;ir:#239f40;is:#02529c;it:#009246;jm:#009b3a;jo:#007a3d;jp:#bc002d;ke:#bb0000;kg:#e8112d;kh:#e00025;ki:#ce1126;km:#3d8e33;kn:#009e49;kp:#ed1c27;kr:#cd2e3a;kw:#007a3d;kz:#00afca;la:#002868;lb:#ed1c24;lc:#66ccff;li:#002b7f;lk:#8d153a;lr:#bf0a30;ls:#00209f;lt:#006a44;lu:#ed2939;lv:#9e3039;ly:#239e46;ma:#c1272d;mc:#ce1126;md:#0046ae;me:#c40308;mg:#fc3d32;mh:#003893;mk:#d20000;ml:#fcd116;mm:#34b233;mn:#c4272f;mr:#006233;mt:#cf142b;mu:#ea2839;mv:#d21034;mw:#ce1126;mx:#006847;my:#cc0001;mz:#007168;na:#003580;ne:#e05206;ng:#008751;ni:#0067c6;nl:#ae1c28;no:#ba0c2f;np:#dc143c;nr:#002b7f;nz:#00247d;om:#db161b;pa:#005293;pe:#d91023;pg:#ce1126;ph:#0038a8;pk:#01411c;pl:#dc143c;ps:#007a3d;pt:#da291c;pw:#4aadd6;py:#d52b1e;qa:#8a1538;ro:#fcd116;rs:#c6363c;ru:#0039a6;rw:#00a1de;sa:#006c35;sb:#0051ba;sc:#003f87;sd:#d21034;se:#006aa7;sg:#ed2939;si:#005da4;sk:#0b4ea2;sl:#1eb53a;sm:#5eb6e4;sn:#00853f;so:#4189dd;sr:#377e3f;ss:#078930;st:#12ad2b;sv:#0f47af;sy:#007a3d;sz:#3e5eb9;td:#002664;tg:#006a4e;th:#a51931;tj:#cc0000;tl:#dc241f;tm:#00843d;tn:#e70013;to:#c10000;tr:#e30a17;tt:#ce1126;tv:#009fca;tw:#fe0000;tz:#1eb53a;ua:#0057b8;ug:#fcdc04;us:#b22234;uy:#0038a8;uz:#0099b5;va:#ffe000;vc:#009e60;ve:#ffcc00;vn:#da251d;vu:#d21034;ws:#ce1126;xk:#244aa5;ye:#ce1126;za:#007749;zm:#198a00;zw:#006400";
@@ -437,7 +451,7 @@ const appear=()=>`<div class="seg">${[["auto","auto","clock"],["light","light","
 /* ---------- views ---------- */
 function top(){
  return `<header class="top"><a class="logo" href="#/">${globe(34)}<span>the global archive</span></a>
- <form id="topSearch" class="srch">${ic("search")}<input id="tq" placeholder="search recipes, songs, #tags, countries…" aria-label="search" value="${esc(S.q)}" autocomplete="off"></form>
+ <form id="topSearch" class="srch">${ic("search")}<input id="tq" placeholder="${innerWidth<640?"search…":"search recipes, songs, #tags, countries…"}" aria-label="search" value="${esc(S.q)}" autocomplete="off"></form>
  ${S.authReady&&!S.user?`<button class="btn" data-act="login">log in</button>`:""}
  <span id="bellw">${bellHTML()}</span><button class="ib" data-act="menu" aria-label="menu">${ic("menu",20)}</button></header>`;
 }
@@ -564,8 +578,8 @@ async function loadComments(id){
  }catch(e){console.error(e);const el=$("#cmts");if(el)el.innerHTML=`<p class="err">couldn't load comments.</p>`}
 }
 function contribute(params){
- const h=`<div class="intro"><h1>share a piece of <em>home</em></h1><p class="sub">pick what you're sharing, choose a country, and add a caption with #tags so people can find it.${S.admin?" as admin your posts go live straight away.":" posts appear once they've been reviewed."}</p></div>`;
- if(!S.user)return h+loginPrompt("post");
+ const h=`<div class="intro"><h1>share a piece of <em>home</em></h1><p class="sub">pick what you're sharing, choose a country, and add a caption with #tags if you like, so people can find it.${S.admin?" as admin your posts go live straight away.":" posts appear once they've been reviewed."}</p></div>`;
+ if(!S.user)return h+`<div class="box"><p>log in to share something from home.</p><button class="btn p" data-act="login">log in or sign up</button></div>`;
  if(S.banned)return h+banBanner();
  const pre=params.get("country")||"";
  S.after=()=>{syncType();drawUps()};
@@ -862,7 +876,7 @@ function render(keep){
  let body;
  if(!S.loaded)body=S.loadErr?`<div class="box"><p class="err">couldn't load the archive. check that the firebase config and firestore rules are set up.</p></div>`:`<p class="k" style="margin-top:20px">loading…</p>`;
  else body=route();
- $("#app").innerHTML=top()+`<main>${body}</main>`;
+ $("#app").innerHTML=top()+`<main>${body}</main><footer class="foot"><span>the global archive</span><a href="#/about">about</a><a href="#/countries">countries</a><a href="#/contribute">share a post</a></footer>`;
  $("#layer").innerHTML=layerHTML();
  window.scrollTo(0,keep?y:0);layoutMas();
  if(S.after)S.after();
